@@ -1,0 +1,75 @@
+ion-content{
+}
+
+ion-title{
+  display: flex;
+  margin-top: 80px;
+  margin-bottom: 20px;
+  width: max-content;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 35px;
+}
+
+form{
+  margin-bottom: 30px;
+}
+
+.log{
+  display: flex;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 40px;
+  width: 200px;
+  height: 50px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: black;
+}
+
+ion-label{
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 10px;
+}
+
+ion-item{
+  margin-bottom: 15px;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+ion-input{
+  font-size: 12px;
+}
+
+.custom-label{
+  font-size: 14px;
+}
+
+.signUp{
+  display: flex;
+  margin-left: auto;
+  margin-right: auto;
+  font-size: 12px;
+  width: fit-content;
+  height: fit-content;
+  margin-top: 15px;
+}
+
+.Google{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 20px;
+  color: black;
+}
+
+.GoogleBack{
+  margin-top: 20px;
+  display: flex;
+  margin-left: auto;
+  margin-right: auto;
+  align-items: center;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}

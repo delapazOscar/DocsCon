@@ -1,0 +1,31 @@
+<ion-content>
+  <ion-title>
+    Registrarse
+  </ion-title>
+  <form [formGroup]="registerForm" (keyup.enter)="saveData()">
+    <ion-item>
+      <ion-label position="floating"  class="custom-label">Nombre(s)</ion-label>
+      <ion-input formControlName="names" type="text"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating"  class="custom-label">Apellidos</ion-label>
+      <ion-input formControlName="lastnames" type="text"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating"  class="custom-label">Correo electrónico</ion-label>
+      <ion-input formControlName="email" type="email"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating" class="custom-label">Contraseña</ion-label>
+      <ion-input formControlName="password" type="password"></ion-input>
+    </ion-item>
+  </form>
+
+  <ion-button (click)="saveData()" color="primary" shape="round" class="log">Registrarme</ion-button>
+  <ion-button (click)="otraPagina()" fill="clear" class="signUp">Iniciar Sesión</ion-button>
+  <ion-button (click)="googleRegister()" class="GoogleBack" color="light" shape="round"><ion-icon name="logo-google" class="Google"></ion-icon></ion-button>
+
+</ion-content>

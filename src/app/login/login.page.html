@@ -1,0 +1,18 @@
+<ion-content>
+  <ion-title>Login</ion-title>
+  <form [formGroup]="loginForm" (keyup.enter)="login()">
+    <ion-item>
+      <ion-label position="floating"  class="custom-label">Correo electrónico</ion-label>
+      <ion-input formControlName="email" type="email"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating" class="custom-label">Contraseña</ion-label>
+      <ion-input formControlName="password" type="password"></ion-input>
+    </ion-item>
+  </form>
+
+  <ion-button (click)="login()" color="primary" shape="round" class="log">INICIAR SESIÓN</ion-button>
+  <ion-button (click)="RegisterPage()" fill="clear" class="signUp">Registrarme</ion-button>
+  <ion-button (click)="googleRegister()" class="GoogleBack" color="light" shape="round"><ion-icon name="logo-google" class="Google"></ion-icon></ion-button>
+</ion-content>

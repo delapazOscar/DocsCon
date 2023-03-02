@@ -1,0 +1,99 @@
+*{
+  margin: 0;
+  padding: 0;
+}
+ion-toolbar{
+  padding-top: 15px;
+  display: flex;
+  height: 70px;
+}
+
+.toolbar-container{
+  width: 100%;
+  display: flex;
+  align-items: center;
+  margin: 0;
+}
+
+ion-title{
+  margin-left: 12px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 25px;
+  font-weight: 700;
+}
+
+.addIcon{
+  font-size: 25px;
+  padding-top: 7px;
+}
+
+.addIconButton{
+  margin: 12px;
+  color: rgb(75, 75, 75);
+  background-color: transparent;
+}
+
+ion-content{
+  display: flex;
+}
+
+.searchbar-container{
+  display: flex;
+  align-items: center;
+  height: auto;
+  border-radius: 11px;
+  margin-left: 12px;
+  margin-right: 12px;
+  height: 27px;
+  background-color: rgb(195, 195, 195);
+}
+
+ion-searchbar{
+  margin-left: 12px;
+  margin-right: 12px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+ion-input{
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 3px;
+}
+
+.icon-search{
+  padding-left: 10px;
+  color: rgb(59, 59, 59);
+}
+
+.cancel-btn{
+  height: 18px;
+
+}
+
+.inactive-search{
+  display: flex;
+  flex:1;
+  transition: .5s;
+}
+
+.hidden-btn{
+  position: absolute;
+  top: 5px;
+  right: -100px;
+  transition: .5s;
+}
+
+.active-search{
+  display: flex;
+  flex: 0.8;
+  transition: .5s;
+}
+
+
+.visible-btn{
+  position: absolute;
+  top: 1px;
+  right: 7px;
+  transition: .5s;
+}

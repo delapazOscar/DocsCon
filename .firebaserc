@@ -1,0 +1,15 @@
+{
+  "projects": {
+    "default": "proyect1-80428"
+  },
+  "targets": {
+    "proyect1-80428": {
+      "hosting": {
+        "app": [
+          "proyect1-80428"
+        ]
+      }
+    }
+  },
+  "etags": {}
+}
