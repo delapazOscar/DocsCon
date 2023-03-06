@@ -1,0 +1,38 @@
+
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button (click)="navigateBack()"></ion-back-button>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-icon name="information-circle-outline" (click)="setOpen(true)"></ion-icon>
+    </ion-buttons>
+    <ion-title>{{datos.name}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <div class="btnCenter">
+    <ion-button class="create-button" >Crear {{datos.name}}</ion-button>
+  </div>
+
+  <ion-modal [isOpen]="isModalOpen">
+    <ng-template>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>{{datos.name}}</ion-title>
+          <ion-buttons slot="end">
+            <ion-button (click)="setOpen(false)">Close</ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content class="ion-padding">
+        <p class=".document-description">
+          {{datos.description}}
+        </p>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
+
+</ion-content>

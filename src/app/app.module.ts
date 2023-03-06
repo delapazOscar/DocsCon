@@ -9,6 +9,7 @@ import { Component, OnInit } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { LoginPage } from './login/login.page';
 import { User } from './shared/user.interface';
+import { DetailPage } from './detail/detail.page';
 import * as firebase from 'firebase/app';
 import 'firebase/firestore';
 import { DocumentsService } from './services/documents.service';

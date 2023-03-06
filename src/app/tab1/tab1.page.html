@@ -18,7 +18,7 @@
 
     <div class="acomodo">
       <div class="documents-list" *ngFor="let documents of searchedDocument">
-        <ion-card style="background:{{documents.color}}">
+        <ion-card style="background:{{documents.color}}" (click)="cardDocument(documents.name)">
           <ion-card-header>
             <ion-card-title>{{documents.name}}</ion-card-title>
           </ion-card-header>

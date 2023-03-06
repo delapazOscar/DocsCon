@@ -17,47 +17,18 @@ export class Tab1Page implements OnInit {
   documentos:Document[] = [];
   searchedDocument: any;
 
-  constructor(private router:Router, private _documentsService:DocumentsService, private alertController:AlertController) {
+  constructor(private router:Router, private documentsService:DocumentsService, private alertController:AlertController) {
 
    }
 
   ngOnInit() {
-    this.documentos = this._documentsService.getDocuments();
+    this.documentos = this.documentsService.getDocuments();
     this.searchedDocument= this.documentos;
-  }
-
-  async addTemplateButton(){
-    // alert('Eso no está programado');
-    const alert = await this.alertController.create({
-      header: 'Nuevo Documento',
-      buttons: [
-        {
-        text:'Crear',
-        handler:()=>{
-            //console.log("Crear perron");
-            //let nameDocument: string;
-        }
-        }
-      ],
-      inputs: [
-        {
-          placeholder: 'Nombre del documento',
-          min:1,
-          max:15
-        },
-      ],
-    });
-
-    await alert.present();
   }
 
   toogleSearch(){
     this.searching = !this.searching;
     this.textInput = '';
-  }
-
-  goToDocument(){
-
   }
 
   searchCustomer(event:any){
@@ -68,6 +39,10 @@ export class Tab1Page implements OnInit {
         return (documents.name.toLowerCase().indexOf(text.toLowerCase()) > -1);
       })
     }
+  }
+
+  cardDocument(name: string){
+    this.router.navigate(['detail', name]);
   }
 
 }

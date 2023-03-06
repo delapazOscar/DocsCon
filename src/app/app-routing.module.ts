@@ -27,6 +27,14 @@ const routes: Routes = [
     path: 'welcome',
     loadChildren: () => import('./welcome/welcome.module').then( m => m.WelcomePageModule)
   },
+  {
+    path: 'tab1',
+    loadChildren: () => import('./tab1/tab1.module').then( m => m.Tab1PageModule)
+  },
+  {
+    path: 'detail/:name',
+    loadChildren: () => import('./detail/detail.module').then( m => m.DetailPageModule)
+  },
 
 ];
 

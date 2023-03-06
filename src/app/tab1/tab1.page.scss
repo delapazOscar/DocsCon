@@ -42,8 +42,8 @@ ion-content{
   align-items: center;
   height: auto;
   border-radius: 11px;
-  margin-left: 12px;
-  margin-right: 12px;
+  margin-left: 10px;
+  margin-right: 10px;
   height: 27px;
   background-color: rgb(195, 195, 195);
 }
@@ -127,7 +127,6 @@ ion-card-title{
   letter-spacing: .5px;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   color: #434343;
-
 }
 
 ion-card-subtitle{
@@ -153,7 +152,7 @@ ion-card-subtitle{
   display: grid;
   grid-template-columns: repeat(2,1fr);
   margin-top: 1px;
-  padding: 10px 12px 0px 12px;
+  padding: 8px 10px 0px 10px;
   gap: 10px;
   width: 100%;
 }
