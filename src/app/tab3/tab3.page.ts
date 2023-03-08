@@ -5,6 +5,7 @@ import { Auth, createUserWithEmailAndPassword , signInWithEmailAndPassword, sign
 import { UserInfo, userInfo } from 'os';
 import { AuthService } from '../services/auth.service';
 import { FirebaseApp } from '@angular/fire/app';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-tab3',
@@ -13,24 +14,36 @@ import { FirebaseApp } from '@angular/fire/app';
 })
 export class Tab3Page implements OnInit {
 
-  uid: string = ""
+  uid: string | null = null;
 
-  constructor(private authService:AuthService ) { }
+  constructor(private authService: AuthService, private router: Router) { }
 
   async ngOnInit() {
-    this.getUid();
+    await this.getUid();
   }
 
   async getUid(){
-    const uid = await this.authService.getUser();
+    let uid = await this.authService.getUser();
     if(uid){
       this.uid = uid;
+      localStorage.setItem('uid', uid);
       console.log(uid);
+    } else {
+      uid = localStorage.getItem('uid');
+      if(uid){
+        this.uid = uid;
+      } else {
+        console.log('No se pudo encontrar un UID válido');
+      }
     }
   }
 
   avatarAccount(){
 
+  }
+
+  btnCuenta(){
+    this.router.navigate(['account']);
   }
 
 }

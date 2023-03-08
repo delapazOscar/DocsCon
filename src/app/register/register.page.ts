@@ -113,7 +113,7 @@ export class RegisterPage implements OnInit {
   googleRegister(){
     this.authService.loginWithGoogle()
       .then(response =>{
-        this.router.navigate(['login']);
+        this.router.navigate(['welcome']);
       })
       .catch(error=>console.log(error));
   }

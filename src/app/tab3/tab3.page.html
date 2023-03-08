@@ -7,13 +7,18 @@
 <ion-content>
   <!-- <ion-button color="dark" class="user-icon" shape="round"><ion-icon name="person-circle-outline"></ion-icon></ion-button> -->
   <div class="user-container">
-    <ion-button fill="clear" class="btn-img">
-      <ion-avatar (click)="avatarAccount()">
+    <ion-button fill="clear" class="btn-img" (click)="avatarAccount()">
+      <ion-avatar>
         <img alt="Silhouette of a person's head" src="https://ionicframework.com/docs/img/demos/avatar.svg" />
       </ion-avatar>
     </ion-button>
     <p class="email-user">
       {{uid}}
     </p>
+  </div>
+  <div class="options-container">
+    <ion-button expand="full"><span>Preferencias</span></ion-button>
+    <ion-button expand="full" (click)="btnCuenta()"><span>Cuenta</span></ion-button>
+    <ion-button expand="full"><span>Configuración</span></ion-button>
   </div>
 </ion-content>

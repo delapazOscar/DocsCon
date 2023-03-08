@@ -1,7 +1,6 @@
 {
   "hosting": [
     {
-      "site": "docscon",
       "target": "app",
       "public": "www",
       "ignore": [

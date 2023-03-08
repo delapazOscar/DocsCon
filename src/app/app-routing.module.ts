@@ -35,6 +35,14 @@ const routes: Routes = [
     path: 'detail/:name',
     loadChildren: () => import('./detail/detail.module').then( m => m.DetailPageModule)
   },
+  {
+    path: 'account',
+    loadChildren: () => import('./account/account.module').then( m => m.AccountPageModule)
+  },
+  {
+    path: 'tab3',
+    loadChildren: () => import('./tab3/tab3.module').then( m => m.Tab3PageModule)
+  },
 
 ];
 
