@@ -1,6 +1,6 @@
 export const environment = {
   firebase: {
-    projectId: 'proyect1-80428',
+    projectId: 'proyect1-80428'.toLowerCase(),
     appId: '1:764201731338:web:0c797c9f65f9d5664866f3',
     storageBucket: 'proyect1-80428.appspot.com',
     locationId: 'us-central',

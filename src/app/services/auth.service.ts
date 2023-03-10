@@ -5,12 +5,15 @@ import { userInfo } from 'os';
 import * as auth from 'firebase/auth';
 import 'firebase/auth';
 import 'firebase/firestore';
+import { AngularFireModule } from '@angular/fire/compat';
+import { environment } from 'src/environments/environment';
+import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 
 @Injectable({
   providedIn: 'root'
  })
  export class AuthService {
- 	constructor(private auth:Auth) {}
+ 	constructor(private auth:Auth, private afAuth: AngularFireAuthModule) {}
 
 
    async register({email, password}:any){
