@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ActionCodeOperation, sendEmailVerification, user } from '@angular/fire/auth';
+import { ActionCodeOperation, sendEmailVerification, updateProfile, user } from '@angular/fire/auth';
 import { Auth, createUserWithEmailAndPassword , signInWithEmailAndPassword, signOut, signInWithPopup, GoogleAuthProvider } from '@angular/fire/auth';
 import { userInfo } from 'os';
 import * as auth from 'firebase/auth';
@@ -13,7 +13,7 @@ import 'firebase/firestore';
  	constructor(private auth:Auth) {}
 
 
-  async register({email, password}:any){
+   async register({email, password}:any){
     const userCredential = await createUserWithEmailAndPassword(this.auth,email,password);
     await sendEmailVerification(userCredential.user);
     return userCredential;
