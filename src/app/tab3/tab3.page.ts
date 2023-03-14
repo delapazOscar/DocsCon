@@ -38,12 +38,16 @@ export class Tab3Page implements OnInit {
     }
   }
 
-  avatarAccount(){
-
+  avatarAccount() {
+    alert("No se pudo abrir el explorador de archivos");
   }
 
   btnCuenta(){
     this.router.navigate(['account']);
   }
+
+  btnConfiguration(){
+    this.router.navigate(['configuration'])
+  };
 
 }

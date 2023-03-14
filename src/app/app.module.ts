@@ -8,11 +8,15 @@ import { Component, OnInit } from '@angular/core';
 
 import { ReactiveFormsModule } from '@angular/forms';
 import { LoginPage } from './login/login.page';
-import { User } from './shared/user.interface';
+import { usuario } from './shared/user.interface';
 import { DetailPage } from './detail/detail.page';
 import * as firebase from 'firebase/app';
 import 'firebase/firestore';
 import { DocumentsService } from './services/documents.service';
+import { ɵAngularFireSchedulers} from '@angular/fire'
+import { FirestoreModule} from '@angular/fire/firestore'
+import { AngularFireModule } from '@angular/fire/compat';
+import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 
 import { BrowserModule } from '@angular/platform-browser';
 import { initializeApp,provideFirebaseApp } from '@angular/fire/app';
@@ -23,10 +27,17 @@ import { provideFirestore,getFirestore } from '@angular/fire/firestore';
 import { provideStorage,getStorage } from '@angular/fire/storage';
 
 
+
 @NgModule({
   declarations: [AppComponent],
   entryComponents:[],
-  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, ReactiveFormsModule, BrowserAnimationsModule, provideFirebaseApp(() => initializeApp(environment.firebase)), provideAuth(() => getAuth()), provideDatabase(() => getDatabase()), provideFirestore(() => getFirestore()), provideStorage(() => getStorage())],
+  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule,
+    ReactiveFormsModule, BrowserAnimationsModule,
+    provideFirebaseApp(() => initializeApp(environment.firebaseConfig)), provideAuth(() => getAuth()),
+    provideDatabase(() => getDatabase()), provideFirestore(() => getFirestore()),
+    provideStorage(() => getStorage()), FirestoreModule,
+    AngularFireModule,
+    AngularFireAuthModule],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy} ,DocumentsService],
   bootstrap: [AppComponent],
 })
