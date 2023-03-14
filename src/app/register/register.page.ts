@@ -6,7 +6,13 @@ import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms'
 import { ReactiveFormsModule } from '@angular/forms';
 import { AlertController, LoadingController } from '@ionic/angular';
 import { AuthService } from '../services/auth.service';
-import { User } from 'firebase/auth';
+import firebase from 'firebase/compat/app';
+import 'firebase/compat/auth';
+import 'firebase/compat/firestore';
+// import { AngularFirestore } from '@angular/fire/compat/firestore';
+
+interface User extends firebase.User {}
+import { AngularFireAuth } from '@angular/fire/compat/auth';
 
 
 @Component({
@@ -17,8 +23,10 @@ import { User } from 'firebase/auth';
 export class RegisterPage implements OnInit {
 
   registerForm: FormGroup;
-
+  // private perfilesRef = this.afs.collection('perfiles');
   constructor(private router: Router, public formBuilder:FormBuilder, public alertController:AlertController,
+    // private afs: AngularFirestore,
+    private afAuth: AngularFireAuth, // <--- Agrega AngularFireAuth aquí
     private loadingController: LoadingController,
     private authService: AuthService
     //private authService: AuthService,
@@ -107,6 +115,11 @@ export class RegisterPage implements OnInit {
            this.router.navigate(['/login']);
          })
          .catch(error => console.log(error));
+
+
+
+
+
     }
   }
 
