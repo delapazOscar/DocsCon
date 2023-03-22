@@ -5,7 +5,6 @@ ion-header{
 }
 
 ion-content{
-  --background: #E6E6E6 ;
   display: flex;
   justify-content: center;
 }
@@ -55,7 +54,9 @@ ion-img.image-document{
   --border-style: solid;
   --border-width: 0px;
   --border-radius: 40px;
-  --box-shadow: 0 3px 7px rgba(0, 0, 0, 0.2);
+  --webkit-box-shadow: 0px 0px 20px -2px rgba(0,0,0,1);
+  --moz-box-shadow: 0px 0px 20px -2px rgba(0,0,0,1);
+  --box-shadow: 0px 0px 20px -2px rgba(0,0,0,1);
   align-items: center;
   --background:white;
 }
@@ -78,6 +79,28 @@ ion-icon:hover{
   right: 0;
   display: flex;
   justify-content: center;
+}
+
+ion-modal {
+  --height: 45%;
+  --width: 90%;
+  --border-radius: 16px;
+  --box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+}
+
+ion-modal::part(backdrop) {
+  background: #313131;
+  opacity: 1;
+}
+
+ion-modal ion-toolbar {
+  --background: #A2A2A2;
+  --color: rgb(0, 0, 0);
+  --height: 20px;
+}
+
+ion-modal ion-header {
+  --height: 20px;
 }
 
 p{

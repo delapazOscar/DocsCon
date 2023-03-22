@@ -17,6 +17,7 @@ import { Auth } from 'firebase/auth';
 export class LoginPage implements OnInit {
 
   loginForm: FormGroup;
+  emailInput:string = '';
 
   constructor(private router: Router, public formBuilder:FormBuilder, public alertController: AlertController,
     private loadingController: LoadingController,
@@ -59,7 +60,7 @@ export class LoginPage implements OnInit {
       if(this.loginForm.get('password')?.hasError('minlength')){
         const alert = await this.alertController.create({
           header: 'Error en contraseña',
-          message: '***La contraseña debe ser de almenos 6 caracteres***',
+          message: '***Longitud inválida***',
           buttons: ['OK']
         });
         await alert.present();
@@ -87,16 +88,23 @@ export class LoginPage implements OnInit {
            console.log(response);
            this.router.navigate(['welcome']);
          })
-         .catch(async error => {
-            console.log(error)
-            const alert = await this.alertController.create({
-              header: 'Correo o contraseña incorrectos',
-              buttons: ['OK'],
-            });
+         .catch(async (error: any) => {
+          console.log(error);
+          const alert = await this.alertController.create({
+            header: error.code === "auth/user-not-found" || error.code === "auth/wrong-password"
+              ? "Correo o contraseña incorrectos"
+              : error.code === "auth/user-not-verified"
+                ? "Verifica tu correo electrónico"
+                : "Verifica tu correo electrónico",
+            message: error.message,
+            buttons: ['OK'],
+          });
 
-            await alert.present();});
+          await alert.present();
+        });
     }
   }
+
   googleRegister(){
     this.authService.loginWithGoogle()
       .then(response =>{
@@ -105,4 +113,33 @@ export class LoginPage implements OnInit {
       .catch(error=>console.log(error));
   }
 
+  async resetPassword(){
+    if(this.loginForm.value.email == ''){
+      const alert = await this.alertController.create({
+        header: 'Ingrese Email',
+        message: '***Ingresa el email al que quieres reestablecer la contraseña***',
+        buttons: ['OK']
+      });
+
+      await alert.present();
+    }else if(this.loginForm.get('email')?.hasError('email')){
+      const alert = await this.alertController.create({
+        header: 'Error en Email',
+        message: '***Ingresa un email válido***',
+        buttons: ['OK']
+      });
+      await alert.present();
+    }else{
+      this.authService.resetPassword(this.loginForm.value.email);
+      const alert = await this.alertController.create({
+        header: 'Email Enviado',
+        message: '***Abra el Email enviado y reestablezca la contraseña***',
+        buttons: ['OK']
+      });
+
+      await alert.present();
+      this.emailInput = '';
+    }
+
+  }
 }

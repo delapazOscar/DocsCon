@@ -103,28 +103,39 @@ export class RegisterPage implements OnInit {
       }
 
     }else{
-       this.authService.register(this.registerForm.value)
-         .then(async response =>{
-           console.log(response);
-           const alert = await this.alertController.create({
-            header: '¡Registro exitoso!',
-            buttons: ['OK'],
-          });
+      this.authService.register(this.registerForm.value)
+        .then(async response =>{
+          console.log(response);
+          const alert = await this.alertController.create({
+           header: '¡Registro exitoso!',
+           message: 'Revisa tu bandeja de entrada y verifica el correo electrónico para usar la aplicación',
+           buttons: ['OK'],
+         });
 
-          await alert.present();
-           this.router.navigate(['/login']);
-         })
-         .catch(error => console.log(error));
-
-
-
-
-
-    }
+         await alert.present();
+         // Reseteamos el formulario para borrar los datos que habia escrito anteriormente
+         this.registerForm.reset();
+         this.router.navigate(['/login']);
+        })
+        .catch(async error => {
+          if(error.code === "auth/email-already-in-use") {
+            const alert = await this.alertController.create({
+              header: 'Error en Email',
+              message: 'El correo ingresado ya tiene una cuenta existente',
+              buttons: ['OK'],
+            });
+            await alert.present();
+            // Reseteamos el formulario para borrar los datos que habia escrito anteriormente
+            this.registerForm.reset();
+          } else {
+            console.log(error);
+          }
+        });
+   }
   }
 
   googleRegister(){
-    this.authService.loginWithGoogle()
+    this.authService.registerWithGoogle()
       .then(response =>{
         this.router.navigate(['welcome']);
       })

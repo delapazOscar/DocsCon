@@ -3,6 +3,10 @@ import { Router,NavigationExtras } from '@angular/router';
 import { DocumentsService, Document } from '../services/documents.service';
 import { AlertController } from '@ionic/angular';
 
+import { HttpClient } from '@angular/common/http';
+
+
+
 @Component({
   selector: 'app-tab1',
   templateUrl: './tab1.page.html',

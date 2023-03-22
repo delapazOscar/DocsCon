@@ -16,9 +16,32 @@ ion-toolbar{
 }
 
 ion-title{
-  margin-left: 12px;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   font-size: 25px;
   font-weight: 700;
-
 }
+
+.options-container{
+  padding-top: 50px;
+  width: 100%;
+  height: 60%;
+  display: flex;
+  flex-direction: column;
+}
+
+.options-container ion-button{
+  span{
+    text-align: left;
+    width:100%;
+  }
+  width: 100%;
+  height: 35px;
+  margin-bottom: 30px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  text-transform: capitalize;
+  --background: #afaeae;
+  --color: black;
+}
+

@@ -8,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { ReactiveFormsModule } from '@angular/forms';
 import { LoginPage } from './login/login.page';
-import { usuario } from './shared/user.interface';
+import { User } from './shared/user.interface';
 import { DetailPage } from './detail/detail.page';
 import * as firebase from 'firebase/app';
 import 'firebase/firestore';
@@ -25,7 +25,6 @@ import { provideAuth,getAuth } from '@angular/fire/auth';
 import { provideDatabase,getDatabase } from '@angular/fire/database';
 import { provideFirestore,getFirestore } from '@angular/fire/firestore';
 import { provideStorage,getStorage } from '@angular/fire/storage';
-
 
 
 @NgModule({

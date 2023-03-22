@@ -1,8 +1,6 @@
-export interface usuario{
-  names: string;
-  lastnames: string;
+export interface User{
+  uid: string;
   email: string;
-  password: string;
-  photo:string;
-  id:string;
+  displayName: string;
+  emailVerified: boolean;
 }
