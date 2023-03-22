@@ -42,10 +42,6 @@ async function sleep(ms: number): Promise<void> {
     return userCredential;
   }
 
-  logout(){
-    return signOut(this.auth);
-  }
-
   async loginWithGoogle(){
     const userCredential = await signInWithPopup(this.auth, new GoogleAuthProvider);
     return userCredential;
@@ -82,6 +78,15 @@ async function sleep(ms: number): Promise<void> {
       return null;
     }
   }
+
+  async logout() {
+    try {
+      await this.auth.signOut();
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
 
  }
 

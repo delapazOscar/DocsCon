@@ -25,6 +25,7 @@ ion-back-button{
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   margin-top: 6px;
   font-size: 12px;
+  color: black;
 }
 
 ion-title{
@@ -82,25 +83,30 @@ ion-icon:hover{
 }
 
 ion-modal {
-  --height: 45%;
+  --height: 60%;
   --width: 90%;
   --border-radius: 16px;
   --box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
 }
 
 ion-modal::part(backdrop) {
-  background: #313131;
+  background: #151515;
   opacity: 1;
 }
 
 ion-modal ion-toolbar {
   --background: #A2A2A2;
   --color: rgb(0, 0, 0);
-  --height: 20px;
+  --height: 10px;
+  --margin: 0;
 }
 
 ion-modal ion-header {
-  --height: 20px;
+
+}
+
+ion-modal ion-toolbar ion-title{
+  margin: 0;
 }
 
 p{

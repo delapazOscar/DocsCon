@@ -7,6 +7,7 @@ import { AuthService } from '../services/auth.service';
 import { FirebaseApp } from '@angular/fire/app';
 import { Router } from '@angular/router';
 import { ref, Storage, uploadBytes } from '@angular/fire/storage'
+import { LoadingController } from '@ionic/angular';
 
 @Component({
   selector: 'app-tab3',
@@ -17,7 +18,7 @@ export class Tab3Page implements OnInit {
 
   uid: string | null = null;
 
-  constructor(private authService: AuthService, private router: Router, private storage:Storage) { }
+  constructor(private authService: AuthService, private router: Router, private storage:Storage, private loadingController:LoadingController) { }
 
   async ngOnInit() {
     await this.getUid();
@@ -57,5 +58,19 @@ export class Tab3Page implements OnInit {
   btnConfiguration(){
     this.router.navigate(['configuration'])
   };
+
+  async logout(){
+    const loading = await this.loadingController.create({
+      message: 'Cerrando sesión...',
+      duration: 1500
+    });
+
+    await loading.present();
+
+    this.authService.logout();
+    await loading.onWillDismiss();
+    this.router.navigate(['home']);
+  }
+
 
 }

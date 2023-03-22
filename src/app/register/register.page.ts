@@ -134,9 +134,16 @@ export class RegisterPage implements OnInit {
    }
   }
 
-  googleRegister(){
-    this.authService.registerWithGoogle()
-      .then(response =>{
+  async googleRegister(){
+    this.authService.loginWithGoogle()
+      .then(async response =>{
+        const loading = await this.loadingController.create({
+          message: 'Registrando...',
+          duration: 1000
+          });
+
+        await loading.present();
+        await loading.onWillDismiss();
         this.router.navigate(['welcome']);
       })
       .catch(error=>console.log(error));

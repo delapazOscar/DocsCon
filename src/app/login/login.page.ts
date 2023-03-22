@@ -86,7 +86,15 @@ export class LoginPage implements OnInit {
       this.authService.login(this.loginForm.value)
          .then(async response =>{
            console.log(response);
+           const loading = await this.loadingController.create({
+            message: 'Iniciando sesión...',
+            duration: 1000
+            });
+
+          await loading.present();
+          await loading.onWillDismiss();
            this.router.navigate(['welcome']);
+
          })
          .catch(async (error: any) => {
           console.log(error);
@@ -105,9 +113,16 @@ export class LoginPage implements OnInit {
     }
   }
 
-  googleRegister(){
+  async googleRegister(){
     this.authService.loginWithGoogle()
-      .then(response =>{
+      .then(async response =>{
+        const loading = await this.loadingController.create({
+          message: 'Iniciando sesión...',
+          duration: 1000
+          });
+
+        await loading.present();
+        await loading.onWillDismiss();
         this.router.navigate(['welcome']);
       })
       .catch(error=>console.log(error));
