@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
+import { trigger, transition, style, animate } from '@angular/animations';
+import { delay } from 'rxjs';
+
 
 @Component({
   selector: 'app-tab2',
@@ -8,6 +11,14 @@ import { AlertController } from '@ionic/angular';
   styleUrls: ['./tab2.page.scss'],
 })
 export class Tab2Page implements OnInit {
+
+  handleRefresh(event:any) {
+    setTimeout(() => {
+      // Any calls to load data go here
+      event.target.complete();
+    }, 2000);
+  };
+
   searching = false;
   constructor(private router:Router, private alertController:AlertController) { }
 
@@ -19,30 +30,7 @@ export class Tab2Page implements OnInit {
   }
 
   async addTemplateButton(){
-    // alert('Eso no está programado');
-    const alert = await this.alertController.create({
-      header: 'Selecciona el documento',
-      buttons: ['OK'],
-      inputs: [
-        {
-          label: 'Factura',
-          type: 'radio',
-          value: 'factura',
-        },
-        {
-          label: 'Contrato',
-          type: 'radio',
-          value: 'contrato',
-        },
-        {
-          label: 'Préstamo',
-          type: 'radio',
-          value: 'prestamo',
-        },
-      ],
-    });
-
-    await alert.present();
+    this.router.navigate(['welcome']);
   }
 
 }

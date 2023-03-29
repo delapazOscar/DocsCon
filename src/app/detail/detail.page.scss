@@ -83,7 +83,7 @@ ion-icon:hover{
 }
 
 ion-modal {
-  --height: 60%;
+  --height: 40%;
   --width: 90%;
   --border-radius: 16px;
   --box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
@@ -114,4 +114,27 @@ p{
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   font-size: 14px;
   text-align: justify;
+}
+
+.form-container{
+  width: 100%;
+  height: max-content;
+}
+
+ion-list{
+  margin-top: 30px;
+  padding: 0;
+}
+
+ion-item{
+  margin: 0;
+  --background: #E3E3E3;
+}
+
+ion-select{
+  --width: 100%;
+}
+
+.label-empresa{
+  width: 100px;
 }

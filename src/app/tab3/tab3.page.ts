@@ -69,7 +69,7 @@ export class Tab3Page implements OnInit {
 
     this.authService.logout();
     await loading.onWillDismiss();
-    this.router.navigate(['home']);
+    this.router.navigate(['login']);
   }
 
 

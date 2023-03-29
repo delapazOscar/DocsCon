@@ -128,33 +128,64 @@ export class LoginPage implements OnInit {
       .catch(error=>console.log(error));
   }
 
-  async resetPassword(){
-    if(this.loginForm.value.email == ''){
-      const alert = await this.alertController.create({
-        header: 'Ingrese Email',
-        message: '***Ingresa el email al que quieres reestablecer la contraseña***',
-        buttons: ['OK']
-      });
+  async resetPassword() {
+    const alert = await this.alertController.create({
+      header: 'Ingresa tu correo electrónico',
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel'
+        },
+        {
+          text: 'Enviar correo',
+          handler: (data) => {
+            const email = data.email;
+            if (!this.validateEmail(email)) {
+              this.presentErrorAlert();
+              return; // Agregar un return aquí
+            }
+            this.authService.resetPassword(email);
+            this.presentSuccessAlert();
+          }
+        }
+      ],
+      inputs: [
+        {
+          name: 'email',
+          placeholder: 'Email',
+          type: 'email'
+        },
+      ]
+    });
 
-      await alert.present();
-    }else if(this.loginForm.get('email')?.hasError('email')){
-      const alert = await this.alertController.create({
-        header: 'Error en Email',
-        message: '***Ingresa un email válido***',
-        buttons: ['OK']
-      });
-      await alert.present();
-    }else{
-      this.authService.resetPassword(this.loginForm.value.email);
-      const alert = await this.alertController.create({
-        header: 'Email Enviado',
-        message: '***Abra el Email enviado y reestablezca la contraseña***',
-        buttons: ['OK']
-      });
-
-      await alert.present();
-      this.emailInput = '';
-    }
-
+    await alert.present();
   }
+
+  validateEmail(email:string) {
+    // Regular expression to validate email format
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  }
+
+  async presentSuccessAlert() {
+    const alert = await this.alertController.create({
+      header: 'Correo enviado',
+      message: 'Se ha enviado un correo electrónico para restablecer tu contraseña.',
+      buttons: ['OK']
+    });
+
+    await alert.present();
+  }
+
+  async presentErrorAlert() {
+    const alert = await this.alertController.create({
+      header: 'Error',
+      message: 'El correo electrónico ingresado no es válido. Por favor, inténtalo de nuevo.',
+      buttons: ['OK']
+    });
+
+    await alert.present();
+  }
+
+
 }

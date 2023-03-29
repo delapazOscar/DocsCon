@@ -10,6 +10,7 @@ import { AngularFireModule } from '@angular/fire/compat';
 import { environment } from 'src/environments/environment';
 import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 import { AlertController } from '@ionic/angular';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
 
 async function sleep(ms: number): Promise<void> {
   return new Promise(resolve => setTimeout(resolve, ms));
@@ -20,6 +21,7 @@ async function sleep(ms: number): Promise<void> {
   providedIn: 'root'
  })
  export class AuthService {
+
   signOut() {
     throw new Error('Method not implemented.');
   }
@@ -31,8 +33,6 @@ async function sleep(ms: number): Promise<void> {
     await sendEmailVerification(userCredential.user);
     return userCredential;
   }
-
-
 
   async login({email, password}:any){
     const userCredential = await signInWithEmailAndPassword(this.auth, email, password);
@@ -86,6 +86,8 @@ async function sleep(ms: number): Promise<void> {
       console.log(error);
     }
   }
+
+
 
 
  }
