@@ -10,9 +10,14 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { LoginPage } from './login/login.page';
 import { User } from './shared/user.interface';
 import { DetailPage } from './detail/detail.page';
+import { ModalEmpresaPage } from './detail/modal-empresa/modal-empresa.page';
+import { ModalClientePage } from './detail/modal-cliente/modal-cliente.page';
+import { ModalProductosPage } from './detail/modal-productos/modal-productos.page';
+import { ModalPagoPage } from './detail/modal-pago/modal-pago.page';
 import * as firebase from 'firebase/app';
 import 'firebase/firestore';
 import { DocumentsService } from './services/documents.service';
+import { AuthenticationService } from './services/authentication.service';
 import { ɵAngularFireSchedulers} from '@angular/fire'
 import { FirestoreModule} from '@angular/fire/firestore'
 import { AngularFireModule } from '@angular/fire/compat';
@@ -25,6 +30,9 @@ import { provideAuth,getAuth } from '@angular/fire/auth';
 import { provideDatabase,getDatabase } from '@angular/fire/database';
 import { provideFirestore,getFirestore } from '@angular/fire/firestore';
 import { provideStorage,getStorage } from '@angular/fire/storage';
+import { StorageModule } from '@angular/fire/storage';
+import { HttpClientModule } from '@angular/common/http';
+
 
 
 @NgModule({
@@ -34,9 +42,9 @@ import { provideStorage,getStorage } from '@angular/fire/storage';
     ReactiveFormsModule, BrowserAnimationsModule,
     provideFirebaseApp(() => initializeApp(environment.firebaseConfig)), provideAuth(() => getAuth()),
     provideDatabase(() => getDatabase()), provideFirestore(() => getFirestore()),
-    provideStorage(() => getStorage()), FirestoreModule,
+    provideStorage(() => getStorage()), FirestoreModule, StorageModule,
     AngularFireModule,
-    AngularFireAuthModule],
+    AngularFireAuthModule, HttpClientModule],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy} ,DocumentsService],
   bootstrap: [AppComponent],
 })

@@ -5,7 +5,7 @@
       <ion-back-button (click)="navigateBack()"></ion-back-button>
     </ion-buttons>
     <ion-buttons slot="end">
-      <ion-icon name="information-circle-outline" (click)="setOpen(true)"></ion-icon>
+      <ion-icon name="information-circle-outline" (click)="setOpen(true)" class="helpButton"></ion-icon>
     </ion-buttons>
     <ion-title>{{datos.name}}</ion-title>
   </ion-toolbar>
@@ -14,18 +14,30 @@
 <ion-content style="--background: {{datos.color}};">
 
   <div class="form-container">
-    <ion-list>
-      <ion-item>
-        <ion-label class="label-empresa">Empresa</ion-label>
-        <ion-select [interfaceOptions]="customAlertOptions" interface="alert" placeholder="Empresa" >
-          <ion-select-option value="{{document.name}}"  *ngFor="let document of searchedDocument">{{document.name}}</ion-select-option>
-        </ion-select>
-      </ion-item>
-    </ion-list>
+    <ion-item *ngIf="datos.name === 'Factura'" class="item-empresa">
+      <ion-label class="label-empresa">Empresa</ion-label>
+      <ion-button (click)="openModalEmpresa()">Datos</ion-button>
+      <ion-icon name="alert-circle-outline" size="small" slot="start"></ion-icon>
+    </ion-item>
+    <ion-item *ngIf="datos.name === 'Factura'" class="item-empresa">
+      <ion-label class="label-empresa">Cliente</ion-label>
+      <ion-button (click)="openModalCliente()">Datos</ion-button>
+      <ion-icon name="alert-circle-outline" size="small" slot="start"></ion-icon>
+    </ion-item>
+    <ion-item *ngIf="datos.name === 'Factura'" class="item-empresa">
+      <ion-label class="label-empresa">Productos</ion-label>
+      <ion-button (click)="openModalProductos()">Datos</ion-button>
+      <ion-icon name="alert-circle-outline" size="small" slot="start"></ion-icon>
+    </ion-item>
+    <ion-item *ngIf="datos.name === 'Factura'" class="item-empresa">
+      <ion-label class="label-empresa">Forma de Pago</ion-label>
+      <ion-button (click)="openModalPago()">Datos</ion-button>
+      <ion-icon name="alert-circle-outline" size="small" slot="start"></ion-icon>
+    </ion-item>
   </div>
 
   <div class="btnCenter">
-    <ion-button class="create-button" (click)="createDocument()" >Crear {{datos.name}}</ion-button>
+    <ion-button class="create-button" (click)="createDocument()">Crear {{datos.name}}</ion-button>
   </div>
 
   <ion-modal [isOpen]="isModalOpen">

@@ -1,0 +1,26 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button color="medium" (click)="cancel()">Cancel</ion-button>
+    </ion-buttons>
+    <ion-title>Pago</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="confirm()" [strong]="true">Confirm</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content class="ion-padding">
+  <ion-item>
+    <ion-input labelPlacement="stacked" [(ngModel)]="companyName" placeholder="Nombre de la empresa:"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label>Forma de pago</ion-label>
+    <ion-select [(ngModel)]="selectedPayment">
+      <ion-select-option value="">Selecciona una opción</ion-select-option>
+      <ion-select-option value="tarjeta">Tarjeta de crédito/débito</ion-select-option>
+      <ion-select-option value="paypal">PayPal</ion-select-option>
+      <ion-select-option value="transferencia">Transferencia bancaria</ion-select-option>
+      <ion-select-option value="efectivo">Efectivo</ion-select-option>
+    </ion-select>
+  </ion-item>
+</ion-content>

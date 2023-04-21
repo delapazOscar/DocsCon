@@ -5,14 +5,12 @@ ion-header{
 }
 
 ion-content{
-  display: flex;
-  justify-content: center;
 }
 
 ion-toolbar{
   padding: 0;
   margin: 0;
-  --background: #FFFFFF ;
+  --background: #ffffff ;
 }
 
 ion-back-button{
@@ -32,14 +30,6 @@ ion-title{
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   font-weight: 700;
   font-size: 20px;
-}
-
-ion-img{
-  margin: 12px;
-}
-
-ion-img.image-document{
-  clip-path: circle(70% at center);
 }
 
 .create-button{
@@ -62,14 +52,14 @@ ion-img.image-document{
   --background:white;
 }
 
-ion-icon{
+.helpButton{
   font-size: 20px;
   margin: 15px 10px 10px 10px;
   color: black;
   font-weight: 900;
 }
 
-ion-icon:hover{
+.helpButton:hover{
   cursor: pointer;
 }
 
@@ -119,22 +109,50 @@ p{
 .form-container{
   width: 100%;
   height: max-content;
+  padding-top: 20px;
 }
 
-ion-list{
-  margin-top: 30px;
+ion-item {
+  height: auto;
+  margin: 0;
   padding: 0;
 }
 
-ion-item{
-  margin: 0;
-  --background: #E3E3E3;
+ion-item ion-button{
+  display: flex;
+  align-items: center;
+  --background:rgb(90, 158, 190);
+  --color: black;
+  --border-radius: 10px;
+  --border-color: #000;
+  --border-style: solid;
+  --border-width: 2px;
+  width: 45%;
+  font-weight: 700;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  text-transform: uppercase;
+}
+
+ion-item ion-icon{
+  margin: 0 5px 0px 0;
+  color: red;
+  font-weight: bolder;
+}
+
+ion-item ion-label{
+  margin: 0px 0 0 0;
+  font-weight: 700;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 ion-select{
-  --width: 100%;
+  width: 100%;
 }
 
 .label-empresa{
-  width: 100px;
+  width: 100%;
+}
+
+.item-empresa{
+  margin-bottom: 20px;
 }

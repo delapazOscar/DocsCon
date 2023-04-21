@@ -16,11 +16,10 @@ ion-toolbar{
 }
 
 ion-title{
-  margin-left: 12px;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   font-size: 25px;
   font-weight: 700;
-
+  margin-left: 12px;
 }
 
 ion-content{
@@ -36,9 +35,18 @@ ion-content{
 }
 
 ion-avatar {
-  width: auto;
-  height: auto;
-  --margin: 0;
+  :hover{
+    cursor: pointer;
+  }
+  width: 150px;
+  height: 150px;
+  margin: 10px 20px 20px 20px;
+}
+
+ion-avatar ion-icon {
+  width: 150px;
+  height: 150px;
+  --margin: 30px;
 }
 
 .img-user{

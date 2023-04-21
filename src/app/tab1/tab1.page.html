@@ -23,8 +23,14 @@
           <ion-card-header>
             <ion-card-title>{{documents.name}}</ion-card-title>
           </ion-card-header>
-          <ion-icon name="document-text-outline" class="icon-doc"></ion-icon>
+          <ion-card-content>
+            <ion-icon name="document-text-outline" class="icon-doc"></ion-icon>
+            <ng-container *ngIf="documents.icon !== ''">
+              <img class="document-img" src="{{documents.icon}}" alt="{{documents.name}}">
+            </ng-container>
+          </ion-card-content>
+
         </ion-card>
-    </div>
+      </div>
     </div>
 </ion-content>

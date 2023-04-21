@@ -1,8 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { Router,NavigationExtras } from '@angular/router';
 import { DocumentsService, Document } from '../services/documents.service';
-import { AlertController, LoadingController } from '@ionic/angular';
+import { AlertController, LoadingController, ModalController } from '@ionic/angular';
 import { ActivatedRoute } from '@angular/router';
+import { ModalEmpresaPage } from './modal-empresa/modal-empresa.page';
+import { ModalClientePage } from './modal-cliente/modal-cliente.page';
+import { ModalProductosPage } from './modal-productos/modal-productos.page';
+import { ModalPagoPage } from './modal-pago/modal-pago.page';
 
 interface DocumentData {
   name?: string;
@@ -19,6 +23,7 @@ interface DocumentData {
 })
 export class DetailPage implements OnInit {
 
+
   customAlertOptions = {
     header: 'Selecciona tu empresa',
     message: 'Facturación para:',
@@ -28,6 +33,8 @@ export class DetailPage implements OnInit {
   isModalOpen = false;
   documentos: Document[];
   searchedDocument: any;
+  selectedDocument: any;
+
 
   setOpen(isOpen: boolean){
     this.isModalOpen = isOpen;
@@ -38,7 +45,8 @@ export class DetailPage implements OnInit {
   constructor(private router:Router,
     private documentsService:DocumentsService,
     private activatedRoute:ActivatedRoute, private loadingController:LoadingController,
-    private alertController:AlertController) {
+    private alertController:AlertController,
+    private modalCtrl: ModalController) {
       this.documentos = this.documentsService.getDocuments();
       this.searchedDocument= this.documentos;
      }
@@ -84,5 +92,60 @@ export class DetailPage implements OnInit {
     // await loading.onWillDismiss();
     // this.router.navigate(['welcome/tab2']);
   }
+
+  message = 'This modal example uses the modalController to present and dismiss modals.';
+
+  async openModalEmpresa(){
+    const modal = await this.modalCtrl.create({
+      component: ModalEmpresaPage,
+    });
+    modal.present();
+
+    const { data, role } = await modal.onWillDismiss();
+
+    if (role === 'confirm') {
+      this.message = `Hello, ${data}!`;
+    }
+  }
+
+  async openModalCliente(){
+    const modal = await this.modalCtrl.create({
+      component: ModalClientePage,
+    });
+    modal.present();
+
+    const { data, role } = await modal.onWillDismiss();
+
+    if (role === 'confirm') {
+      this.message = `Hello, ${data}!`;
+    }
+  }
+
+  async openModalProductos(){
+    const modal = await this.modalCtrl.create({
+      component: ModalProductosPage,
+    });
+    modal.present();
+
+    const { data, role } = await modal.onWillDismiss();
+
+    if (role === 'confirm') {
+      this.message = `Hello, ${data}!`;
+    }
+  }
+
+  async openModalPago(){
+    const modal = await this.modalCtrl.create({
+      component: ModalPagoPage,
+    });
+    modal.present();
+
+    const { data, role } = await modal.onWillDismiss();
+
+    if (role === 'confirm') {
+      this.message = `Hello, ${data}!`;
+    }
+  }
+
 
 }

@@ -42,10 +42,16 @@ const routes: Routes = [
   {
     path: 'tab3',
     loadChildren: () => import('./tab3/tab3.module').then( m => m.Tab3PageModule)
-  },  {
+  },
+  {
     path: 'configuration',
     loadChildren: () => import('./configuration/configuration.module').then( m => m.ConfigurationPageModule)
   },
+  {
+    path: 'modal-empresa',
+    loadChildren: () => import('./detail/modal-empresa/modal-empresa.module').then( m => m.ModalEmpresaPageModule)
+  },
+
 
 
 ];

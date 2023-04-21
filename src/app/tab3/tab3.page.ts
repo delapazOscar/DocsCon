@@ -4,10 +4,14 @@ import { ActionCodeOperation, AuthCredential, EmailAuthCredential, User, sendEma
 import { Auth, createUserWithEmailAndPassword , signInWithEmailAndPassword, signOut, signInWithPopup, GoogleAuthProvider } from '@angular/fire/auth';
 import { UserInfo, userInfo } from 'os';
 import { AuthService } from '../services/auth.service';
+import { AuthenticationService } from '../services/authentication.service';
 import { FirebaseApp } from '@angular/fire/app';
 import { Router } from '@angular/router';
 import { ref, Storage, uploadBytes } from '@angular/fire/storage'
-import { LoadingController } from '@ionic/angular';
+import { AlertController, LoadingController } from '@ionic/angular';
+import { Observable } from 'rxjs';
+import { DocumentData } from 'firebase/firestore';
+import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 
 @Component({
   selector: 'app-tab3',
@@ -16,9 +20,46 @@ import { LoadingController } from '@ionic/angular';
 })
 export class Tab3Page implements OnInit {
 
+  profile: DocumentData | undefined;
+
   uid: string | null = null;
 
-  constructor(private authService: AuthService, private router: Router, private storage:Storage, private loadingController:LoadingController) { }
+  constructor(private authService: AuthService, private router: Router,
+    private storage:Storage,
+    private loadingController:LoadingController,
+    private authenticationService:AuthenticationService,
+    private alertController:AlertController) {
+    this.authenticationService.getUserProfile().then((data) => {
+      this.profile = data;
+    }).catch((error) => {
+      console.log(error);
+    });
+   }
+
+
+  async changeImage(){
+     const image = await Camera.getPhoto({
+       quality: 90,
+       allowEditing: false,
+       resultType: CameraResultType.Base64,
+       source: CameraSource.Photos,
+     });
+     console.log(image);
+     if(image){
+       const loading = await this.loadingController.create();
+       await loading.present();
+       const result = await this.authenticationService.uploadImage(image);
+       loading.dismiss();
+       if(!result){
+         const alert = await this.alertController.create({
+           header: 'Error',
+           message: 'Hubo un problema subiendo tu foto',
+           buttons: ['OK'],
+         });
+         await alert.present();
+       }
+     }
+  }
 
   async ngOnInit() {
     await this.getUid();
@@ -41,14 +82,7 @@ export class Tab3Page implements OnInit {
   }
 
   uploadImage($event:any){
-    const file = $event.target.files[0];
-    console.log(file);
 
-    const imgRef = ref(this.storage, `images/${file.name}`);
-
-    uploadBytes(imgRef, file)
-      .then(response => console.log(response))
-      .catch(error => console.log(error));
   }
 
   btnCuenta(){
