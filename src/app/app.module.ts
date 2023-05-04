@@ -14,6 +14,8 @@ import { ModalEmpresaPage } from './detail/modal-empresa/modal-empresa.page';
 import { ModalClientePage } from './detail/modal-cliente/modal-cliente.page';
 import { ModalProductosPage } from './detail/modal-productos/modal-productos.page';
 import { ModalPagoPage } from './detail/modal-pago/modal-pago.page';
+import { DatosfacturaService } from './services/datosfactura.service';
+
 import * as firebase from 'firebase/app';
 import 'firebase/firestore';
 import { DocumentsService } from './services/documents.service';
@@ -33,7 +35,10 @@ import { provideStorage,getStorage } from '@angular/fire/storage';
 import { StorageModule } from '@angular/fire/storage';
 import { HttpClientModule } from '@angular/common/http';
 
+import * as pdfMake from "pdfmake/build/pdfmake";
+import * as pdfFonts from 'pdfmake/build/vfs_fonts';
 
+(<any>pdfMake).vfs = pdfFonts.pdfMake.vfs;
 
 @NgModule({
   declarations: [AppComponent],

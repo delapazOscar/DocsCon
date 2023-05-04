@@ -5,7 +5,7 @@
     </ion-buttons>
     <ion-title>Productos</ion-title>
     <ion-buttons slot="end">
-      <ion-button [disabled]="" (click)="confirm()" [strong]="true">Confirm</ion-button>
+      <ion-button [disabled]="!productName||!productDescription||!productPrice||!productQuantity" (click)="confirm()" [strong]="true">Confirm</ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
@@ -17,7 +17,7 @@
     <ion-input labelPlacement="stacked" [(ngModel)]="productDescription" placeholder="Descripción"></ion-input>
   </ion-item>
   <ion-item>
-    <ion-input labelPlacement="stacked" [(ngModel)]="productPrice" placeholder="Precio" type="number"></ion-input>
+    <ion-input labelPlacement="stacked" [(ngModel)]="productPrice" placeholder="Precio" type="number">$</ion-input>
   </ion-item>
   <ion-item>
     <ion-input labelPlacement="stacked" [(ngModel)]="productQuantity" placeholder="Cantidad" type="number"></ion-input>

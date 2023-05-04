@@ -36,12 +36,12 @@ export class DocumentsService{
       color: "linear-gradient(to bottom right, #05C0C9, #017579)",
       description: "Un préstamo es un contrato financiero en el cual una persona o entidad (el prestamista) presta una cantidad específica de dinero a otra persona o entidad (el prestatario) con la obligación de devolver ese dinero en un plazo determinado, junto con el pago de intereses acordados."
     },
-    {
-      name: "Firma",
-      icon: "../assets/img/firma-digital.png",
-      color: "linear-gradient(to bottom right, #999999, #FFFFFF)",
-      description: ""
-    },
+    // {
+    //   name: "Firma",
+    //   icon: "../assets/img/firma-digital.png",
+    //   color: "linear-gradient(to bottom right, #999999, #FFFFFF)",
+    //   description: ""
+    // },
     {
       name: "Derechos",
       icon: "../assets/img/derechos-de-autor.png",
@@ -54,12 +54,12 @@ export class DocumentsService{
       color: "linear-gradient(to bottom right, #FFA8A8, #A61B1B)",
       description: ""
     },
-    // {
-    //   name: "Curriculum",
-    //   icon: "../assets/img/curriculum.png",
-    //   color: "linear-gradient(to bottom right, #4F91A5, #7ECEE8)",
-    //   description: ""
-    // },
+    {
+      name: "Curriculum",
+      icon: "../assets/img/curriculum.png",
+      color: "linear-gradient(to bottom right, #4F91A5, #7ECEE8)",
+      description: ""
+    },
   ];
 
   constructor(){}

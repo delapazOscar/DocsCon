@@ -12,7 +12,6 @@ import {
 import { Firestore } from '@angular/fire/firestore';
 import { Injectable } from '@angular/core';
 import { user } from '@angular/fire/auth';
-import { usuario } from 'src/app/shared/user.interface'
 
 @Injectable({
   providedIn: 'root'

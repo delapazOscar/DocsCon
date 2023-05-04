@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { AlertController, ModalController } from '@ionic/angular';
+import { DatosfacturaService } from 'src/app/services/datosfactura.service';
 
 @Component({
   selector: 'app-modal-empresa',
@@ -14,30 +15,19 @@ export class ModalEmpresaPage implements OnInit {
   rfcCompany: string = '';
   companyNumber: string = '';
 
-  // state:boolean | undefined;
+  constructor(private modalCtrl: ModalController, private httpClient:HttpClient,
+    private datosFactura:DatosfacturaService,
+    private alertController:AlertController) {
 
-  constructor(private modalCtrl: ModalController, private httpClient:HttpClient) { }
+     }
 
 
   cancel() {
-    localStorage.removeItem('companyData');
     return this.modalCtrl.dismiss(null, 'cancel');
   }
 
-  ionViewDidEnter() {
-    // Obtiene los datos guardados en el almacenamiento local
-    const companyData = JSON.parse(localStorage.getItem('companyData') || '[]');
-    const lastCompany = companyData[companyData.length - 1];
+  async confirm() {
 
-    // Completar los campos del ion-input con los datos guardados
-    this.companyName = lastCompany?.companyName || '';
-    this.domicileCompany = lastCompany?.domicileCompany || '';
-    this.cpCompany = lastCompany?.cpCompany || '';
-    this.rfcCompany = lastCompany?.rfcCompany || '';
-    this.companyNumber = lastCompany?.companyNumber || '';
-  }
-
-  confirm() {
     const data = {
       companyName: this.companyName,
       domicileCompany: this.domicileCompany,
@@ -46,21 +36,32 @@ export class ModalEmpresaPage implements OnInit {
       companyNumber: this.companyNumber
     };
 
-    // Obtiene los datos anteriores del almacenamiento local y agrega el nuevo dato
-    const companyData = JSON.parse(localStorage.getItem('companyData') || '[]');
-    companyData.push(data);
+    // Asignar los valores de las variables del servicio
+    this.datosFactura.companyName = data.companyName;
+    this.datosFactura.domicileCompany = data.domicileCompany;
+    this.datosFactura.cpCompany = data.cpCompany;
+    this.datosFactura.rfcCompany = data.rfcCompany;
+    this.datosFactura.companyNumber = data.companyNumber;
 
-    // Guarda los datos actualizados en el almacenamiento local
-    localStorage.setItem('companyData', JSON.stringify(companyData));
+    // Imprimir los valores asignados en consola
+    // console.log(this.datosFactura.companyName);
+    // console.log(this.datosFactura.domicileCompany);
+    // console.log(this.datosFactura.cpCompany);
+    // console.log(this.datosFactura.rfcCompany);
+    // console.log(this.datosFactura.companyNumber);
+
 
     // Cierra el modal con un resultado de this.companyName
     this.modalCtrl.dismiss(this.companyName, 'confirm');
   }
 
   ngOnInit() {
-    // if(this.state==false){
-
-    // }
+    this.companyName = this.datosFactura.companyName;
+    this.domicileCompany = this.datosFactura.domicileCompany;
+    this.cpCompany = this.datosFactura.cpCompany;
+    this.rfcCompany = this.datosFactura.rfcCompany;
+    this.companyNumber = this.datosFactura.companyNumber;
   }
+
 
 }

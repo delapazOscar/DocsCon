@@ -7,6 +7,7 @@ import { ModalEmpresaPage } from './modal-empresa/modal-empresa.page';
 import { ModalClientePage } from './modal-cliente/modal-cliente.page';
 import { ModalProductosPage } from './modal-productos/modal-productos.page';
 import { ModalPagoPage } from './modal-pago/modal-pago.page';
+import { DatosfacturaService } from '../services/datosfactura.service';
 
 interface DocumentData {
   name?: string;
@@ -46,7 +47,8 @@ export class DetailPage implements OnInit {
     private documentsService:DocumentsService,
     private activatedRoute:ActivatedRoute, private loadingController:LoadingController,
     private alertController:AlertController,
-    private modalCtrl: ModalController) {
+    private modalCtrl: ModalController,
+    private datosFactura:DatosfacturaService) {
       this.documentos = this.documentsService.getDocuments();
       this.searchedDocument= this.documentos;
      }
@@ -65,23 +67,34 @@ export class DetailPage implements OnInit {
 
   async createDocument(){
 
-    const alert = await this.alertController.create({
-      header: 'Nombre del documento:',
-      buttons: [{
-        text: 'OK',
-        handler: (data) => {
+    if (!this.datosFactura.allValuesEntered()) {
+      const alert = await this.alertController.create({
+        header: 'Datos Incompletos',
+        subHeader: 'Por favor llene todos los datos requeridos',
+        buttons: ['OK'],
+      });
 
-        }
-      }],
-      inputs: [
-        {
-          placeholder: 'Name',
-          type: 'text',
-          name: 'name'
-        },
-      ],
-    });
-    await alert.present();
+      await alert.present();
+
+    }else{
+      const alert = await this.alertController.create({
+        header: 'Nombre del documento:',
+        buttons: [{
+          text: 'OK',
+          handler: (data) => {
+
+          }
+        }],
+        inputs: [
+          {
+            placeholder: 'Name',
+            type: 'text',
+            name: 'name'
+          },
+        ],
+      });
+      await alert.present();
+    }
 
     // const loading = await this.loadingController.create({
     //   message: 'Creando documento...',

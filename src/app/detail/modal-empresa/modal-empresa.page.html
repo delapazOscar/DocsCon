@@ -5,24 +5,25 @@
     </ion-buttons>
     <ion-title>Empresa</ion-title>
     <ion-buttons slot="end">
-      <ion-button [disabled]="!companyName || !domicileCompany || !cpCompany || !rfcCompany  || !companyNumber" (click)="confirm()" [strong]="true">Confirm</ion-button>
+      <ion-button [disabled]="!companyName||!domicileCompany||!cpCompany||!rfcCompany||!companyNumber" (click)="confirm()" [strong]="true">Confirm</ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
-<ion-content class="ion-padding">
+
+<ion-content>
   <ion-item>
-    <ion-input labelPlacement="stacked" [(ngModel)]="companyName" placeholder="Nombre de la empresa:"></ion-input>
+    <ion-input label="Floating label" type="text" labelPlacement="floating" [(ngModel)]="companyName" placeholder="Nombre de la empresa:"></ion-input>
   </ion-item>
   <ion-item>
-    <ion-input labelPlacement="stacked" [(ngModel)]="domicileCompany" placeholder="Dirección de la empresa"></ion-input>
+    <ion-input label="Floating label" labelPlacement="floating" [(ngModel)]="domicileCompany" placeholder="Dirección de la empresa"></ion-input>
   </ion-item>
   <ion-item>
-    <ion-input labelPlacement="stacked" [(ngModel)]="cpCompany" placeholder="Código Postal"></ion-input>
+    <ion-input label="Floating label" maxlength="5" inputmode="numeric" labelPlacement="floating" [(ngModel)]="cpCompany" placeholder="Código Postal"></ion-input>
   </ion-item>
   <ion-item>
-    <ion-input labelPlacement="stacked" [(ngModel)]="rfcCompany" placeholder="RFC de la empresa"></ion-input>
+    <ion-input label="Floating label" maxlength="13" (ionChange)="rfcCompany = rfcCompany.toUpperCase()" labelPlacement="floating" [(ngModel)]="rfcCompany" placeholder="RFC de la empresa"></ion-input>
   </ion-item>
   <ion-item>
-    <ion-input labelPlacement="stacked" [(ngModel)]="companyNumber" placeholder="Numero de telefono de la empresa"></ion-input>
+    <ion-input label="Floating label" labelPlacement="floating" type="tel" [(ngModel)]="companyNumber" placeholder="Numero de telefono de la empresa"></ion-input>
   </ion-item>
 </ion-content>

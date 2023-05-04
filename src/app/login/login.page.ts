@@ -54,6 +54,7 @@ export class LoginPage implements OnInit {
 	}
 
   async login(){
+
     var f = this.loginForm.value;
 
     if(this.loginForm.invalid){
