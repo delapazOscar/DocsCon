@@ -27,8 +27,14 @@ export class DatosfacturaService {
   bankName: any;
   moneda:any;
 
+  fecha: String | undefined;
+  total: any;
+  iva: any;
 
-  constructor() { }
+
+  constructor() {
+    this.fecha = new Date().toLocaleDateString('ES');
+   }
 
   allValuesEntered(): boolean {
     return !!this.companyName && !!this.domicileCompany && !!this.cpCompany && !!this.rfcCompany && !!this.companyNumber &&

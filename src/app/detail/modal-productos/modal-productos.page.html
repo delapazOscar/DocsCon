@@ -10,17 +10,29 @@
   </ion-toolbar>
 </ion-header>
 <ion-content class="ion-padding">
-  <ion-item>
-    <ion-input labelPlacement="stacked" [(ngModel)]="productName" placeholder="Nombre del producto"></ion-input>
-  </ion-item>
-  <ion-item>
-    <ion-input labelPlacement="stacked" [(ngModel)]="productDescription" placeholder="Descripción"></ion-input>
-  </ion-item>
-  <ion-item>
-    <ion-input labelPlacement="stacked" [(ngModel)]="productPrice" placeholder="Precio" type="number">$</ion-input>
-  </ion-item>
-  <ion-item>
-    <ion-input labelPlacement="stacked" [(ngModel)]="productQuantity" placeholder="Cantidad" type="number"></ion-input>
-  </ion-item>
+  <ng-container *ngFor="let item of docState; let i = index;">
+    <div class="product-container">
+      <h1>Producto {{i + 1}}</h1>
+      <ion-item>
+        <ion-input labelPlacement="stacked" [(ngModel)]="productName" placeholder="Nombre del producto {{i + 1}}"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-input labelPlacement="stacked" [(ngModel)]="productDescription" placeholder="Descripción de producto {{i + 1}}"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-input labelPlacement="stacked" [(ngModel)]="productPrice" placeholder="Precio producto {{i + 1}}" type="number">$</ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-input labelPlacement="stacked" [(ngModel)]="productQuantity" placeholder="Cantidad producto {{i + 1}}" type="number"></ion-input>
+      </ion-item>
+    </div>
+  </ng-container>
+
+  <ion-fab slot="fixed" vertical="bottom" horizontal="end">
+    <ion-fab-button (click)="addProduct()">
+      <ion-icon name="add-circle-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
 </ion-content>
+
 
