@@ -14,7 +14,11 @@ import { ModalEmpresaPage } from './detail/modal-empresa/modal-empresa.page';
 import { ModalClientePage } from './detail/modal-cliente/modal-cliente.page';
 import { ModalProductosPage } from './detail/modal-productos/modal-productos.page';
 import { ModalPagoPage } from './detail/modal-pago/modal-pago.page';
+import { ModalAcuerdoPage } from './detail/modal-acuerdo/modal-acuerdo.page';
+import { ModalDeudorPage } from './detail/modal-deudor/modal-deudor.page';
+import { ModalAcredorPage } from './detail/modal-acredor/modal-acredor.page';
 import { DatosfacturaService } from './services/datosfactura.service';
+import { DatosPagareService } from './services/datos-pagare.service';
 
 import * as firebase from 'firebase/app';
 import 'firebase/firestore';
@@ -35,8 +39,15 @@ import { provideStorage,getStorage } from '@angular/fire/storage';
 import { StorageModule } from '@angular/fire/storage';
 import { HttpClientModule } from '@angular/common/http';
 
+import { File } from '@awesome-cordova-plugins/file/ngx';
+import { FileOpener } from '@awesome-cordova-plugins/file-opener/ngx';
 import * as pdfMake from "pdfmake/build/pdfmake";
 import * as pdfFonts from 'pdfmake/build/vfs_fonts';
+
+import * as moment from 'moment';
+import * as numberToWords from 'number-to-words';
+
+import { ToWords } from 'to-words';
 
 (<any>pdfMake).vfs = pdfFonts.pdfMake.vfs;
 
@@ -50,7 +61,7 @@ import * as pdfFonts from 'pdfmake/build/vfs_fonts';
     provideStorage(() => getStorage()), FirestoreModule, StorageModule,
     AngularFireModule,
     AngularFireAuthModule, HttpClientModule],
-  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy} ,DocumentsService],
+  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy} ,DocumentsService, File, FileOpener],
   bootstrap: [AppComponent],
 })
 

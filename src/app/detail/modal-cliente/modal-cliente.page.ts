@@ -22,7 +22,6 @@ export class ModalClientePage implements OnInit {
   selectedState: any;
   clientNumber: string | undefined;
   estados: Estado[]| undefined;
-
   selectedUse: any;
 
   constructor(private modalCtrl:ModalController, private http:HttpClient, private datosFactura:DatosfacturaService) {}

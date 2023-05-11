@@ -20,11 +20,11 @@
     <ion-label>Uso de CFDI</ion-label>
     <ion-select [(ngModel)]="cfdiUse">
       <ion-select-option value="">Selecciona una opción</ion-select-option>
-      <ion-select-option value="general">Gastos en general</ion-select-option>
-      <ion-select-option value="mercancias">Gastos en mercancías</ion-select-option>
-      <ion-select-option value="medicos">Honorarios médicos, dentales y gastos hospitalarios</ion-select-option>
-      <ion-select-option value="educativos">Pagos por servicios educativos (colegiaturas)</ion-select-option>
-      <ion-select-option value="devoluciones">Devoluciones, descuentos o bonificaciones</ion-select-option>
+      <ion-select-option value="Gastos en general">Gastos en general</ion-select-option>
+      <ion-select-option value="Gastos en Mercancías">Gastos en mercancías</ion-select-option>
+      <ion-select-option value="Honorarios médicos, dentales y gastos hospitalarios">Honorarios médicos, dentales y gastos hospitalarios</ion-select-option>
+      <ion-select-option value="Pagos por servicios educativos">Pagos por servicios educativos (colegiaturas)</ion-select-option>
+      <ion-select-option value="Devoluciones, descuentos o bonificaciones">Devoluciones, descuentos o bonificaciones</ion-select-option>
     </ion-select>
   </ion-item>
   <ion-item>
@@ -38,7 +38,7 @@
     </ion-select>
   </ion-item>
   <ion-item>
-    <ion-input labelPlacement="stacked" [(ngModel)]="clientNumber" maxlength="15" placeholder="Telefono" type="tel"></ion-input>
+    <ion-input labelPlacement="stacked" [(ngModel)]="clientNumber" maxlength="10" placeholder="Telefono"></ion-input>
   </ion-item>
 </ion-content>
 

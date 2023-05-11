@@ -36,6 +36,26 @@
     </ion-item>
   </div>
 
+  <div class="form-container">
+    <ion-item *ngIf="datos.name === 'Pagaré'" class="item-empresa">
+      <ion-label class="label-empresa">Deudor</ion-label>
+      <ion-button (click)="openModalDeudor()">Datos</ion-button>
+      <ion-icon name="alert-circle-outline" size="small" slot="start"></ion-icon>
+    </ion-item>
+
+    <ion-item *ngIf="datos.name === 'Pagaré'" class="item-empresa">
+      <ion-label class="label-empresa">Acreedor</ion-label>
+      <ion-button (click)="openModalAcredor()">Datos</ion-button>
+      <ion-icon name="alert-circle-outline" size="small" slot="start"></ion-icon>
+    </ion-item>
+
+    <ion-item *ngIf="datos.name === 'Pagaré'" class="item-empresa">
+      <ion-label class="label-empresa">Acuerdo</ion-label>
+      <ion-button (click)="openModalAcuerdo()">Datos</ion-button>
+      <ion-icon name="alert-circle-outline" size="small" slot="start"></ion-icon>
+    </ion-item>
+  </div>
+
   <div class="btnCenter">
     <ion-button class="create-button" (click)="createDocument()">Crear {{datos.name}}</ion-button>
   </div>

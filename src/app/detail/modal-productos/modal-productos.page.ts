@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { AlertController, ModalController } from '@ionic/angular';
 import { DatosfacturaService } from 'src/app/services/datosfactura.service';
 
 @Component({
@@ -14,7 +14,18 @@ export class ModalProductosPage implements OnInit {
   productPrice: any;
   productQuantity: any;
 
-  constructor(private modalCtrl: ModalController, private datosFactura:DatosfacturaService) { }
+  docState: any;
+
+  constructor(private modalCtrl: ModalController, private datosFactura:DatosfacturaService, private alertController: AlertController) {
+    this.docState = [
+      {
+        productName: '',
+        productDescription: '',
+        productPrice: '',
+        productQuantity: ''
+      }
+    ];
+   }
 
   ngOnInit() {
     this.productName = this.datosFactura.productName;
@@ -33,14 +44,38 @@ export class ModalProductosPage implements OnInit {
       productDescription: this.productDescription,
       productPrice: this.productPrice,
       productQuantity: this.productQuantity
-    }
+    };
 
     this.datosFactura.productName = data.productName;
     this.datosFactura.productDescription = data.productDescription;
     this.datosFactura.productPrice = data.productPrice;
     this.datosFactura.productQuantity = data.productQuantity;
 
+    console.log(this.datosFactura.productName);
+    console.log(this.datosFactura.productDescription);
+    console.log(this.datosFactura.productPrice);
+    console.log(this.datosFactura.productQuantity);
+
     return this.modalCtrl.dismiss(this.productName, 'confirm');
   }
 
+  async addProduct() {
+    if (this.docState.length < 5) {
+      const newProduct = {
+        productName: '',
+        productDescription: '',
+        productPrice: '',
+        productQuantity: ''
+      };
+      this.docState.push(newProduct);
+    }else{
+      const alert = await this.alertController.create({
+        header: 'Advertencia',
+        subHeader: 'Solo se pueden agregar 5 productos por factura.',
+        buttons: ['OK'],
+      });
+
+      await alert.present();
+    }
+  }
 }

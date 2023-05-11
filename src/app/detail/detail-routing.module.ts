@@ -23,6 +23,18 @@ const routes: Routes = [
   {
     path: 'modal-pago',
     loadChildren: () => import('./modal-pago/modal-pago.module').then( m => m.ModalPagoPageModule)
+  },
+  {
+    path: 'modal-acuerdo',
+    loadChildren: () => import('./modal-acuerdo/modal-acuerdo.module').then( m => m.ModalAcuerdoPageModule)
+  },
+  {
+    path: 'modal-deudor',
+    loadChildren: () => import('./modal-deudor/modal-deudor.module').then( m => m.ModalDeudorPageModule)
+  },
+  {
+    path: 'modal-acredor',
+    loadChildren: () => import('./modal-acredor/modal-acredor.module').then( m => m.ModalAcredorPageModule)
   }
 ];
 
