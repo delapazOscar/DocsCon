@@ -35,7 +35,19 @@ const routes: Routes = [
   {
     path: 'modal-acredor',
     loadChildren: () => import('./modal-acredor/modal-acredor.module').then( m => m.ModalAcredorPageModule)
+  },  {
+    path: 'modal-arrendador',
+    loadChildren: () => import('./modal-arrendador/modal-arrendador.module').then( m => m.ModalArrendadorPageModule)
+  },
+  {
+    path: 'modal-arrendatario',
+    loadChildren: () => import('./modal-arrendatario/modal-arrendatario.module').then( m => m.ModalArrendatarioPageModule)
+  },
+  {
+    path: 'modal-renta',
+    loadChildren: () => import('./modal-renta/modal-renta.module').then( m => m.ModalRentaPageModule)
   }
+
 ];
 
 @NgModule({

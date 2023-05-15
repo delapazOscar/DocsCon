@@ -17,6 +17,9 @@ import { ModalPagoPage } from './detail/modal-pago/modal-pago.page';
 import { ModalAcuerdoPage } from './detail/modal-acuerdo/modal-acuerdo.page';
 import { ModalDeudorPage } from './detail/modal-deudor/modal-deudor.page';
 import { ModalAcredorPage } from './detail/modal-acredor/modal-acredor.page';
+import { ModalArrendadorPage } from './detail/modal-arrendador/modal-arrendador.page';
+import { ModalArrendatarioPage } from './detail/modal-arrendatario/modal-arrendatario.page';
+import { ModalRentaPage } from './detail/modal-renta/modal-renta.page';
 import { DatosfacturaService } from './services/datosfactura.service';
 import { DatosPagareService } from './services/datos-pagare.service';
 

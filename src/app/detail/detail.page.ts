@@ -10,12 +10,16 @@ import { ModalPagoPage } from './modal-pago/modal-pago.page';
 import { ModalAcuerdoPage } from './modal-acuerdo/modal-acuerdo.page';
 import { ModalDeudorPage } from './modal-deudor/modal-deudor.page';
 import { ModalAcredorPage } from './modal-acredor/modal-acredor.page';
+import { ModalArrendadorPage } from './modal-arrendador/modal-arrendador.page';
+import { ModalArrendatarioPage } from './modal-arrendatario/modal-arrendatario.page';
+import { ModalRentaPage } from './modal-renta/modal-renta.page';
 import { DatosfacturaService } from '../services/datosfactura.service';
 import { DatosPagareService } from '../services/datos-pagare.service';
 
 import * as pdfMake from "pdfmake/build/pdfmake";
 import * as pdfFonts from 'pdfmake/build/vfs_fonts';
 import { Margins, PageOrientation, PageSize } from 'pdfmake/interfaces';
+import { DatosContratoService } from '../services/datos-contrato.service';
 // import { FileOpener } from '@awesome-cordova-plugins/file-opener/ngx';
 
 //import { Plugins, FilesystemDirectory } from '@capacitor/core';
@@ -369,6 +373,7 @@ export class DetailPage implements OnInit {
   public datos: DocumentData = {};
   facturaName: string | undefined;
   pagareName: string | undefined;
+  contratoName: any;
 
   constructor(private router:Router,
     private documentsService:DocumentsService,
@@ -376,7 +381,8 @@ export class DetailPage implements OnInit {
     private alertController:AlertController,
     private modalCtrl: ModalController,
     private datosFactura:DatosfacturaService,
-    private datosPagare: DatosPagareService) {
+    private datosPagare: DatosPagareService,
+    private datosContrato: DatosContratoService) {
       this.documentos = this.documentsService.getDocuments();
       this.searchedDocument= this.documentos;
 
@@ -430,6 +436,39 @@ export class DetailPage implements OnInit {
         break;
 
         case 'Contrato':
+          if (!this.datosContrato.allValuesEntered()) {
+            const alert = await this.alertController.create({
+              header: 'Datos Incompletos',
+              subHeader: 'Por favor llene todos los datos requeridos',
+              buttons: ['OK'],
+            });
+
+            await alert.present();
+
+          } else {
+            const alert = await this.alertController.create({
+              header: 'Nombre del documento:',
+              buttons: [{
+                text: 'OK',
+                handler: (data) => {
+                  this.contratoName = data.contratoName;
+                  this.datosContrato.contratoName = data.contratoName;
+                  console.log(this.datosContrato.contratoName);
+                  this.datosContrato.pdfDownload();
+
+                }
+              }],
+              inputs: [
+                {
+                  placeholder: 'Name',
+                  type: 'text',
+                  name: 'contratoName'
+                },
+              ],
+            });
+            await alert.present();
+          }
+
 
           break;
 
@@ -554,6 +593,45 @@ export class DetailPage implements OnInit {
   async openModalAcredor(){
     const modal = await this.modalCtrl.create({
       component: ModalAcredorPage,
+    });
+    modal.present();
+
+    const { data, role } = await modal.onWillDismiss();
+
+    if (role === 'confirm') {
+      this.message = `Hello, ${data}!`;
+    }
+  }
+
+  async openModalArrendador(){
+    const modal = await this.modalCtrl.create({
+      component: ModalArrendadorPage,
+    });
+    modal.present();
+
+    const { data, role } = await modal.onWillDismiss();
+
+    if (role === 'confirm') {
+      this.message = `Hello, ${data}!`;
+    }
+  }
+
+  async openModalArrendatario(){
+    const modal = await this.modalCtrl.create({
+      component: ModalArrendatarioPage,
+    });
+    modal.present();
+
+    const { data, role } = await modal.onWillDismiss();
+
+    if (role === 'confirm') {
+      this.message = `Hello, ${data}!`;
+    }
+  }
+
+  async openModalRenta(){
+    const modal = await this.modalCtrl.create({
+      component: ModalRentaPage,
     });
     modal.present();
 

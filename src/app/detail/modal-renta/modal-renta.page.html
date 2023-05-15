@@ -1,0 +1,50 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button color="medium" (click)="cancel()">Cancel</ion-button>
+    </ion-buttons>
+    <ion-title>Renta</ion-title>
+    <ion-buttons slot="end">
+      <ion-button [disabled]="!domicileHouseToRent || !metrosCuadrados || !noHabitaciones || !duracionContrato || !inicioRenta" (click)="confirm()" [strong]="true">Confirm</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-item>
+    <ion-input labelPlacement="stacked" (ionChange)="domicileHouseToRent = domicileHouseToRent.toUpperCase()" [(ngModel)]="domicileHouseToRent" placeholder="Domicilio casa a rentar: "></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-input labelPlacement="stacked" type="number" [(ngModel)]="metrosCuadrados" placeholder="Metros cuadrados de la vivienda: "></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-input labelPlacement="stacked" type="number" [(ngModel)]="noHabitaciones" placeholder="Número de habitaciones: "></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-input labelPlacement="stacked" type="number" [(ngModel)]="duracionContrato" placeholder="Duración del contrato: ">Años:  </ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label>Fecha inicio</ion-label>
+    <ion-datetime-button datetime="datetime"></ion-datetime-button>
+    <ion-modal [keepContentsMounted]="true">
+      <ng-template>
+        <ion-datetime color="dark" locale="es-ES" id="datetime" [(ngModel)]="inicioRenta"></ion-datetime>
+      </ng-template>
+    </ion-modal>
+  </ion-item>
+  <ion-item>
+    <ion-input labelPlacement="stacked" type="number" [(ngModel)]="mensualidadRenta" placeholder="Mensualidad: ">$</ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label>Estado</ion-label>
+    <ion-select [(ngModel)]="selectedState">
+      <ion-select-option value="">Estado</ion-select-option>
+      <ion-select-option *ngFor="let estado of estados" [value]="estado.nombre" [(ngModel)]="selectedState" class="selectState">{{ estado.nombre }}</ion-select-option>
+    </ion-select>
+  </ion-item>
+  <ion-item>
+    <ion-input labelPlacement="stacked" [(ngModel)]="contractMunicipe" placeholder="Municipio: "></ion-input>
+  </ion-item>
+
+</ion-content>
+

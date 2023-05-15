@@ -56,6 +56,26 @@
     </ion-item>
   </div>
 
+  <div class="form-container">
+    <ion-item *ngIf="datos.name === 'Contrato'" class="item-empresa">
+      <ion-label class="label-empresa">Arrendador</ion-label>
+      <ion-button (click)="openModalArrendador()">Datos</ion-button>
+      <ion-icon name="alert-circle-outline" size="small" slot="start"></ion-icon>
+    </ion-item>
+
+    <ion-item *ngIf="datos.name === 'Contrato'" class="item-empresa">
+      <ion-label class="label-empresa">Arrendatario</ion-label>
+      <ion-button (click)="openModalArrendatario()">Datos</ion-button>
+      <ion-icon name="alert-circle-outline" size="small" slot="start"></ion-icon>
+    </ion-item>
+
+    <ion-item *ngIf="datos.name === 'Contrato'" class="item-empresa">
+      <ion-label class="label-empresa">Renta</ion-label>
+      <ion-button (click)="openModalRenta()">Datos</ion-button>
+      <ion-icon name="alert-circle-outline" size="small" slot="start"></ion-icon>
+    </ion-item>
+  </div>
+
   <div class="btnCenter">
     <ion-button class="create-button" (click)="createDocument()">Crear {{datos.name}}</ion-button>
   </div>

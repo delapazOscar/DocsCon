@@ -1,0 +1,28 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button color="medium" (click)="cancel()">Cancel</ion-button>
+    </ion-buttons>
+    <ion-title>Arrendador</ion-title>
+    <ion-buttons slot="end">
+      <ion-button [disabled]="!arrendadorName || !arrendadorDomicile || !arrendadorSexo" (click)="confirm()" [strong]="true">Confirm</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-item>
+    <ion-input labelPlacement="stacked" (ionChange)="arrendadorName = arrendadorName.toUpperCase()" [(ngModel)]="arrendadorName" placeholder="Nombre completo del arrendador: "></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-input labelPlacement="stacked" (ionChange)="arrendadorDomicile = arrendadorDomicile.toUpperCase()" [(ngModel)]="arrendadorDomicile" placeholder="Domicilio actual: "></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label>Sexo:</ion-label>
+    <ion-select [(ngModel)]="arrendadorSexo">
+      <ion-select-option value="">Selecciona una opción</ion-select-option>
+      <ion-select-option value="Hombre">Hombre</ion-select-option>
+      <ion-select-option value="Mujer">Mujer</ion-select-option>
+    </ion-select>
+  </ion-item>
+</ion-content>
