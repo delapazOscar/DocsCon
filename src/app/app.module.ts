@@ -61,7 +61,7 @@ import { ToWords } from 'to-words';
     ReactiveFormsModule, BrowserAnimationsModule,
     provideFirebaseApp(() => initializeApp(environment.firebaseConfig)), provideAuth(() => getAuth()),
     provideDatabase(() => getDatabase()), provideFirestore(() => getFirestore()),
-    provideStorage(() => getStorage()), FirestoreModule, StorageModule,
+    provideStorage(() => getStorage()),
     AngularFireModule,
     AngularFireAuthModule, HttpClientModule],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy} ,DocumentsService, File, FileOpener],

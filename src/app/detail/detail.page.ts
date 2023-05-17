@@ -13,6 +13,8 @@ import { ModalAcredorPage } from './modal-acredor/modal-acredor.page';
 import { ModalArrendadorPage } from './modal-arrendador/modal-arrendador.page';
 import { ModalArrendatarioPage } from './modal-arrendatario/modal-arrendatario.page';
 import { ModalRentaPage } from './modal-renta/modal-renta.page';
+import { ModalBeneficiarioPage } from './modal-beneficiario/modal-beneficiario.page';
+import { ModalDetalleschequePage } from './modal-detallescheque/modal-detallescheque.page';
 import { DatosfacturaService } from '../services/datosfactura.service';
 import { DatosPagareService } from '../services/datos-pagare.service';
 
@@ -20,6 +22,12 @@ import * as pdfMake from "pdfmake/build/pdfmake";
 import * as pdfFonts from 'pdfmake/build/vfs_fonts';
 import { Margins, PageOrientation, PageSize } from 'pdfmake/interfaces';
 import { DatosContratoService } from '../services/datos-contrato.service';
+import { DatosChequeService } from '../services/datos-cheque.service';
+import { ModalPrestamoPage } from './modal-prestamo/modal-prestamo.page';
+import { ModalPrestatarioPage } from './modal-prestatario/modal-prestatario.page';
+import { ModalPrestamistaPage } from './modal-prestamista/modal-prestamista.page';
+import { ModalGarantePage } from './modal-garante/modal-garante.page';
+import { DatosPrestamoService } from '../services/datos-prestamo.service';
 // import { FileOpener } from '@awesome-cordova-plugins/file-opener/ngx';
 
 //import { Plugins, FilesystemDirectory } from '@capacitor/core';
@@ -374,6 +382,8 @@ export class DetailPage implements OnInit {
   facturaName: string | undefined;
   pagareName: string | undefined;
   contratoName: any;
+  chequeName: any;
+  prestamoName: any;
 
   constructor(private router:Router,
     private documentsService:DocumentsService,
@@ -382,7 +392,9 @@ export class DetailPage implements OnInit {
     private modalCtrl: ModalController,
     private datosFactura:DatosfacturaService,
     private datosPagare: DatosPagareService,
-    private datosContrato: DatosContratoService) {
+    private datosContrato: DatosContratoService,
+    private datosCheque: DatosChequeService,
+    private datosPrestamo: DatosPrestamoService) {
       this.documentos = this.documentsService.getDocuments();
       this.searchedDocument= this.documentos;
 
@@ -506,6 +518,80 @@ export class DetailPage implements OnInit {
               await alert.present();
             }
             break;
+
+            case 'Cheque':
+              if (!this.datosCheque.allValuesEntered()) {
+                const alert = await this.alertController.create({
+                  header: 'Datos Incompletos',
+                  subHeader: 'Por favor llene todos los datos requeridos',
+                  buttons: ['OK'],
+                });
+
+                await alert.present();
+
+              } else {
+                const alert = await this.alertController.create({
+                  header: 'Nombre del documento:',
+                  buttons: [{
+                    text: 'OK',
+                    handler: (data) => {
+                      this.chequeName = data.chequeName;
+                      this.datosCheque.chequeName = data.chequeName;
+                      console.log(this.datosCheque.chequeName);
+                      this.datosCheque.pdfDownload();
+
+                    }
+                  }],
+                  inputs: [
+                    {
+                      placeholder: 'Name',
+                      type: 'text',
+                      name: 'chequeName'
+                    },
+                  ],
+                });
+                await alert.present();
+              }
+
+            break;
+
+            case 'Préstamo':
+              if (!this.datosPrestamo.allValuesEntered()) {
+                const alert = await this.alertController.create({
+                  header: 'Datos Incompletos',
+                  subHeader: 'Por favor llene todos los datos requeridos',
+                  buttons: ['OK'],
+                });
+
+                await alert.present();
+
+              } else {
+                const alert = await this.alertController.create({
+                  header: 'Nombre del documento:',
+                  buttons: [{
+                    text: 'OK',
+                    handler: (data) => {
+                      this.prestamoName = data.prestamoName;
+                      this.datosPrestamo.prestamoName = data.prestamoName;
+                      console.log(this.datosPrestamo.prestamoName);
+                      this.datosPrestamo.pdfDownload();
+
+                    }
+                  }],
+                  inputs: [
+                    {
+                      placeholder: 'Name',
+                      type: 'text',
+                      name: 'prestamoName'
+                    },
+                  ],
+                });
+                await alert.present();
+              }
+
+            break;
+
+
 
     }
   }
@@ -632,6 +718,84 @@ export class DetailPage implements OnInit {
   async openModalRenta(){
     const modal = await this.modalCtrl.create({
       component: ModalRentaPage,
+    });
+    modal.present();
+
+    const { data, role } = await modal.onWillDismiss();
+
+    if (role === 'confirm') {
+      this.message = `Hello, ${data}!`;
+    }
+  }
+
+  async openModalBeneficiario(){
+    const modal = await this.modalCtrl.create({
+      component: ModalBeneficiarioPage,
+    });
+    modal.present();
+
+    const { data, role } = await modal.onWillDismiss();
+
+    if (role === 'confirm') {
+      this.message = `Hello, ${data}!`;
+    }
+  }
+
+  async openModaldetallescheque(){
+    const modal = await this.modalCtrl.create({
+      component: ModalDetalleschequePage,
+    });
+    modal.present();
+
+    const { data, role } = await modal.onWillDismiss();
+
+    if (role === 'confirm') {
+      this.message = `Hello, ${data}!`;
+    }
+  }
+
+  async openModalPrestamo(){
+    const modal = await this.modalCtrl.create({
+      component: ModalPrestamoPage,
+    });
+    modal.present();
+
+    const { data, role } = await modal.onWillDismiss();
+
+    if (role === 'confirm') {
+      this.message = `Hello, ${data}!`;
+    }
+  }
+
+  async openModalPrestatario(){
+    const modal = await this.modalCtrl.create({
+      component: ModalPrestatarioPage,
+    });
+    modal.present();
+
+    const { data, role } = await modal.onWillDismiss();
+
+    if (role === 'confirm') {
+      this.message = `Hello, ${data}!`;
+    }
+  }
+
+  async openModalPrestamista(){
+    const modal = await this.modalCtrl.create({
+      component: ModalPrestamistaPage,
+    });
+    modal.present();
+
+    const { data, role } = await modal.onWillDismiss();
+
+    if (role === 'confirm') {
+      this.message = `Hello, ${data}!`;
+    }
+  }
+
+  async openModalGarante(){
+    const modal = await this.modalCtrl.create({
+      component: ModalGarantePage,
     });
     modal.present();
 

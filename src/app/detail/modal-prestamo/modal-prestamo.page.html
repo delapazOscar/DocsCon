@@ -1,0 +1,29 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button color="medium" (click)="cancel()">Cancel</ion-button>
+    </ion-buttons>
+    <ion-title>Préstamo</ion-title>
+    <ion-buttons slot="end">
+      <ion-button [disabled]="!prestamoQuantity || !prestamoPurpose || !prestamoPeriod "[strong]="true" (click)="confirm()">Confirm</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-item>
+    <ion-input labelPlacement="stacked" [(ngModel)]="prestamoQuantity" placeholder="Cantidad del préstamo:">$</ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-input labelPlacement="stacked" [(ngModel)]="prestamoPurpose"  placeholder="Propósito del préstamo: "></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label>Fecha Fin</ion-label>
+    <ion-datetime-button datetime="datetime"></ion-datetime-button>
+    <ion-modal [keepContentsMounted]="true">
+      <ng-template>
+        <ion-datetime color="dark" locale="es-ES" id="datetime" [(ngModel)]="prestamoPeriod"></ion-datetime>
+      </ng-template>
+    </ion-modal>
+  </ion-item>
+</ion-content>

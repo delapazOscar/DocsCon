@@ -13,7 +13,7 @@
 
 <ion-content style="--background: {{datos.color}};">
 
-  <div class="form-container">
+  <div class="form-container" *ngIf="datos.name === 'Factura'">
     <ion-item *ngIf="datos.name === 'Factura'" class="item-empresa">
       <ion-label class="label-empresa">Empresa</ion-label>
       <ion-button (click)="openModalEmpresa()">Datos</ion-button>
@@ -36,7 +36,7 @@
     </ion-item>
   </div>
 
-  <div class="form-container">
+  <div class="form-container" *ngIf="datos.name === 'Pagaré'">
     <ion-item *ngIf="datos.name === 'Pagaré'" class="item-empresa">
       <ion-label class="label-empresa">Deudor</ion-label>
       <ion-button (click)="openModalDeudor()">Datos</ion-button>
@@ -56,7 +56,7 @@
     </ion-item>
   </div>
 
-  <div class="form-container">
+  <div class="form-container" *ngIf="datos.name === 'Contrato'">
     <ion-item *ngIf="datos.name === 'Contrato'" class="item-empresa">
       <ion-label class="label-empresa">Arrendador</ion-label>
       <ion-button (click)="openModalArrendador()">Datos</ion-button>
@@ -72,6 +72,46 @@
     <ion-item *ngIf="datos.name === 'Contrato'" class="item-empresa">
       <ion-label class="label-empresa">Renta</ion-label>
       <ion-button (click)="openModalRenta()">Datos</ion-button>
+      <ion-icon name="alert-circle-outline" size="small" slot="start"></ion-icon>
+    </ion-item>
+  </div>
+
+  <div class="form-container" *ngIf="datos.name === 'Cheque'">
+    <ion-item *ngIf="datos.name === 'Cheque'" class="item-empresa">
+      <ion-label class="label-empresa">Beneficiario</ion-label>
+      <ion-button (click)="openModalBeneficiario()">Datos</ion-button>
+      <ion-icon name="alert-circle-outline" size="small" slot="start"></ion-icon>
+    </ion-item>
+
+    <ion-item *ngIf="datos.name === 'Cheque'" class="item-empresa">
+      <ion-label class="label-empresa">Detalles</ion-label>
+      <ion-button (click)="openModaldetallescheque()">Datos</ion-button>
+      <ion-icon name="alert-circle-outline" size="small" slot="start"></ion-icon>
+    </ion-item>
+  </div>
+
+  <div class="form-container" *ngIf="datos.name === 'Préstamo'">
+    <ion-item *ngIf="datos.name === 'Préstamo'" class="item-empresa">
+      <ion-label class="label-empresa">Préstamo</ion-label>
+      <ion-button (click)="openModalPrestamo()">Datos</ion-button>
+      <ion-icon name="alert-circle-outline" size="small" slot="start"></ion-icon>
+    </ion-item>
+
+    <ion-item *ngIf="datos.name === 'Préstamo'" class="item-empresa">
+      <ion-label class="label-empresa">Prestatario</ion-label>
+      <ion-button (click)="openModalPrestatario()">Datos</ion-button>
+      <ion-icon name="alert-circle-outline" size="small" slot="start"></ion-icon>
+    </ion-item>
+
+    <ion-item *ngIf="datos.name === 'Préstamo'" class="item-empresa">
+      <ion-label class="label-empresa">Prestamista</ion-label>
+      <ion-button (click)="openModalPrestamista()">Datos</ion-button>
+      <ion-icon name="alert-circle-outline" size="small" slot="start"></ion-icon>
+    </ion-item>
+
+    <ion-item *ngIf="datos.name === 'Préstamo'" class="item-empresa">
+      <ion-label class="label-empresa">Garante</ion-label>
+      <ion-button (click)="openModalGarante()">Datos</ion-button>
       <ion-icon name="alert-circle-outline" size="small" slot="start"></ion-icon>
     </ion-item>
   </div>

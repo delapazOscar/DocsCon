@@ -1,0 +1,20 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button color="medium" (click)="cancel()">Cancel</ion-button>
+    </ion-buttons>
+    <ion-title>Garante</ion-title>
+    <ion-buttons slot="end">
+      <ion-button [disabled]="!garanteName || !garanteDirection " [strong]="true" (click)="confirm()">Confirm</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-item>
+    <ion-input labelPlacement="stacked" [(ngModel)]="garanteName" placeholder="Nombre del garante:"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-input labelPlacement="stacked" [(ngModel)]="garanteDirection"  placeholder="Domicilio del garante: "></ion-input>
+  </ion-item>
+</ion-content>

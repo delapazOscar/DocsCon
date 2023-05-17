@@ -1,0 +1,22 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button color="medium" (click)="cancel()">Cancel</ion-button>
+    </ion-buttons>
+    <ion-title>Beneficiario</ion-title>
+    <ion-buttons slot="end">
+      <ion-button [disabled]="!beneficiarioName || !beneficiarioDirection || !beneficiarioNumber"(click)="confirm()" [strong]="true">Confirm</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content class="ion-padding">
+  <ion-item>
+    <ion-input labelPlacement="stacked" (ionChange)="beneficiarioName = beneficiarioName.toUpperCase()" [(ngModel)]="beneficiarioName" placeholder="Nombre completo del beneficiario:"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-input labelPlacement="stacked" [(ngModel)]="beneficiarioDirection"  placeholder="Domicilio del beneficiario: "></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-input labelPlacement="stacked" type="number" [maxlength]="10" [(ngModel)]="beneficiarioNumber" placeholder="Teléfono del beneficiario:"></ion-input>
+  </ion-item>
+</ion-content>

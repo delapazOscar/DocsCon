@@ -1,0 +1,20 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button color="medium" (click)="cancel()">Cancel</ion-button>
+    </ion-buttons>
+    <ion-title>Prestatario</ion-title>
+    <ion-buttons slot="end">
+      <ion-button [disabled]="!prestatarioName || !prestatarioDirection" [strong]="true" (click)="confirm()">Confirm</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-item>
+    <ion-input labelPlacement="stacked" [(ngModel)]="prestatarioName" placeholder="Nombre del prestatario:"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-input labelPlacement="stacked" [(ngModel)]="prestatarioDirection"  placeholder="Domicilio del prestatario: "></ion-input>
+  </ion-item>
+</ion-content>

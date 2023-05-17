@@ -1,0 +1,22 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button color="medium" (click)="cancel()">Cancel</ion-button>
+    </ion-buttons>
+    <ion-title>Detalles</ion-title>
+    <ion-buttons slot="end">
+      <ion-button [disabled]="!bankName || !accountNumber || !montoCheque" (click)="confirm()" [strong]="true">Confirm</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content class="ion-padding">
+  <ion-item>
+    <ion-input labelPlacement="stacked" (ionChange)="bankName = bankName.toUpperCase()" [(ngModel)]="bankName" placeholder="Nombre del banco:"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-input labelPlacement="stacked" [(ngModel)]="accountNumber"  placeholder="Número de cuenta: "></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-input labelPlacement="stacked" type="number" [(ngModel)]="montoCheque" placeholder="Monto del cheque:">$</ion-input>
+  </ion-item>
+</ion-content>
