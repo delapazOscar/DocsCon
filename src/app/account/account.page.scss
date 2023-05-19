@@ -16,9 +16,72 @@ ion-toolbar{
 }
 
 ion-title{
-  margin-left: 12px;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   font-size: 25px;
   font-weight: 700;
 
+}
+
+.btn-img{
+  --border-radius:100%;
+  --padding: 0;
+  margin: 10px;
+  margin-top: 0;
+  width: 140px;
+  height: 140px;
+}
+
+ion-avatar {
+  :hover{
+    cursor: pointer;
+  }
+  width: 150px;
+  height: 150px;
+  margin: 10px 20px 20px 20px;
+}
+
+ion-avatar ion-icon {
+  width: 150px;
+  height: 150px;
+  --margin: 30px;
+}
+
+.img-user{
+  height: 80px;
+  width: 100%;
+}
+
+input:hover{
+  cursor: pointer;
+}
+
+p{
+  margin-left: 15px;
+  font-size: 15px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.options-container{
+  width: 100%;
+  height: 35%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.options-container ion-button{
+  span{
+    text-align: left;
+    width:100%;
+  }
+  width: 100%;
+  height: 45px;
+  margin-bottom: 30px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  text-transform: capitalize;
+  --background: #afaeae;
+  --color: black;
 }

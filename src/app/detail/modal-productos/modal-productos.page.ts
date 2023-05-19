@@ -60,7 +60,7 @@ export class ModalProductosPage implements OnInit {
   }
 
   async addProduct() {
-    if (this.docState.length < 5) {
+    if (this.docState.length < 3) {
       const newProduct = {
         productName: '',
         productDescription: '',
@@ -71,7 +71,7 @@ export class ModalProductosPage implements OnInit {
     }else{
       const alert = await this.alertController.create({
         header: 'Advertencia',
-        subHeader: 'Solo se pueden agregar 5 productos por factura.',
+        subHeader: 'Solo se pueden agregar 3 productos por factura.',
         buttons: ['OK'],
       });
 

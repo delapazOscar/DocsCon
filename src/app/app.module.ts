@@ -59,7 +59,7 @@ import { ToWords } from 'to-words';
   entryComponents:[],
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule,
     ReactiveFormsModule, BrowserAnimationsModule,
-    provideFirebaseApp(() => initializeApp(environment.firebaseConfig)), provideAuth(() => getAuth()),
+    provideFirebaseApp(() => initializeApp(environment.firebase)), provideAuth(() => getAuth()),
     provideDatabase(() => getDatabase()), provideFirestore(() => getFirestore()),
     provideStorage(() => getStorage()),
     AngularFireModule,

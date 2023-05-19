@@ -56,6 +56,20 @@ export class DatosContratoService {
            !!this.duracionContrato && !!this.inicioRenta ;
   }
 
+  resetValues(){
+    this.arrendadorName = null;
+    this.arrendadorDomicile = null;
+    this.arrendadorSexo = null;
+    this.arrendatarioDomicile = null;
+    this.arrendatarioName = null;
+    this.arrendatarioSexo = null;
+    this.domicileHouseToRent = null;
+    this.metrosCuadrados = null;
+    this.noHabitaciones = null;
+    this.duracionContrato = null;
+    this.inicioRenta = null;
+  }
+
   pdfDownload(){
     const docDef = {
       content: [

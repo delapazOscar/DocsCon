@@ -11,6 +11,8 @@ import { environment } from 'src/environments/environment';
 import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 import { AlertController } from '@ionic/angular';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { User } from 'firebase/auth';
+
 
 async function sleep(ms: number): Promise<void> {
   return new Promise(resolve => setTimeout(resolve, ms));
@@ -87,7 +89,24 @@ async function sleep(ms: number): Promise<void> {
     }
   }
 
+  async deleteAccount() {
+    try {
+      const user: User | null = this.auth.currentUser;
+      if (user) {
+        // Delete the user's account
+        await user.delete();
 
+        // Perform any additional cleanup or tasks here
+
+        // Log the user out
+        await this.auth.signOut();
+      } else {
+        throw new Error('User not found');
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }
 
 
  }

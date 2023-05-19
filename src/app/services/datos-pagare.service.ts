@@ -50,6 +50,46 @@ export class DatosPagareService {
            !!this.selectedState ;
   }
 
+  resetValues(){
+    this.acredorName = null;
+    this.deudorName = null;
+    this.deudorDomicile = null;
+    this.deudorNumber = null;
+    this.dateAcuerdo = null;
+    this.acuerdoPlace = null;
+    this.acuerdoQuantity = null;
+    this.acuerdoInteres = null;
+    this.acuerdoMunicipio = null;
+    this.selectedState = null;
+  }
+
+  convertirNumeroALetras(numero: number): string {
+    const unidades: string[] = ['cero', 'uno', 'dos', 'tres', 'cuatro', 'cinco', 'seis', 'siete', 'ocho', 'nueve'];
+    const especiales: string[] = ['diez', 'once', 'doce', 'trece', 'catorce', 'quince', 'dieciséis', 'diecisiete', 'dieciocho', 'diecinueve'];
+    const decenas: string[] = ['', 'diez', 'veinte', 'treinta', 'cuarenta', 'cincuenta', 'sesenta', 'setenta', 'ochenta', 'noventa'];
+    const centenas: string[] = ['', 'ciento', 'doscientos', 'trescientos', 'cuatrocientos', 'quinientos', 'seiscientos', 'setecientos', 'ochocientos', 'novecientos'];
+
+    if (numero === 0) {
+      return unidades[numero];
+    } else if (numero < 0) {
+      return 'menos ' + this.convertirNumeroALetras(Math.abs(numero));
+    } else if (numero < 10) {
+      return unidades[numero];
+    } else if (numero < 20) {
+      return especiales[numero - 10];
+    } else if (numero < 100) {
+      return decenas[Math.floor(numero / 10)] + ' y ' + this.convertirNumeroALetras(numero % 10);
+    } else if (numero < 1000) {
+      return centenas[Math.floor(numero / 100)] + ' ' + this.convertirNumeroALetras(numero % 100);
+    } else if (numero < 1000000) {
+      return this.convertirNumeroALetras(Math.floor(numero / 1000)) + ' mil ' + this.convertirNumeroALetras(numero % 1000);
+    } else if (numero < 1000000000) {
+      return this.convertirNumeroALetras(Math.floor(numero / 1000000)) + ' millones ' + this.convertirNumeroALetras(numero % 1000000);
+    } else {
+      return 'Número fuera de rango';
+    }
+  }
+
   // openFile(){
 
   //   this.fileOpener.open(this.file.dataDirectory + this.pagareName + '.pdf', 'application/pdf')
@@ -59,6 +99,7 @@ export class DatosPagareService {
   // }
 
   pdfDownload(){
+    const quantityLetterdos = this.convertirNumeroALetras(this.acuerdoQuantity);
     const docDef = {
       pageSize: {
         width: 800,
@@ -94,7 +135,7 @@ export class DatosPagareService {
 			    widths: ['*'],
 			    heights: 30,
 				body: [
-					[{text: `${this.quantityLetter}`, alignments: 'center', fontSize: 16, bold: true}],
+					[{text: `${quantityLetterdos}`, alignments: 'center', fontSize: 16, bold: true}],
 				],
 				style: 'tableStyle'
 			},

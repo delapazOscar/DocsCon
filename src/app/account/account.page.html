@@ -3,10 +3,25 @@
     <ion-buttons slot="start">
       <ion-back-button></ion-back-button>
     </ion-buttons>
-    <ion-title>Datos Personales</ion-title>
+    <ion-title>Cuenta</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+  <div class="user-container">
+    <ion-avatar>
+      <img *ngIf="profile?.['imageUrl']; else placeholder_avatar;" [src]="profile?.['imageUrl']"/>
+      <ng-template #placeholder_avatar>
+        <ion-icon name="person-circle"></ion-icon>
+      </ng-template>
+    </ion-avatar>
+    <p class="email-user">
+      {{uid}}
+    </p>
+  </div>
 
+  <div class="options-container">
+    <ion-button expand="full" (click)="resetPassword()" ><span>Restablecer contraseña:</span></ion-button>
+    <ion-button expand="full" (click)="deleteAccount()" color="danger" ><span>Borrar cuenta de DocsCon</span></ion-button>
+  </div>
 </ion-content>

@@ -24,6 +24,10 @@
     <ion-input labelPlacement="stacked" [(ngModel)]="bankName" placeholder="Nombre del banco" maxlength="20"></ion-input>
   </ion-item>
   <ion-item>
-    <ion-input labelPlacement="stacked" [(ngModel)]="moneda" placeholder="Moneda" ></ion-input>
+    <ion-label>Moneda</ion-label>
+    <ion-select [(ngModel)]="moneda">
+      <ion-select-option value="">Seleccionar moneda</ion-select-option>
+      <ion-select-option *ngFor="let moneda of monedas" [value]="moneda.codigo" class="selectState">{{ moneda.nombre }}</ion-select-option>
+    </ion-select>
   </ion-item>
 </ion-content>

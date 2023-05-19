@@ -4,7 +4,7 @@
       <ion-back-button></ion-back-button>
     </ion-buttons>
     <div class=".toolbar-container">
-      <ion-title>Configuración</ion-title>
+      <ion-title>Acerca de</ion-title>
     </div>
   </ion-toolbar>
 </ion-header>
@@ -12,8 +12,13 @@
 
 <ion-content>
   <div class="options-container">
-    <ion-button expand="full" (click)="appareance()"><span>Apariencia</span></ion-button>
-    <!-- <ion-button expand="full"><span>Configuración</span></ion-button>
-    <ion-button expand="full"><span>Preferencias</span></ion-button> -->
+    <div class="container-op">
+      <ion-label>Versión 1.0.0</ion-label>
+    </div>
+    <div class="container-op">
+      <ion-label>Creador: <a href="https://www.instagram.com/delapaz.oscar/"> Oscar de la Paz</a></ion-label>
+    </div>
   </div>
+
+  <ion-button color="dark" (click)="openModalTerms()">Términos y condiciones</ion-button>
 </ion-content>

@@ -14,6 +14,16 @@ export class ModalPagoPage implements OnInit {
 
   constructor(private modalCtrl:ModalController, private datosFactura:DatosfacturaService) { }
 
+  public monedas = [
+    { nombre: 'Peso mexicano', codigo: 'MXN' },
+    { nombre: 'Dólar estadounidense', codigo: 'USD' },
+    { nombre: 'Euro', codigo: 'EUR' },
+    { nombre: 'Libra esterlina', codigo: 'GBP' },
+    { nombre: 'Yen japonés', codigo: 'JPY' },
+    { nombre: 'Dólar canadiense', codigo: 'CAD' },
+  ];
+
+
   ngOnInit() {
     this.selectedPayment = this.datosFactura.selectedPayment;
     this.bankName = this.datosFactura.bankName;

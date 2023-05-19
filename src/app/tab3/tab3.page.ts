@@ -93,6 +93,12 @@ export class Tab3Page implements OnInit {
     this.router.navigate(['configuration'])
   };
 
+  btnAyuda(){
+    const url = 'https://www.instagram.com/delapaz.oscar/';
+    window.open(url, '_system');
+    //this.router.navigate(['configuration'])
+  };
+
   async logout(){
     const loading = await this.loadingController.create({
       message: 'Cerrando sesión...',

@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import * as pdfMake from "pdfmake/build/pdfmake";
 import * as pdfFonts from 'pdfmake/build/vfs_fonts';
 import { Margins, PageOrientation, PageSize } from 'pdfmake/interfaces';
+import { File } from '@awesome-cordova-plugins/file/ngx';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -26,7 +28,9 @@ export class DatosPrestamoService {
 
   pdfOjb: any;
 
-  constructor() { }
+  allDocuments: any[] = []; // Array para almacenar los datos de todos los documentos creados
+
+  constructor(private file:File, private httpClient:HttpClient) { }
 
   pdfDownload(){
     const docDef = {
@@ -125,8 +129,6 @@ export class DatosPrestamoService {
 
     this.pdfOjb.download(this.prestamoName + '.pdf');
 
-    // pdfMake.createPdf(docDef).download();
-
   }
 
   allValuesEntered(): boolean {
@@ -134,5 +136,18 @@ export class DatosPrestamoService {
            !!this.prestatarioDirection && !!this.prestamistaName && !!this.prestamistaDirection && !!this.garanteName
            && !!this.garanteDirection ;
   }
+
+  resetValues(){
+    this.prestamoPeriod = null;
+    this.prestamoQuantity = null;
+    this.prestamoPurpose = null;
+    this.prestatarioName = null;
+    this.prestatarioDirection = null;
+    this.prestamistaName = null;
+    this.prestamistaDirection = null;
+    this.garanteName = null;
+    this.garanteDirection = null;
+  }
+
 
 }
