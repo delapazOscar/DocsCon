@@ -4,6 +4,8 @@ import * as pdfFonts from 'pdfmake/build/vfs_fonts';
 import { Margins, PageOrientation, PageSize } from 'pdfmake/interfaces';
 import { File } from '@awesome-cordova-plugins/file/ngx';
 import { HttpClient } from '@angular/common/http';
+import { AuthService } from './auth.service';
+import { FirestoreDataService } from './firestore-data.service';
 
 @Injectable({
   providedIn: 'root'
@@ -30,9 +32,48 @@ export class DatosPrestamoService {
 
   allDocuments: any[] = []; // Array para almacenar los datos de todos los documentos creados
 
-  constructor(private file:File, private httpClient:HttpClient) { }
+  constructor(private file:File, private httpClient:HttpClient, private authService: AuthService,
+    private firestoreData: FirestoreDataService) {
+      this.prestamoDate = new Date().toLocaleDateString('ES');
+      this.getUid();
+  }
 
-  pdfDownload(){
+  async firestorePrestamo(){
+    //await this.getUid();
+    const uid = await this.getUid();
+    if(uid !== null){
+      const subcoleccion = 'préstamos';
+      const documento = this.prestamoName;
+      const datos = { // Crea un objeto con los datos que deseas subir
+        prestamoDate: this.prestamoDate,
+        prestamoPeriod: this.prestamoPeriod,
+        prestamoQuantity: this.prestamoQuantity,
+        prestamoPurpose: this.prestamoPurpose,
+        prestatarioName: this.prestatarioName,
+        prestatarioDirection: this.prestatarioDirection,
+        prestamistaName: this.prestamistaName,
+        prestamistaDirection: this.prestamistaDirection,
+        garanteName: this.garanteName,
+        garanteDirection: this.garanteDirection,
+        prestamoName: this.prestamoName,
+        name: "Préstamo",
+        icon: "./assets/img/prestamo.png",
+        color: "linear-gradient(to bottom right, #05C0C9, #017579)",
+        description: "Un préstamo es un contrato financiero en el cual una persona o entidad (el prestamista) presta una cantidad específica de dinero a otra persona o entidad (el prestatario) con la obligación de devolver ese dinero en un plazo determinado, junto con el pago de intereses acordados."
+      };
+      console.log(datos)
+      this.firestoreData.createDocument(datos, uid, subcoleccion, documento);
+    }else{
+      console.log('Error en UID');
+    }
+  }
+
+  async getUid(){
+    let uid = await this.authService.getUser();
+    return uid;
+  }
+
+  async pdfDownload(){
     const docDef = {
       content: [
         {
@@ -128,6 +169,10 @@ export class DatosPrestamoService {
     this.pdfOjb = pdfMake.createPdf(docDef);
 
     this.pdfOjb.download(this.prestamoName + '.pdf');
+
+    await this.firestorePrestamo();
+
+    this.resetValues();
 
   }
 

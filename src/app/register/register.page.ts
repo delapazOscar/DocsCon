@@ -135,7 +135,7 @@ export class RegisterPage implements OnInit {
   }
 
   async googleRegister(){
-    this.authService.loginWithGoogle()
+    this.authService.registerWithGoogle()
       .then(async response =>{
         const loading = await this.loadingController.create({
           message: 'Registrando...',

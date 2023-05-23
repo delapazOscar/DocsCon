@@ -18,9 +18,10 @@ export class AccountPage implements OnInit {
 
    }
 
-  async ngOnInit() {
+   async ngOnInit() {
     await this.getUid();
   }
+
 
   async getUid(){
     let uid = await this.authService.getUser();

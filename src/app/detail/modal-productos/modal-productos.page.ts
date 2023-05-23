@@ -9,10 +9,10 @@ import { DatosfacturaService } from 'src/app/services/datosfactura.service';
 })
 export class ModalProductosPage implements OnInit {
 
-  productName:string| undefined;
-  productDescription: any;
-  productPrice: any;
-  productQuantity: any;
+  productNames: Array<string> = [];
+  productDescriptions: Array<string> = [];;
+  productPrices: Array<any> = [];
+  productQuantitys: Array<any> = [];
 
   docState: any;
 
@@ -25,13 +25,17 @@ export class ModalProductosPage implements OnInit {
         productQuantity: ''
       }
     ];
-   }
+  }
 
   ngOnInit() {
-    this.productName = this.datosFactura.productName;
-    this.productDescription = this.datosFactura.productDescription;
-    this.productPrice = this.datosFactura.productPrice;
-    this.productQuantity = this.datosFactura.productQuantity;
+    this.productNames = this.datosFactura.productNames;
+    this.productDescriptions = this.datosFactura.productDescriptions;
+    this.productPrices = this.datosFactura.productPrices;
+    this.productQuantitys = this.datosFactura.productQuantitys;
+    const storedProductsCount = this.productNames.length;
+    for (let i = 1; i < storedProductsCount; i++) {
+      this.addProduct();
+    }
   }
 
   cancel() {
@@ -39,43 +43,47 @@ export class ModalProductosPage implements OnInit {
   }
 
   confirm() {
+    //debugger;
     const data = {
-      productName: this.productName,
-      productDescription: this.productDescription,
-      productPrice: this.productPrice,
-      productQuantity: this.productQuantity
+      //productName: this.productName,
+      productNames:this.productNames,
+      productDescriptions: this.productDescriptions,
+      productPrices: this.productPrices,
+      productQuantitys: this.productQuantitys,
     };
 
-    this.datosFactura.productName = data.productName;
-    this.datosFactura.productDescription = data.productDescription;
-    this.datosFactura.productPrice = data.productPrice;
-    this.datosFactura.productQuantity = data.productQuantity;
+    this.datosFactura.productNames = data.productNames;
+    this.datosFactura.productDescriptions = data.productDescriptions;
+    this.datosFactura.productPrices = data.productPrices;
+    this.datosFactura.productQuantitys = data.productQuantitys;
 
-    console.log(this.datosFactura.productName);
-    console.log(this.datosFactura.productDescription);
-    console.log(this.datosFactura.productPrice);
-    console.log(this.datosFactura.productQuantity);
+    console.log(this.datosFactura.productNames);
+    console.log(this.datosFactura.productDescriptions);
+    console.log(this.datosFactura.productPrices);
+    console.log(this.datosFactura.productQuantitys);
 
-    return this.modalCtrl.dismiss(this.productName, 'confirm');
+    return this.modalCtrl.dismiss(this.productNames, 'confirm');
   }
 
   async addProduct() {
-    if (this.docState.length < 3) {
+    if (this.docState.length < 5) {
       const newProduct = {
-        productName: '',
-        productDescription: '',
-        productPrice: '',
-        productQuantity: ''
+        productNames: '',
+        productDescriptions: '',
+        productPrices: '',
+        productQuantitys: ''
       };
       this.docState.push(newProduct);
     }else{
       const alert = await this.alertController.create({
         header: 'Advertencia',
-        subHeader: 'Solo se pueden agregar 3 productos por factura.',
+        subHeader: 'Solo se pueden agregar 5 productos por factura.',
         buttons: ['OK'],
       });
 
       await alert.present();
     }
   }
+
+
 }

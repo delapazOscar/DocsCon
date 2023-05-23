@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import * as pdfMake from "pdfmake/build/pdfmake";
 import * as pdfFonts from 'pdfmake/build/vfs_fonts';
 import { Margins, PageOrientation, PageSize } from 'pdfmake/interfaces';
+import { FirestoreDataService } from './firestore-data.service';
+import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root'
@@ -15,15 +17,50 @@ export class DatosChequeService {
   montoCheque:any;
   accountNumber: any;
 
-  montoLetter:any;
+  // montoLetter:any;
   chequeName: any;
   chequeDate: any;
 
   pdfOjb: any;
 
-  constructor( ) {
+  constructor(private authService: AuthService, private firestoreData: FirestoreDataService ) {
     this.chequeDate = new Date().toLocaleDateString('ES');
+    this.getUid();
    }
+
+   async firestoreCheque(){
+    //await this.getUid();
+    const uid = await this.getUid();
+    if(uid !== null){
+      const subcoleccion = 'cheques';
+      const documento = this.chequeName;
+      const datos = { // Crea un objeto con los datos que deseas subir
+        bankName: this.bankName,
+        beneficiarioName: this.beneficiarioName,
+        beneficiarioDirection: this.beneficiarioDirection,
+        beneficiarioNumber: this.beneficiarioNumber,
+        montoCheque:this.montoCheque,
+        accountNumber: this.accountNumber,
+
+        //montoLetter:this.montoLetter,
+        chequeName: this.chequeName,
+        chequeDate: this.chequeDate,
+        name: "Cheque",
+        icon: "./assets/img/cheque-bancario.png",
+        color: "linear-gradient(to bottom right, #91FFD7, #19C788)",
+        description: "Un cheque es un documento financiero que se utiliza para realizar pagos a terceros. Es una orden escrita emitida por una persona o entidad (el librador o emisor del cheque) que autoriza a otra persona o entidad (el beneficiario o tenedor del cheque) a retirar una cantidad específica de dinero de una cuenta bancaria."
+      };
+      console.log(datos)
+      this.firestoreData.createDocument(datos, uid, subcoleccion, documento);
+    }else{
+      console.log('Error en UID');
+    }
+  }
+
+  async getUid(){
+    let uid = await this.authService.getUser();
+    return uid;
+  }
 
   allValuesEntered(): boolean {
     return !!this.bankName && !!this.beneficiarioName && !!this.beneficiarioDirection && !!this.beneficiarioNumber &&
@@ -85,7 +122,7 @@ export class DatosChequeService {
 
 
 
-  pdfDownload(){
+  async pdfDownload(){
     const montoEnLetras = this.convertirNumeroALetras(this.montoCheque);
     const docDef = {
       pageSize: {
@@ -185,5 +222,8 @@ export class DatosChequeService {
 
     // pdfMake.createPdf(docDef).download();
 
+    await this.firestoreCheque();
+
+    this.resetValues();
   }
 }

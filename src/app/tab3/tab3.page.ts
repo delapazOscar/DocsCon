@@ -109,6 +109,7 @@ export class Tab3Page implements OnInit {
 
     this.authService.logout();
     await loading.onWillDismiss();
+    localStorage.clear();
     this.router.navigate(['login']);
   }
 

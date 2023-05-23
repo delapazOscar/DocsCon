@@ -10,8 +10,7 @@ export class DocumentsService{
       // icon: "../assets/img/factura.png",
       icon: "./assets/img/factura.png",
       color: "linear-gradient(to bottom right, #81C9FA, #055084)",
-      description: "Este documento se utiliza para registrar una operación comercial y detallar los bienes o servicios que se han vendido, así como el precio de venta y la información fiscal de las partes involucradas en la transacción.",
-      pregunta1: "Este es un ejemplo"
+      description: "Este documento se utiliza para registrar una operación comercial y detallar los bienes o servicios que se han vendido, así como el precio de venta y la información fiscal de las partes involucradas en la transacción."
     },
     {
       name: "Contrato",

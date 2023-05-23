@@ -1,40 +1,75 @@
 <ion-toolbar>
   <div class="toolbar-container">
     <ion-title>Mis documentos</ion-title>
-    <button (click)="addTemplateButton()" class="addIconButton">
+    <button (click)="addTemplateButton()" class="addIconButton" id="addButton">
       <ion-icon name="add-circle-outline" slot="end" class="addIcon"></ion-icon>
     </button>
   </div>
 </ion-toolbar>
 
 <ion-content>
+  <ion-refresher slot="fixed" (ionRefresh)="refreshData($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
   <div class="searchbar-container">
-    <ion-input type="text" [(ngModel)]="textInput" placeholder="Buscar" (ionFocus)="toogleSearch()"
-    animated (ionChange)="searchCustomer($event)"
-    [class.active-search]="searching"
-    [class.inactive.search]="!searching">
+    <ion-input
+      type="text"
+      [(ngModel)]="textInput"
+      placeholder="Buscar"
+      (ionFocus)="toogleSearch()"
+      animated
+      (ionChange)="searchCustomer($event)"
+      [class.active-search]="searching"
+      [class.inactive.search]="!searching"
+    >
       <ion-icon name="search-outline" class="icon-search"></ion-icon>
     </ion-input>
-    <ion-button fill="clear" color="dark" size="small" (click)="toogleSearch()"
-    [ngClass]="{'visible-btn':searching,'hidden-btn':!searching}"
-    *ngIf="textInput.trim() !== ''"><ion-icon class="cancel-btn" name="close-circle-outline"></ion-icon></ion-button>
+    <ion-button
+      fill="clear"
+      color="dark"
+      size="small"
+      (click)="toogleSearch()"
+      [ngClass]="{'visible-btn':searching,'hidden-btn':!searching}"
+      *ngIf="searching && textInput.trim() !== ''"
+    >
+      <ion-icon class="cancel-btn" name="close-circle-outline"></ion-icon>
+    </ion-button>
   </div>
 
   <div class="acomodo">
-    <div class="documents-list" *ngFor="let document of searchedDocument">
-      <ion-card [style.background]="document.color">
-        <ion-card-header>
-          <ion-card-title>{{ document.name }}</ion-card-title>
-          <ion-card-subtitle>{{ document.name }}</ion-card-subtitle>
-        </ion-card-header>
-        <ion-card-content>
-          <ion-icon name="document-text-outline" class="icon-doc"></ion-icon>
-          <ng-container *ngIf="document.icon !== ''">
-            <img class="document-img" [src]="document.icon" [alt]="document.name">
-          </ng-container>
-        </ion-card-content>
-      </ion-card>
-    </div>
+    <ng-container *ngIf="isLoading; else content">
+      <!-- Display the styled ion-skeleton while loading -->
+      <div class="loading-card" *ngFor="let _ of [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]">
+        <ion-card>
+          <ion-skeleton-text animated class="skeleton-header"></ion-skeleton-text>
+          <ion-skeleton-text animated class="skeleton-subtitle"></ion-skeleton-text>
+          <ion-skeleton-text animated class="skeleton-content"></ion-skeleton-text>
+          <ion-thumbnail slot="end">
+            <ion-skeleton-text animated></ion-skeleton-text>
+          </ion-thumbnail>
+        </ion-card>
+      </div>
+    </ng-container>
+
+    <ng-template #content>
+      <div class="documents-list" *ngFor="let document of filteredDocuments">
+        <ion-card [style.background]="document.color" (click)="downloadFirestorePdf(uid, document.id, document.name)">
+          <ion-card-header>
+            <ion-card-title>{{ document.id }}</ion-card-title>
+            <ion-card-subtitle>{{ document.name }}</ion-card-subtitle>
+          </ion-card-header>
+          <ion-card-content>
+            <ion-icon name="document-text-outline" class="icon-doc"></ion-icon>
+            <ng-container *ngIf="document.icon">
+              <img class="document-img" [src]="document.icon" [alt]="document.name">
+              <ion-icon name="trash-outline" class="deleteButton" (click)="confirmDelete(uid, document.name.toLowerCase()+'s', document.id)"></ion-icon>
+            </ng-container>
+          </ion-card-content>
+        </ion-card>
+      </div>
+    </ng-template>
   </div>
+
 
 </ion-content>

@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import * as pdfMake from "pdfmake/build/pdfmake";
 import * as pdfFonts from 'pdfmake/build/vfs_fonts';
 import { Margins, PageOrientation, PageSize } from 'pdfmake/interfaces';
+import { AuthService } from './auth.service';
+import { FirestoreDataService } from './firestore-data.service';
 
 @Injectable({
   providedIn: 'root'
@@ -34,8 +36,9 @@ export class DatosContratoService {
 
   pdfOjb: any;
 
-  constructor() {
+  constructor(private authService: AuthService, private firestoreData: FirestoreDataService) {
     this.contractDate = new Date().toLocaleDateString('ES');
+    this.getUid();
 
     if(this.arrendadorSexo = 'Hombre'){
       this.obligado = 'obligado'
@@ -48,7 +51,54 @@ export class DatosContratoService {
     }else{
       this.obligado2 = 'obligada'
     }
-   }
+  }
+
+  async getUid(){
+    let uid = await this.authService.getUser();
+    return uid;
+  }
+
+  async firestoreContrato(){
+    //await this.getUid();
+    const uid = await this.getUid();
+    if(uid !== null){
+      const subcoleccion = 'contratos';
+      const documento = this.contratoName;
+      const datos = { // Crea un objeto con los datos que deseas subir
+        arrendadorName: this.arrendadorName,
+        arrendadorDomicile: this.arrendadorDomicile,
+        arrendadorSexo: this.arrendadorSexo,
+
+        arrendatarioName: this.arrendatarioName,
+        arrendatarioDomicile: this.arrendatarioDomicile,
+        arrendatarioSexo: this.arrendatarioSexo,
+
+        domicileHouseToRent: this.domicileHouseToRent,
+        metrosCuadrados: this.metrosCuadrados,
+        noHabitaciones: this.noHabitaciones,
+        duracionContrato: this.duracionContrato,
+        inicioRenta: this.inicioRenta,
+        mensualidadRenta: this.mensualidadRenta,
+
+        contractDate: this.contractDate,
+        // contractState: this.contractState,
+        contractMunicipe: this.contractMunicipe,
+        selectedState: this.selectedState,
+
+        contratoName: this.contratoName,
+        obligado:this.obligado,
+        obligado2: this.obligado2,
+        name: "Contrato",
+        icon: "./assets/img/acuerdo.png",
+        color: "linear-gradient(to bottom right, #C7B5FF, #5A2CEC)",
+        description: "Este documento se utiliza para formalizar y establecer las obligaciones y responsabilidades de cada una de las partes involucradas en un acuerdo, ya sea en un contexto personal o comercial."
+      };
+      console.log(datos)
+      this.firestoreData.createDocument(datos, uid, subcoleccion, documento);
+    }else{
+      console.log('Error en UID');
+    }
+  }
 
   allValuesEntered(): boolean {
     return !!this.arrendadorName && !!this.arrendadorDomicile && !!this.arrendadorSexo && !!this.arrendatarioName &&
@@ -70,7 +120,7 @@ export class DatosContratoService {
     this.inicioRenta = null;
   }
 
-  pdfDownload(){
+  async pdfDownload(){
     const docDef = {
       content: [
         {
@@ -313,5 +363,8 @@ export class DatosContratoService {
 
     // pdfMake.createPdf(docDef).download();
 
+    await this.firestoreContrato();
+
+    this.resetValues();
   }
 }

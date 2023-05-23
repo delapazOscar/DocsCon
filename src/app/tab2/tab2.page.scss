@@ -19,6 +19,7 @@ ion-title{
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   font-size: 25px;
   font-weight: 700;
+  margin-left: 12px;
 }
 
 .addIcon{
@@ -108,7 +109,7 @@ ion-input{
   height: auto;
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
+  justify-content: flex-start;
 }
 
 ion-card{
@@ -145,11 +146,19 @@ ion-card-content{
 }
 
 .document-img{
-  width: 90px;
+  width: 80px;
   position: absolute;
-  left: 70%;
-  bottom: -15px;
+  left: 54%;
+  bottom: 0px;
   transform: rotate(22deg);
+}
+
+.deleteButton{
+  position: absolute;
+  left: 85%;
+  bottom: 25px;
+  font-size: 30px;
+  color: rgb(45, 45, 45);
 }
 
 ion-card-title{
@@ -179,3 +188,26 @@ ion-card-subtitle{
   font-size: 30px;
   color: white;
 }
+
+.loading-card {
+  margin-top: 12px;
+}
+
+.skeleton-header {
+  margin: 12px;
+  width: 60%;
+  height: 20px;
+}
+
+.skeleton-subtitle {
+  width: 50%;
+  height: 12px;
+  margin: 12px;
+}
+
+.skeleton-content {
+  width: 40%;
+  height: 12px;
+  margin: 12px;
+}
+

@@ -6,6 +6,8 @@ import * as pdfFonts from 'pdfmake/build/vfs_fonts';
 import { Margins, PageOrientation, PageSize } from 'pdfmake/interfaces';
 import { buffer } from 'rxjs';
 import * as numberToWords from 'number-to-words';
+import { FirestoreDataService } from './firestore-data.service';
+import { AuthService } from './auth.service';
 //import * as moment from 'moment';
 
 
@@ -32,17 +34,56 @@ export class DatosPagareService {
 
   selectedState:any;
 
-
   pagareName:any;
 
   pdfOjb: any;
 
   lugar: any;
 
-
-  constructor() {
-
+  constructor (private authService: AuthService, private firestoreData: FirestoreDataService) {
+    this.getUid();
    }
+
+   async getUid(){
+    let uid = await this.authService.getUser();
+    return uid;
+  }
+
+  async firestorePagare(){
+    //await this.getUid();
+    const uid = await this.getUid();
+    if(uid !== null){
+      const subcoleccion = 'pagarés';
+      const documento = this.pagareName;
+      const datos = { // Crea un objeto con los datos que deseas subir
+        acredorName:this.acredorName,
+        deudorName: this.deudorName,
+        deudorDomicile: this.deudorDomicile,
+        deudorNumber: this.deudorNumber,
+
+        dateAcuerdo:this.dateAcuerdo,
+        acuerdoPlace: this.acuerdoPlace,
+        acuerdoQuantity: this.acuerdoQuantity,
+        quantityLetter: this.quantityLetter,
+        acuerdoInteres: this.acuerdoInteres,
+        acuerdoMunicipio: this.acuerdoMunicipio,
+        moneda:this.moneda,
+
+        selectedState:this.selectedState,
+
+        pagareName:this.pagareName,
+        //lugar: this.lugar,
+        name: "Pagaré",
+        icon: "./assets/img/metodo-de-pago.png",
+        color: "linear-gradient(to bottom right, #B2FFBC, #08951B)",
+        description: "Es un instrumento legal que formaliza la obligación de una persona o entidad (llamada el deudor) de pagar una cantidad específica de dinero a otra persona o entidad (llamada el acreedor) en una fecha determinada o a solicitud del acreedor. El pagaré se utiliza principalmente en el ámbito empresarial y comercial como una forma de garantizar el pago de una deuda o un préstamo."
+      };
+      console.log(datos)
+      this.firestoreData.createDocument(datos, uid, subcoleccion, documento);
+    }else{
+      console.log('Error en UID');
+    }
+  }
 
   allValuesEntered(): boolean {
     return !!this.acredorName && !!this.deudorName && !!this.deudorDomicile && !!this.deudorNumber &&
@@ -98,7 +139,7 @@ export class DatosPagareService {
 
   // }
 
-  pdfDownload(){
+  async pdfDownload(){
     const quantityLetterdos = this.convertirNumeroALetras(this.acuerdoQuantity);
     const docDef = {
       pageSize: {
@@ -198,6 +239,9 @@ export class DatosPagareService {
 
     // pdfMake.createPdf(docDef).download();
 
+    await this.firestorePagare();
+
+    this.resetValues();
   }
 
 

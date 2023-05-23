@@ -1,134 +1,59 @@
 import { Injectable } from '@angular/core';
-import * as pdfMake from "pdfmake/build/pdfmake";
-import * as pdfFonts from 'pdfmake/build/vfs_fonts';
-import { Margins, PageOrientation, PageSize } from 'pdfmake/interfaces';
 import { Firestore } from '@angular/fire/firestore';
 import { doc, setDoc } from 'firebase/firestore';
 import { AngularFirestore, AngularFirestoreCollection, DocumentReference } from '@angular/fire/compat/firestore';
-import { AuthService } from './auth.service';
-import { getuid } from 'process';
-import { FirestoreDataService } from './firestore-data.service';
-import { Platform } from '@ionic/angular';
-import { FileOpener } from '@awesome-cordova-plugins/file-opener/ngx';
-import { buffer } from 'rxjs';
+import { AuthService } from '../auth.service';
+import * as pdfMake from "pdfmake/build/pdfmake";
+import * as pdfFonts from 'pdfmake/build/vfs_fonts';
+import { Margins, PageOrientation, PageSize } from 'pdfmake/interfaces';
 
 @Injectable({
   providedIn: 'root'
 })
-export class DatosfacturaService {
-
-  companyName: any;
-  domicileCompany: any;
-  cpCompany: any;
-  rfcCompany: any;
-  companyNumber: any;
-
-  rfcClient: any;
-  selectedState: any;
-  domicileClient: any;
-  clientName: any;
-  clientNumber: any;
-  cfdiUse: any;
-
-  productNames: Array<string> = [];
-  productDescriptions: Array<string> = [];;
-  productPrices: Array<any> = [];
-  productQuantitys: Array<any> = [];
-
-  selectedPayment: any;
-  bankName: any;
-  moneda:any;
+export class FacturaFirestoreService {
 
   fecha: any;
-  total1:any;
-  total2:any;
-  total3:any;
-  total4:any;
-  total5:any;
-
-  total: any;
-
-  iva: any;
-
-  products: any[] = [];
-  [key: string]: any;
-
-  facturaName:any;
+  uid:any;
 
   pdfOjb:any;
 
-  uid: any;
+  facturaName:any;
 
-  constructor(public angularFirestore: AngularFirestore, private authService: AuthService,
-    private firestoreData: FirestoreDataService) {
+  constructor(private firestore: AngularFirestore, private authService: AuthService) {
     this.fecha = new Date().toLocaleDateString('ES');
-    this.getUid();
+    this.getUid().then((uid) => {
+      this.uid = uid;
+    });
    }
 
-  calculateTotal() {
-      this.total1 = this.productQuantitys[0] * this.productPrices[0];
-      this.total2 = this.productQuantitys[1] * this.productPrices[1];
-      this.total3 = this.productQuantitys[2] * this.productPrices[2];
-      this.total4 = this.productQuantitys[3] * this.productPrices[3];
-      this.total5 = this.productQuantitys[4] * this.productPrices[4];
-
-      this.total = this.total1 + this.total2 +this.total3 +this.total4 +this.total5;
-  }
-
-  async getUid(){
+   async getUid(){
     let uid = await this.authService.getUser();
     return uid;
   }
 
-  async firestoreFactura(){
-    //debugger;
-    //await this.getUid();
-    const uid = await this.getUid();
-    if(uid !== null){
-      const subcoleccion = 'facturas';
-      const documento = this.facturaName;
-      const datos = { // Crea un objeto con los datos que deseas subir
-        companyName: this.companyName,
-        domicileCompany: this.domicileCompany,
-        cpCompany: this.cpCompany,
-        rfcCompany: this.rfcCompany,
-        companyNumber: this.companyNumber,
-        rfcClient: this.rfcClient,
-        selectedState: this.selectedState,
-        domicileClient: this.domicileClient,
-        clientName: this.clientName,
-        clientNumber: this.clientNumber,
-        cfdiUse: this.cfdiUse,
-        productNames: this.productNames,
-        productDescriptions: this.productDescriptions,
-        productPrices: this.productPrices,
-        productQuantitys: this.productQuantitys,
-        selectedPayment: this.selectedPayment,
-        bankName: this.bankName,
-        moneda: this.moneda,
-        fecha: this.fecha,
-        total: this.total,
-        total1: this.total1,
-        total2: this.total2,
-        total3: this.total3,
-        total4: this.total4,
-        total5: this.total5,
-        facturaName: this.facturaName,
-        name: "Factura",
-        icon: "./assets/img/factura.png",
-        color: "linear-gradient(to bottom right, #81C9FA, #055084)",
-        description: "Este documento se utiliza para registrar una operación comercial y detallar los bienes o servicios que se han vendido, así como el precio de venta y la información fiscal de las partes involucradas en la transacción."
-      };
-      console.log(datos)
-      this.firestoreData.createDocument(datos, uid, subcoleccion, documento);
-    }else{
-      console.log('Error en UID');
+  async getDocumentData(uid: string, subcoleccion: string, documento: string): Promise<any> {
+    try {
+      const userRef = this.firestore.collection('users').doc(uid);
+      const subcollectionRef = userRef.collection(subcoleccion);
+      const documentRef = subcollectionRef.doc(documento);
+
+      const snapshot = await documentRef.get().toPromise();
+      if (snapshot && snapshot.exists) {
+        const documentData = snapshot.data();
+        console.log('Datos del documento:', documentData);
+        return documentData;
+      } else {
+        console.log('El documento no existe.');
+        return null;
+      }
+    } catch (error) {
+      console.error('Error al obtener los datos del documento:', error);
+      return null;
     }
   }
 
-  async pdfDownload(){
-    const usuario = this.uid;
-    this.calculateTotal();
+
+  async pdfDownload(userData: any, documentData: any){
     const docDef = {
       content: [
         {
@@ -181,7 +106,7 @@ export class DatosfacturaService {
                         //alignment: 'right',
                       },
                       {
-                        text: `${this.fecha}`,
+                        text: `${documentData.fecha}`,
                         bold: true,
                         color: '#333333',
                         fontSize: 12,
@@ -238,13 +163,13 @@ export class DatosfacturaService {
         {
           columns: [
             {
-              text: `${this.rfcCompany} \n ${this.companyName} \n ${this.companyNumber}`,
+              text: `${documentData.rfcCompany} \n ${documentData.companyName} \n ${documentData.companyNumber}`,
               bold: true,
               color: '#333333',
               //alignment: 'left',
             },
             {
-              text: `${this.rfcClient} \n ${this.clientName} \n ${this.cfdiUse} \n ${this.clientNumber}`,
+              text: `${documentData.rfcClient} \n ${documentData.clientName} \n ${documentData.cfdiUse} \n ${documentData.clientNumber}`,
               bold: true,
               color: '#333333',
               //alignment: 'left',
@@ -270,11 +195,11 @@ export class DatosfacturaService {
         {
           columns: [
             {
-              text: `${this.domicileCompany}, ${this.cpCompany}`,
+              text: `${documentData.domicileCompany}, ${documentData.cpCompany}`,
               style: 'invoiceBillingAddress',
             },
             {
-              text: `${this.domicileClient}, ${this.selectedState}`,
+              text: `${documentData.domicileClient}, ${documentData.selectedState}`,
               style: 'invoiceBillingAddress',
             },
           ],
@@ -325,49 +250,24 @@ export class DatosfacturaService {
               ],
               [
                 {
-                  text: `${this.productNames[0]}`,
+                  text: `${documentData.productNames[0]}`,
                   border: [false, false, false, true],
                   margin: [0, 5, 0, 5],
                 },
                 {
-                  text: `${this.productQuantitys[0]}`, // Example quantity
-                  border: [false, false, false, true],
-                  fillColor: '#f5f5f5',
-                  margin: [0, 5, 0, 5],
-                },
-                {
-                  text: `$${this.productPrices[0]}`,
+                  text: `${documentData.productQuantitys[0]}`, // Example quantity
                   border: [false, false, false, true],
                   fillColor: '#f5f5f5',
                   margin: [0, 5, 0, 5],
                 },
                 {
-                  text: `$${this.total1}`, // Example subtotal (quantity * price)
-                  border: [false, false, false, true],
-                  fillColor: '#f5f5f5',
-                  margin: [0, 5, 0, 5],
-                },
-              ],
-              [
-                {
-                  text: `${this.productDescriptions[1]}`,
-                  border: [false, false, false, true],
-                  margin: [0, 5, 0, 5],
-                },
-                {
-                  text: `${this.productQuantitys[1]}`, // Example quantity
+                  text: `$${documentData.productPrices[0]}`,
                   border: [false, false, false, true],
                   fillColor: '#f5f5f5',
                   margin: [0, 5, 0, 5],
                 },
                 {
-                  text: `$${this.productPrices[1]}`,
-                  border: [false, false, false, true],
-                  fillColor: '#f5f5f5',
-                  margin: [0, 5, 0, 5],
-                },
-                {
-                  text: `$${this.total2}`, // Example subtotal (quantity * price)
+                  text: `$${documentData.total1}`, // Example subtotal (quantity * price)
                   border: [false, false, false, true],
                   fillColor: '#f5f5f5',
                   margin: [0, 5, 0, 5],
@@ -375,49 +275,24 @@ export class DatosfacturaService {
               ],
               [
                 {
-                  text: `${this.productDescriptions[2]}`,
+                  text: `${documentData.productDescriptions[1]}`,
                   border: [false, false, false, true],
                   margin: [0, 5, 0, 5],
                 },
                 {
-                  text: `${this.productQuantitys[2]}`, // Example quantity
-                  border: [false, false, false, true],
-                  fillColor: '#f5f5f5',
-                  margin: [0, 5, 0, 5],
-                },
-                {
-                  text: `$${this.productPrices[2]}`,
+                  text: `${documentData.productQuantitys[1]}`, // Example quantity
                   border: [false, false, false, true],
                   fillColor: '#f5f5f5',
                   margin: [0, 5, 0, 5],
                 },
                 {
-                  text: `$${this.total3}`, // Example subtotal (quantity * price)
-                  border: [false, false, false, true],
-                  fillColor: '#f5f5f5',
-                  margin: [0, 5, 0, 5],
-                },
-              ],
-              [
-                {
-                  text: `${this.productDescriptions[3]}`,
-                  border: [false, false, false, true],
-                  margin: [0, 5, 0, 5],
-                },
-                {
-                  text: `${this.productQuantitys[3]}`, // Example quantity
+                  text: `$${documentData.productPrices[1]}`,
                   border: [false, false, false, true],
                   fillColor: '#f5f5f5',
                   margin: [0, 5, 0, 5],
                 },
                 {
-                  text: `$${this.productPrices[3]}`,
-                  border: [false, false, false, true],
-                  fillColor: '#f5f5f5',
-                  margin: [0, 5, 0, 5],
-                },
-                {
-                  text: `$${this.total4}`, // Example subtotal (quantity * price)
+                  text: `$${documentData.total2}`, // Example subtotal (quantity * price)
                   border: [false, false, false, true],
                   fillColor: '#f5f5f5',
                   margin: [0, 5, 0, 5],
@@ -425,24 +300,74 @@ export class DatosfacturaService {
               ],
               [
                 {
-                  text: `${this.productDescriptions[4]}`,
+                  text: `${documentData.productDescriptions[2]}`,
                   border: [false, false, false, true],
                   margin: [0, 5, 0, 5],
                 },
                 {
-                  text: `${this.productQuantitys[4]}`, // Example quantity
-                  border: [false, false, false, true],
-                  fillColor: '#f5f5f5',
-                  margin: [0, 5, 0, 5],
-                },
-                {
-                  text: `$${this.productPrices[4]}`,
+                  text: `${documentData.productQuantitys[2]}`, // Example quantity
                   border: [false, false, false, true],
                   fillColor: '#f5f5f5',
                   margin: [0, 5, 0, 5],
                 },
                 {
-                  text: `$${this.total5}`, // Example subtotal (quantity * price)
+                  text: `$${documentData.productPrices[2]}`,
+                  border: [false, false, false, true],
+                  fillColor: '#f5f5f5',
+                  margin: [0, 5, 0, 5],
+                },
+                {
+                  text: `$${documentData.total3}`, // Example subtotal (quantity * price)
+                  border: [false, false, false, true],
+                  fillColor: '#f5f5f5',
+                  margin: [0, 5, 0, 5],
+                },
+              ],
+              [
+                {
+                  text: `${documentData.productDescriptions[3]}`,
+                  border: [false, false, false, true],
+                  margin: [0, 5, 0, 5],
+                },
+                {
+                  text: `${documentData.productQuantitys[3]}`, // Example quantity
+                  border: [false, false, false, true],
+                  fillColor: '#f5f5f5',
+                  margin: [0, 5, 0, 5],
+                },
+                {
+                  text: `$${documentData.productPrices[3]}`,
+                  border: [false, false, false, true],
+                  fillColor: '#f5f5f5',
+                  margin: [0, 5, 0, 5],
+                },
+                {
+                  text: `$${documentData.total4}`, // Example subtotal (quantity * price)
+                  border: [false, false, false, true],
+                  fillColor: '#f5f5f5',
+                  margin: [0, 5, 0, 5],
+                },
+              ],
+              [
+                {
+                  text: `${documentData.productDescriptions[4]}`,
+                  border: [false, false, false, true],
+                  margin: [0, 5, 0, 5],
+                },
+                {
+                  text: `${documentData.productQuantitys[4]}`, // Example quantity
+                  border: [false, false, false, true],
+                  fillColor: '#f5f5f5',
+                  margin: [0, 5, 0, 5],
+                },
+                {
+                  text: `$${documentData.productPrices[4]}`,
+                  border: [false, false, false, true],
+                  fillColor: '#f5f5f5',
+                  margin: [0, 5, 0, 5],
+                },
+                {
+                  text: `$${documentData.total5}`, // Example subtotal (quantity * price)
                   border: [false, false, false, true],
                   fillColor: '#f5f5f5',
                   margin: [0, 5, 0, 5],
@@ -468,7 +393,7 @@ export class DatosfacturaService {
                 },
                 {
                   border: [false, true, false, true],
-                  text: `$${this.total}`,
+                  text: `$${documentData.total}`,
                   alignment: 'right',
                   fillColor: '#f5f5f5',
                   margins: [0, 5, 0, 5],
@@ -484,7 +409,7 @@ export class DatosfacturaService {
                   margins: [0, 5, 0, 5],
                 },
                 {
-                  text: `${this.moneda} $${this.total}`,
+                  text: `${documentData.moneda} $${documentData.total}`,
                   bold: true,
                   fontSize: 20,
                   alignment: 'right',
@@ -524,41 +449,6 @@ export class DatosfacturaService {
 
     this.pdfOjb = pdfMake.createPdf(docDef);
 
-    this.pdfOjb.download(this.facturaName + '.pdf');
-
-    // pdfMake.createPdf(docDef).download();
-
-    await this.firestoreFactura();
-
-    this.resetValues();
+    this.pdfOjb.download(documentData.facturaName + '.pdf');
   }
-
-  allValuesEntered(): boolean {
-    return !!this.companyName && !!this.domicileCompany && !!this.cpCompany && !!this.rfcCompany && !!this.companyNumber &&
-           !!this.rfcClient && !!this.selectedState && !!this.domicileClient && !!this.clientName && !!this.clientNumber &&
-           !!this.cfdiUse && !!this.productNames && !!this.productDescriptions && !!this.productPrices && !!this.productQuantitys &&
-           !!this.selectedPayment && !!this.bankName && !!this.moneda;
-  }
-
-  resetValues(){
-    this.companyName = null;
-    this.domicileCompany = null;
-    this.cpCompany = null;
-    this.rfcCompany = null;
-    this.companyNumber = null;
-    this.rfcClient = null;
-    this.selectedState = null;
-    this.domicileClient = null;
-    this.clientName = null;
-    this.clientNumber = null;
-    this.cfdiUse = null;
-    this.productNames = [];
-    this.productDescriptions = []
-    this.productPrices = [];
-    this.productQuantitys = [];
-    this.selectedPayment = null;
-    this.bankName = null;
-    this.moneda = null;
-  }
-
 }

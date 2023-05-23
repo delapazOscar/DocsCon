@@ -2,6 +2,10 @@ import { Injectable } from '@angular/core';
 import { ActionCodeOperation, sendEmailVerification, updateProfile, user } from '@angular/fire/auth';
 import { Auth, createUserWithEmailAndPassword , signInWithEmailAndPassword, sendPasswordResetEmail, signOut, signInWithPopup, GoogleAuthProvider } from '@angular/fire/auth';
 import { userInfo } from 'os';
+import { Observable } from 'rxjs';
+import { DocumentData } from 'firebase/firestore';
+
+
 
 import * as auth from 'firebase/auth';
 import 'firebase/auth';
@@ -12,12 +16,12 @@ import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 import { AlertController } from '@ionic/angular';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { User } from 'firebase/auth';
-
+import { FirestoreDataService } from './firestore-data.service';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
 
 async function sleep(ms: number): Promise<void> {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
-
 
 @Injectable({
   providedIn: 'root'
@@ -27,12 +31,21 @@ async function sleep(ms: number): Promise<void> {
   signOut() {
     throw new Error('Method not implemented.');
   }
- 	constructor(private auth:Auth, private afAuth: AngularFireAuthModule, private alertController:AlertController) {}
+ 	constructor(private auth:Auth, private afAuth: AngularFireAuthModule, private alertController:AlertController,
+    private angularFirestore: AngularFirestore) {}
 
 
-   async register({email, password}:any){
+   async register({email, password, names, lastnames}:any){
     const userCredential = await createUserWithEmailAndPassword(this.auth, email, password);
     await sendEmailVerification(userCredential.user);
+    const usersCollection = this.angularFirestore.collection('users');
+
+    // Crear el documento con los datos del usuario
+    await usersCollection.doc(email).set({
+      email: email,
+      names: names,
+      lastnames: lastnames
+    });
     return userCredential;
   }
 
@@ -79,6 +92,12 @@ async function sleep(ms: number): Promise<void> {
     }else{
       return null;
     }
+  }
+
+  getUserProfile(uid: string): Observable<DocumentData | undefined> {
+    const usersCollection = this.angularFirestore.collection('users');
+    const userProfileDoc = usersCollection.doc(uid);
+    return userProfileDoc.valueChanges({ idField: 'id' }) as Observable<DocumentData | undefined>;
   }
 
   async logout() {

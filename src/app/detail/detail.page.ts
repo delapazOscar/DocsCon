@@ -30,6 +30,8 @@ import { ModalGarantePage } from './modal-garante/modal-garante.page';
 import { DatosPrestamoService } from '../services/datos-prestamo.service';
 import { File } from '@awesome-cordova-plugins/file/ngx';
 import { FileOpener } from '@awesome-cordova-plugins/file-opener/ngx';
+import { FirestoreDataConverter } from 'firebase/firestore';
+import { FirestoreDataService } from '../services/firestore-data.service';
 
 (<any>pdfMake).vfs = pdfFonts.pdfMake.vfs;
 
@@ -85,7 +87,8 @@ export class DetailPage implements OnInit {
     private fileOpener:FileOpener,
     private file:File,
     private platform:Platform,
-    private toastController: ToastController) {
+    private toastController: ToastController,
+    private firestoreData: FirestoreDataService) {
       this.documentos = this.documentsService.getDocuments();
       this.searchedDocument= this.documentos;
 
@@ -104,7 +107,7 @@ export class DetailPage implements OnInit {
   async presentToast() {
     const toast = await this.toastController.create({
       message: 'Documento creado exitosamente!',
-      duration: 3000,
+      duration: 2500,
       position: 'top',
       icon: 'checkmark-circle'
     });
@@ -146,7 +149,8 @@ export class DetailPage implements OnInit {
                 console.log(this.facturaName);
                 // this.showLoading();
                 this.datosFactura.pdfDownload();
-                this.datosFactura.resetValues();
+
+                //this.datosFactura.resetValues();
                 this.presentToast();
 
               }
@@ -155,7 +159,11 @@ export class DetailPage implements OnInit {
               {
                 placeholder: 'Name',
                 type: 'text',
-                name: 'facturaName'
+                name: 'facturaName',
+                attributes: {
+                  maxlength: 15,
+                  inputmode: 'text'
+                },
               },
             ],
           });
@@ -183,7 +191,6 @@ export class DetailPage implements OnInit {
                   this.datosContrato.contratoName = data.contratoName;
                   console.log(this.datosContrato.contratoName);
                   this.datosContrato.pdfDownload();
-                  this.datosContrato.resetValues();
                   this.presentToast();
                 }
               }],
@@ -191,7 +198,11 @@ export class DetailPage implements OnInit {
                 {
                   placeholder: 'Name',
                   type: 'text',
-                  name: 'contratoName'
+                  name: 'contratoName',
+                  attributes: {
+                    maxlength: 15,
+                    inputmode: 'text'
+                  },
                 },
               ],
             });
@@ -221,7 +232,6 @@ export class DetailPage implements OnInit {
                     this.datosPagare.pagareName = data.pagareName;
                     console.log(this.datosPagare.pagareName);
                     this.datosPagare.pdfDownload();
-                    this.datosPagare.resetValues();
                     this.presentToast();
                   }
                 }],
@@ -229,7 +239,11 @@ export class DetailPage implements OnInit {
                   {
                     placeholder: 'Name',
                     type: 'text',
-                    name: 'pagareName'
+                    name: 'pagareName',
+                    attributes: {
+                      maxlength: 15,
+                      inputmode: 'text'
+                    },
                   },
                 ],
               });
@@ -257,7 +271,6 @@ export class DetailPage implements OnInit {
                       this.datosCheque.chequeName = data.chequeName;
                       console.log(this.datosCheque.chequeName);
                       this.datosCheque.pdfDownload();
-                      this.datosCheque.resetValues();
                       this.presentToast();
                     }
                   }],
@@ -265,7 +278,11 @@ export class DetailPage implements OnInit {
                     {
                       placeholder: 'Name',
                       type: 'text',
-                      name: 'chequeName'
+                      name: 'chequeName',
+                      attributes: {
+                        maxlength: 15,
+                        inputmode: 'text'
+                      },
                     },
                   ],
                 });
@@ -294,7 +311,6 @@ export class DetailPage implements OnInit {
                       this.datosPrestamo.prestamoName = data.prestamoName;
                       console.log(this.datosPrestamo.prestamoName);
                       this.datosPrestamo.pdfDownload();
-                      this.datosPrestamo.resetValues();
                       this.presentToast();
                     }
                   }],
@@ -302,7 +318,11 @@ export class DetailPage implements OnInit {
                     {
                       placeholder: 'Name',
                       type: 'text',
-                      name: 'prestamoName'
+                      name: 'prestamoName',
+                      attributes: {
+                        maxlength: 15,
+                        inputmode: 'text'
+                      },
                     },
                   ],
                 });

@@ -31,13 +31,14 @@ import { ɵAngularFireSchedulers} from '@angular/fire'
 import { FirestoreModule} from '@angular/fire/firestore'
 import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFireAuthModule } from '@angular/fire/compat/auth';
+import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 
 import { BrowserModule } from '@angular/platform-browser';
 import { initializeApp,provideFirebaseApp } from '@angular/fire/app';
 import { environment } from '../environments/environment';
 import { provideAuth,getAuth } from '@angular/fire/auth';
 import { provideDatabase,getDatabase } from '@angular/fire/database';
-import { provideFirestore,getFirestore } from '@angular/fire/firestore';
+import { provideFirestore, getFirestore } from '@angular/fire/firestore';
 import { provideStorage,getStorage } from '@angular/fire/storage';
 import { StorageModule } from '@angular/fire/storage';
 import { HttpClientModule } from '@angular/common/http';
@@ -60,9 +61,11 @@ import { ToWords } from 'to-words';
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule,
     ReactiveFormsModule, BrowserAnimationsModule,
     provideFirebaseApp(() => initializeApp(environment.firebase)), provideAuth(() => getAuth()),
-    provideDatabase(() => getDatabase()), provideFirestore(() => getFirestore()),
+    provideDatabase(() => getDatabase()),
+    provideFirestore(() => getFirestore()),
     provideStorage(() => getStorage()),
-    AngularFireModule,
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFirestoreModule,
     AngularFireAuthModule, HttpClientModule],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy} ,DocumentsService, File, FileOpener],
   bootstrap: [AppComponent],
