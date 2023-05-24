@@ -1,0 +1,41 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button color="medium" (click)="cancel()">Cancel</ion-button>
+    </ion-buttons>
+    <ion-title>Cliente</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="confirm()" [strong]="true">Confirm</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content class="ion-padding">
+  <ion-item>
+    <ion-label color="primary" position="floating">Nombre completo:</ion-label>
+    <ion-input type="text" placeholder="Nombre completo" [(ngModel)]="nameCv"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label color="primary">Estado:</ion-label>
+    <ion-select [(ngModel)]="selectedState">
+      <ion-select-option value="">Estado:</ion-select-option>
+      <ion-select-option *ngFor="let estado of estados" [value]="estado.nombre" class="selectState">{{ estado.nombre }}</ion-select-option>
+    </ion-select>
+  </ion-item>
+  <ion-item>
+    <ion-label color="primary" position="floating">Municipio:</ion-label>
+    <ion-input type="text" placeholder="Municipio" [(ngModel)]="municipeCv"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label color="primary" position="floating">Teléfono:</ion-label>
+    <ion-input type="tel" placeholder="Teléfono" [(ngModel)]="numberCv" maxlength="10"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label color="primary" position="floating">Correo electrónico:</ion-label>
+    <ion-input type="email" placeholder="Correo electrónico" [(ngModel)]="emailCv"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label color="primary" position="floating">Breve descripción:</ion-label>
+    <ion-textarea rows="10" placeholder="Escribe una breve descripción de ti" [(ngModel)]="descriptionCv"></ion-textarea>
+  </ion-item>
+</ion-content>
+

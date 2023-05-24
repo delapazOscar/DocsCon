@@ -8,6 +8,7 @@ import { buffer } from 'rxjs';
 import * as numberToWords from 'number-to-words';
 import { FirestoreDataService } from './firestore-data.service';
 import { AuthService } from './auth.service';
+import { File } from '@awesome-cordova-plugins/file/ngx';
 //import * as moment from 'moment';
 
 
@@ -40,7 +41,8 @@ export class DatosPagareService {
 
   lugar: any;
 
-  constructor (private authService: AuthService, private firestoreData: FirestoreDataService) {
+  constructor (private authService: AuthService, private firestoreData: FirestoreDataService,
+    private fileOpener: FileOpener, private plt:Platform, private file: File) {
     this.getUid();
    }
 
@@ -241,8 +243,24 @@ export class DatosPagareService {
 
     await this.firestorePagare();
 
+    this.openFile();
+
     this.resetValues();
   }
 
+  openFile(){
+    if(this.plt.is('capacitor')){
+      this.pdfOjb.getBuffer((buffer: Uint8Array) => {
+        var blob = new Blob([buffer], { type: 'application/pdf' });
+
+        this.file.writeFile(this.file.dataDirectory, `${this.pagareName}.pdf`, blob, { replace: true }).then(fileEntry =>{
+          this.fileOpener.open(this.file.dataDirectory + `${this.pagareName}.pdf`, 'application/pdf');
+        });
+      });
+      return true;
+    }else{
+      return undefined;
+    }
+  }
 
 }

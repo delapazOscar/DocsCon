@@ -71,7 +71,27 @@ const routes: Routes = [
   {
     path: 'modal-garante',
     loadChildren: () => import('./modal-garante/modal-garante.module').then( m => m.ModalGarantePageModule)
+  },  {
+    path: 'modal-user-cv',
+    loadChildren: () => import('./modal-user-cv/modal-user-cv.module').then( m => m.ModalUserCvPageModule)
   },
+  {
+    path: 'modal-formacion-cv',
+    loadChildren: () => import('./modal-formacion-cv/modal-formacion-cv.module').then( m => m.ModalFormacionCvPageModule)
+  },
+  {
+    path: 'modal-habilidades-cv',
+    loadChildren: () => import('./modal-habilidades-cv/modal-habilidades-cv.module').then( m => m.ModalHabilidadesCvPageModule)
+  },
+  {
+    path: 'modal-experiencia-cv',
+    loadChildren: () => import('./modal-experiencia-cv/modal-experiencia-cv.module').then( m => m.ModalExperienciaCvPageModule)
+  },
+  {
+    path: 'modal-idiom-cv',
+    loadChildren: () => import('./modal-idiom-cv/modal-idiom-cv.module').then( m => m.ModalIdiomCvPageModule)
+  },
+
 ];
 
 @NgModule({

@@ -1,0 +1,28 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button color="medium" (click)="cancel()">Cancel</ion-button>
+    </ion-buttons>
+    <ion-title>Experiencia</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="confirm()" [strong]="true">Confirm</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ng-container *ngFor="let item of experienceState; let i = index;">
+    <div class="product-container" >
+      <h1>Experiencia {{i + 1}}</h1>
+      <ion-item>
+        <ion-input labelPlacement="stacked" [(ngModel)]="experienceCv[i]" placeholder="Experiencia {{i + 1}}:"></ion-input>
+      </ion-item>
+    </div>
+  </ng-container>
+
+  <ion-fab slot="fixed" vertical="bottom" horizontal="end">
+    <ion-fab-button (click)="addFormation()">
+      <ion-icon name="add-circle-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>

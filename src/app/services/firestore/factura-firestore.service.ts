@@ -6,6 +6,9 @@ import { AuthService } from '../auth.service';
 import * as pdfMake from "pdfmake/build/pdfmake";
 import * as pdfFonts from 'pdfmake/build/vfs_fonts';
 import { Margins, PageOrientation, PageSize } from 'pdfmake/interfaces';
+import { FileOpener } from '@awesome-cordova-plugins/file-opener/ngx';
+import { File } from '@awesome-cordova-plugins/file/ngx';
+import { Platform } from '@ionic/angular';
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +22,8 @@ export class FacturaFirestoreService {
 
   facturaName:any;
 
-  constructor(private firestore: AngularFirestore, private authService: AuthService) {
+  constructor(private firestore: AngularFirestore, private authService: AuthService,
+    private fileOpener: FileOpener, private plt:Platform, private file:File) {
     this.fecha = new Date().toLocaleDateString('ES');
     this.getUid().then((uid) => {
       this.uid = uid;
@@ -53,7 +57,38 @@ export class FacturaFirestoreService {
   }
 
 
-  async pdfDownload(userData: any, documentData: any){
+  async pdfDownload(userData:any, documentData:any){
+    const products = [];
+    for (let i = 0; i < documentData.productNames.length; i++) {
+      if (documentData.productNames[i]) {
+        const product = [
+          {
+            text: `${documentData.productDescriptions[i]}`,
+            border: [false, false, false, true],
+            margin: [0, 5, 0, 5],
+          },
+          {
+            text: `${documentData.productQuantitys[i]}`,
+            border: [false, false, false, true],
+            margin: [0, 5, 0, 5],
+          },
+          {
+            text: `${documentData.productPrices[i]}`,
+            border: [false, false, false, true],
+            margin: [0, 5, 0, 5],
+          },
+          {
+            text: `${documentData.productQuantitys[i] * documentData.productPrices[i]}`,
+            border: [false, false, false, true],
+            margin: [0, 5, 0, 5],
+          },
+          // Resto de las propiedades del producto
+        ];
+        products.push(product);
+      }
+    }
+
+    const usuario = this.uid;
     const docDef = {
       content: [
         {
@@ -248,132 +283,8 @@ export class FacturaFirestoreService {
                   textTransform: 'uppercase',
                 },
               ],
-              [
-                {
-                  text: `${documentData.productNames[0]}`,
-                  border: [false, false, false, true],
-                  margin: [0, 5, 0, 5],
-                },
-                {
-                  text: `${documentData.productQuantitys[0]}`, // Example quantity
-                  border: [false, false, false, true],
-                  fillColor: '#f5f5f5',
-                  margin: [0, 5, 0, 5],
-                },
-                {
-                  text: `$${documentData.productPrices[0]}`,
-                  border: [false, false, false, true],
-                  fillColor: '#f5f5f5',
-                  margin: [0, 5, 0, 5],
-                },
-                {
-                  text: `$${documentData.total1}`, // Example subtotal (quantity * price)
-                  border: [false, false, false, true],
-                  fillColor: '#f5f5f5',
-                  margin: [0, 5, 0, 5],
-                },
-              ],
-              [
-                {
-                  text: `${documentData.productDescriptions[1]}`,
-                  border: [false, false, false, true],
-                  margin: [0, 5, 0, 5],
-                },
-                {
-                  text: `${documentData.productQuantitys[1]}`, // Example quantity
-                  border: [false, false, false, true],
-                  fillColor: '#f5f5f5',
-                  margin: [0, 5, 0, 5],
-                },
-                {
-                  text: `$${documentData.productPrices[1]}`,
-                  border: [false, false, false, true],
-                  fillColor: '#f5f5f5',
-                  margin: [0, 5, 0, 5],
-                },
-                {
-                  text: `$${documentData.total2}`, // Example subtotal (quantity * price)
-                  border: [false, false, false, true],
-                  fillColor: '#f5f5f5',
-                  margin: [0, 5, 0, 5],
-                },
-              ],
-              [
-                {
-                  text: `${documentData.productDescriptions[2]}`,
-                  border: [false, false, false, true],
-                  margin: [0, 5, 0, 5],
-                },
-                {
-                  text: `${documentData.productQuantitys[2]}`, // Example quantity
-                  border: [false, false, false, true],
-                  fillColor: '#f5f5f5',
-                  margin: [0, 5, 0, 5],
-                },
-                {
-                  text: `$${documentData.productPrices[2]}`,
-                  border: [false, false, false, true],
-                  fillColor: '#f5f5f5',
-                  margin: [0, 5, 0, 5],
-                },
-                {
-                  text: `$${documentData.total3}`, // Example subtotal (quantity * price)
-                  border: [false, false, false, true],
-                  fillColor: '#f5f5f5',
-                  margin: [0, 5, 0, 5],
-                },
-              ],
-              [
-                {
-                  text: `${documentData.productDescriptions[3]}`,
-                  border: [false, false, false, true],
-                  margin: [0, 5, 0, 5],
-                },
-                {
-                  text: `${documentData.productQuantitys[3]}`, // Example quantity
-                  border: [false, false, false, true],
-                  fillColor: '#f5f5f5',
-                  margin: [0, 5, 0, 5],
-                },
-                {
-                  text: `$${documentData.productPrices[3]}`,
-                  border: [false, false, false, true],
-                  fillColor: '#f5f5f5',
-                  margin: [0, 5, 0, 5],
-                },
-                {
-                  text: `$${documentData.total4}`, // Example subtotal (quantity * price)
-                  border: [false, false, false, true],
-                  fillColor: '#f5f5f5',
-                  margin: [0, 5, 0, 5],
-                },
-              ],
-              [
-                {
-                  text: `${documentData.productDescriptions[4]}`,
-                  border: [false, false, false, true],
-                  margin: [0, 5, 0, 5],
-                },
-                {
-                  text: `${documentData.productQuantitys[4]}`, // Example quantity
-                  border: [false, false, false, true],
-                  fillColor: '#f5f5f5',
-                  margin: [0, 5, 0, 5],
-                },
-                {
-                  text: `$${documentData.productPrices[4]}`,
-                  border: [false, false, false, true],
-                  fillColor: '#f5f5f5',
-                  margin: [0, 5, 0, 5],
-                },
-                {
-                  text: `$${documentData.total5}`, // Example subtotal (quantity * price)
-                  border: [false, false, false, true],
-                  fillColor: '#f5f5f5',
-                  margin: [0, 5, 0, 5],
-                },
-              ],
-              // Add more rows as needed
+              ...products,
+
             ],
           },
         },
@@ -450,5 +361,33 @@ export class FacturaFirestoreService {
     this.pdfOjb = pdfMake.createPdf(docDef);
 
     this.pdfOjb.download(documentData.facturaName + '.pdf');
+    if(this.plt.is('capacitor')){
+      this.pdfOjb.getBuffer((buffer: Uint8Array) => {
+        var blob = new Blob([buffer], { type: 'application/pdf' });
+
+        this.file.writeFile(this.file.dataDirectory, `${documentData.facturaName}.pdf`, blob, { replace: true }).then(fileEntry =>{
+          this.fileOpener.open(this.file.dataDirectory + `${documentData.facturaName}.pdf`, 'application/pdf');
+        });
+      });
+      return true;
+    }else{
+      return undefined;
+    }
   }
+
+  // openFile(documentData: string){
+  //   if(this.plt.is('capacitor')){
+  //     this.pdfOjb.getBuffer((buffer: Uint8Array) => {
+  //       var blob = new Blob([buffer], { type: 'application/pdf' });
+
+  //       this.file.writeFile(this.file.dataDirectory, `${documentData.facturaName}.pdf`, blob, { replace: true }).then(fileEntry =>{
+  //         this.fileOpener.open(this.file.dataDirectory + `${documentData.facturaName}.pdf`, 'application/pdf');
+  //       });
+  //     });
+  //     return true;
+  //   }else{
+  //     return undefined;
+  //   }
+  // }
+
 }

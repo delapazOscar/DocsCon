@@ -11,12 +11,16 @@
 </ion-header>
 <ion-content class="ion-padding">
   <ion-item>
-    <ion-input labelPlacement="stacked" [(ngModel)]="deudorName" placeholder="Nombre completo del deudor:"></ion-input>
+    <ion-label color="primary" position="floating">Nombre completo del deudor:</ion-label>
+    <ion-input labelPlacement="floating" [(ngModel)]="deudorName" placeholder="Nombre completo del deudor:"></ion-input>
   </ion-item>
   <ion-item>
-    <ion-input labelPlacement="stacked" [(ngModel)]="deudorDomicile"  placeholder="Domicilio:"></ion-input>
+    <ion-label color="primary" position="floating">Domicilio:</ion-label>
+    <ion-input labelPlacement="floating" [(ngModel)]="deudorDomicile" placeholder="Domicilio:"></ion-input>
   </ion-item>
   <ion-item>
-    <ion-input labelPlacement="stacked" [maxlength]="10" [(ngModel)]="deudorNumber" placeholder="Teléfono:"></ion-input>
+    <ion-label color="primary" position="floating">Teléfono:</ion-label>
+    <ion-input labelPlacement="floating" [maxlength]="10" [(ngModel)]="deudorNumber" placeholder="Teléfono:"></ion-input>
   </ion-item>
 </ion-content>
+

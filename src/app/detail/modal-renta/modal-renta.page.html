@@ -12,39 +12,46 @@
 
 <ion-content>
   <ion-item>
-    <ion-input labelPlacement="stacked" (ionChange)="domicileHouseToRent = domicileHouseToRent.toUpperCase()" [(ngModel)]="domicileHouseToRent" placeholder="Domicilio casa a rentar: "></ion-input>
+    <ion-label position="floating" color="primary">Domicilio casa a rentar</ion-label>
+    <ion-input labelPlacement="floating" (ionChange)="domicileHouseToRent = domicileHouseToRent.toUpperCase()" [(ngModel)]="domicileHouseToRent" placeholder="Domicilio casa a rentar"></ion-input>
   </ion-item>
   <ion-item>
-    <ion-input labelPlacement="stacked" type="number" [(ngModel)]="metrosCuadrados" placeholder="Metros cuadrados de la vivienda: "></ion-input>
+    <ion-label position="floating" color="primary">Metros cuadrados de la vivienda</ion-label>
+    <ion-input labelPlacement="floating" type="number" [(ngModel)]="metrosCuadrados" placeholder="Metros cuadrados de la vivienda"></ion-input>
   </ion-item>
   <ion-item>
-    <ion-input labelPlacement="stacked" type="number" [(ngModel)]="noHabitaciones" placeholder="Número de habitaciones: "></ion-input>
+    <ion-label position="floating" color="primary">Número de habitaciones</ion-label>
+    <ion-input labelPlacement="floating" type="number" [(ngModel)]="noHabitaciones" placeholder="Número de habitaciones"></ion-input>
   </ion-item>
   <ion-item>
-    <ion-input labelPlacement="stacked" type="number" [(ngModel)]="duracionContrato" placeholder="Duración del contrato: ">Años:  </ion-input>
+    <ion-label position="floating" color="primary">Duración del contrato</ion-label>
+    <ion-input labelPlacement="floating" type="number" [(ngModel)]="duracionContrato" placeholder="Duración del contrato">Años:</ion-input>
   </ion-item>
   <ion-item>
-    <ion-label>Fecha inicio</ion-label>
-    <ion-datetime-button datetime="datetime"></ion-datetime-button>
+    <div style="display: flex; flex-direction: column;">
+      <ion-label color="primary" style="width: 100%; text-align: left; margin-top: 15px; margin-bottom: 8px;">Fecha inicio de renta:</ion-label>
+      <ion-datetime-button datetime="datetime" style="margin-bottom: 12px;" color="primary"></ion-datetime-button>
+    </div>
     <ion-modal [keepContentsMounted]="true">
       <ng-template>
-        <ion-datetime color="dark" locale="es-ES" id="datetime" [(ngModel)]="inicioRenta"></ion-datetime>
+        <ion-datetime color="primary" locale="es-ES" id="datetime" [(ngModel)]="inicioRenta" min="2000" max="2050"></ion-datetime>
       </ng-template>
     </ion-modal>
   </ion-item>
   <ion-item>
-    <ion-input labelPlacement="stacked" type="number" [(ngModel)]="mensualidadRenta" placeholder="Mensualidad: ">$</ion-input>
+    <ion-label position="floating" color="primary">Mensualidad</ion-label>
+    <ion-input labelPlacement="floating" type="number" [(ngModel)]="mensualidadRenta" placeholder="Mensualidad">$</ion-input>
   </ion-item>
   <ion-item>
-    <ion-label>Estado</ion-label>
+    <ion-label position="floating" color="primary">Estado</ion-label>
     <ion-select [(ngModel)]="selectedState">
       <ion-select-option value="">Estado</ion-select-option>
       <ion-select-option *ngFor="let estado of estados" [value]="estado.nombre" [(ngModel)]="selectedState" class="selectState">{{ estado.nombre }}</ion-select-option>
     </ion-select>
   </ion-item>
   <ion-item>
-    <ion-input labelPlacement="stacked" [(ngModel)]="contractMunicipe" placeholder="Municipio: "></ion-input>
+    <ion-label position="floating" color="primary">Municipio</ion-label>
+    <ion-input labelPlacement="floating" [(ngModel)]="contractMunicipe" placeholder="Municipio"></ion-input>
   </ion-item>
-
 </ion-content>
 

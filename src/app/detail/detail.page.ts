@@ -27,11 +27,17 @@ import { ModalPrestamoPage } from './modal-prestamo/modal-prestamo.page';
 import { ModalPrestatarioPage } from './modal-prestatario/modal-prestatario.page';
 import { ModalPrestamistaPage } from './modal-prestamista/modal-prestamista.page';
 import { ModalGarantePage } from './modal-garante/modal-garante.page';
+import { ModalUserCvPage } from './modal-user-cv/modal-user-cv.page';
+import { ModalFormacionCvPage } from './modal-formacion-cv/modal-formacion-cv.page';
+import { ModalHabilidadesCvPage } from './modal-habilidades-cv/modal-habilidades-cv.page';
+import { ModalExperienciaCvPage } from './modal-experiencia-cv/modal-experiencia-cv.page';
+import { ModalIdiomCvPage } from './modal-idiom-cv/modal-idiom-cv.page';
 import { DatosPrestamoService } from '../services/datos-prestamo.service';
 import { File } from '@awesome-cordova-plugins/file/ngx';
 import { FileOpener } from '@awesome-cordova-plugins/file-opener/ngx';
 import { FirestoreDataConverter } from 'firebase/firestore';
 import { FirestoreDataService } from '../services/firestore-data.service';
+import { DatosCurriculumService } from '../services/datos-curriculum.service';
 
 (<any>pdfMake).vfs = pdfFonts.pdfMake.vfs;
 
@@ -73,6 +79,7 @@ export class DetailPage implements OnInit {
   contratoName: any;
   chequeName: any;
   prestamoName: any;
+  curriculumName: any;
 
   constructor(private router:Router,
     private documentsService:DocumentsService,
@@ -84,6 +91,7 @@ export class DetailPage implements OnInit {
     private datosContrato: DatosContratoService,
     private datosCheque: DatosChequeService,
     private datosPrestamo: DatosPrestamoService,
+    private datosCurriculum: DatosCurriculumService,
     private fileOpener:FileOpener,
     private file:File,
     private platform:Platform,
@@ -331,6 +339,45 @@ export class DetailPage implements OnInit {
 
             break;
 
+            case 'Curriculum':
+              if (!this.datosCurriculum.allValuesEntered()) {
+                const alert = await this.alertController.create({
+                  header: 'Datos Incompletos',
+                  subHeader: 'Por favor llene todos los datos requeridos',
+                  buttons: ['OK'],
+                });
+
+                await alert.present();
+
+              } else {
+                const alert = await this.alertController.create({
+                  header: 'Nombre del documento:',
+                  buttons: [{
+                    text: 'OK',
+                    handler: (data) => {
+                      this.curriculumName = data.curriculumName;
+                      this.datosCurriculum.curriculumName = data.curriculumName;
+                      console.log(this.datosCurriculum.curriculumName);
+                      this.datosCurriculum.pdfDownload();
+                      this.presentToast();
+                    }
+                  }],
+                  inputs: [
+                    {
+                      placeholder: 'Name',
+                      type: 'text',
+                      name: 'curriculumName',
+                      attributes: {
+                        maxlength: 15,
+                        inputmode: 'text'
+                      },
+                    },
+                  ],
+                });
+                await alert.present();
+              }
+            break;
+
     }
   }
 
@@ -534,6 +581,71 @@ export class DetailPage implements OnInit {
   async openModalGarante(){
     const modal = await this.modalCtrl.create({
       component: ModalGarantePage,
+    });
+    modal.present();
+
+    const { data, role } = await modal.onWillDismiss();
+
+    if (role === 'confirm') {
+      this.message = `Hello, ${data}!`;
+    }
+  }
+
+  async openModalDatosPersonales(){
+    const modal = await this.modalCtrl.create({
+      component: ModalUserCvPage,
+    });
+    modal.present();
+
+    const { data, role } = await modal.onWillDismiss();
+
+    if (role === 'confirm') {
+      this.message = `Hello, ${data}!`;
+    }
+  }
+
+  async openModalFormacion(){
+    const modal = await this.modalCtrl.create({
+      component: ModalFormacionCvPage,
+    });
+    modal.present();
+
+    const { data, role } = await modal.onWillDismiss();
+
+    if (role === 'confirm') {
+      this.message = `Hello, ${data}!`;
+    }
+  }
+
+  async openModalHabilidades(){
+    const modal = await this.modalCtrl.create({
+      component: ModalHabilidadesCvPage,
+    });
+    modal.present();
+
+    const { data, role } = await modal.onWillDismiss();
+
+    if (role === 'confirm') {
+      this.message = `Hello, ${data}!`;
+    }
+  }
+
+  async openModalExperiencia(){
+    const modal = await this.modalCtrl.create({
+      component: ModalExperienciaCvPage,
+    });
+    modal.present();
+
+    const { data, role } = await modal.onWillDismiss();
+
+    if (role === 'confirm') {
+      this.message = `Hello, ${data}!`;
+    }
+  }
+
+  async openModalIdiomas(){
+    const modal = await this.modalCtrl.create({
+      component: ModalIdiomCvPage,
     });
     modal.present();
 

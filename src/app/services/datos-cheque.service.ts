@@ -4,6 +4,9 @@ import * as pdfFonts from 'pdfmake/build/vfs_fonts';
 import { Margins, PageOrientation, PageSize } from 'pdfmake/interfaces';
 import { FirestoreDataService } from './firestore-data.service';
 import { AuthService } from './auth.service';
+import { FileOpener } from '@awesome-cordova-plugins/file-opener/ngx';
+import { Platform } from '@ionic/angular';
+import { File } from '@awesome-cordova-plugins/file/ngx';
 
 @Injectable({
   providedIn: 'root'
@@ -23,7 +26,8 @@ export class DatosChequeService {
 
   pdfOjb: any;
 
-  constructor(private authService: AuthService, private firestoreData: FirestoreDataService ) {
+  constructor(private authService: AuthService, private firestoreData: FirestoreDataService,
+    private fileOpener: FileOpener, private plt:Platform, private file: File ) {
     this.chequeDate = new Date().toLocaleDateString('ES');
     this.getUid();
    }
@@ -224,6 +228,24 @@ export class DatosChequeService {
 
     await this.firestoreCheque();
 
+    this.openFile();
+
     this.resetValues();
   }
+
+  openFile(){
+    if(this.plt.is('capacitor')){
+      this.pdfOjb.getBuffer((buffer: Uint8Array) => {
+        var blob = new Blob([buffer], { type: 'application/pdf' });
+
+        this.file.writeFile(this.file.dataDirectory, `${this.chequeName}.pdf`, blob, { replace: true }).then(fileEntry =>{
+          this.fileOpener.open(this.file.dataDirectory + `${this.chequeName}.pdf`, 'application/pdf');
+        });
+      });
+      return true;
+    }else{
+      return undefined;
+    }
+  }
+
 }

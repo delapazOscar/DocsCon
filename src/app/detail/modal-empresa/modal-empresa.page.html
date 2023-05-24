@@ -12,18 +12,25 @@
 
 <ion-content>
   <ion-item>
-    <ion-input label="Floating label" type="text" labelPlacement="floating" [(ngModel)]="companyName" placeholder="Nombre de la empresa:"></ion-input>
+    <ion-label position="floating" color="primary">Nombre de la empresa:</ion-label>
+    <ion-input type="text" labelPlacement="floating" [(ngModel)]="companyName" placeholder="Nombre de la empresa:"></ion-input>
   </ion-item>
   <ion-item>
-    <ion-input label="Floating label" labelPlacement="floating" [(ngModel)]="domicileCompany" placeholder="Dirección de la empresa"></ion-input>
+    <ion-label position="floating" color="primary">Dirección de la empresa:</ion-label>
+    <ion-input labelPlacement="floating" [(ngModel)]="domicileCompany" placeholder="Dirección de la empresa"></ion-input>
   </ion-item>
   <ion-item>
-    <ion-input label="Floating label" maxlength="5" type="number" inputmode="numeric" labelPlacement="floating" [(ngModel)]="cpCompany" placeholder="Código Postal"></ion-input>
+    <ion-label position="floating" color="primary">Código Postal:</ion-label>
+    <ion-input maxlength="5" type="number" inputmode="numeric" labelPlacement="floating" [(ngModel)]="cpCompany" placeholder="Código Postal"></ion-input>
   </ion-item>
   <ion-item>
-    <ion-input label="Floating label" maxlength="13" (ionChange)="rfcCompany = rfcCompany.toUpperCase()" labelPlacement="floating" [(ngModel)]="rfcCompany" placeholder="RFC de la empresa"></ion-input>
+    <ion-label position="floating" color="primary">RFC de la empresa:</ion-label>
+    <ion-input maxlength="13" (ionChange)="rfcCompany = rfcCompany.toUpperCase()" labelPlacement="floating" [(ngModel)]="rfcCompany" placeholder="RFC de la empresa"></ion-input>
   </ion-item>
   <ion-item>
-    <ion-input label="Floating label" maxlength="10" labelPlacement="floating" type="tel" [(ngModel)]="companyNumber" placeholder="Numero de telefono de la empresa"></ion-input>
+    <ion-label position="floating" color="primary">Número de teléfono de la empresa:</ion-label>
+    <ion-input maxlength="10" labelPlacement="floating" type="tel" [(ngModel)]="companyNumber" placeholder="Número de teléfono de la empresa"></ion-input>
   </ion-item>
 </ion-content>
+
+

@@ -54,18 +54,22 @@
 
     <ng-template #content>
       <div class="documents-list" *ngFor="let document of filteredDocuments">
-        <ion-card [style.background]="document.color" (click)="downloadFirestorePdf(uid, document.id, document.name)">
-          <ion-card-header>
+        <ion-card [style.background]="document.color" >
+          <div class="divLeft" (click)="downloadFirestorePdf(uid, document.id, document.name)">
+            <ion-card-header>
             <ion-card-title>{{ document.id }}</ion-card-title>
             <ion-card-subtitle>{{ document.name }}</ion-card-subtitle>
-          </ion-card-header>
-          <ion-card-content>
-            <ion-icon name="document-text-outline" class="icon-doc"></ion-icon>
+            </ion-card-header>
+            <ion-card-content>
+              <ion-icon name="document-text-outline" class="icon-doc"></ion-icon>
+            </ion-card-content>
+          </div>
+          <div class="divRight">
             <ng-container *ngIf="document.icon">
               <img class="document-img" [src]="document.icon" [alt]="document.name">
               <ion-icon name="trash-outline" class="deleteButton" (click)="confirmDelete(uid, document.name.toLowerCase()+'s', document.id)"></ion-icon>
             </ng-container>
-          </ion-card-content>
+          </div>
         </ion-card>
       </div>
     </ng-template>

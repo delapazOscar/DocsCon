@@ -11,12 +11,16 @@
 </ion-header>
 <ion-content class="ion-padding">
   <ion-item>
-    <ion-input labelPlacement="stacked" (ionChange)="bankName = bankName.toUpperCase()" [(ngModel)]="bankName" placeholder="Nombre del banco:"></ion-input>
+    <ion-label color="primary" position="floating">Nombre del banco:</ion-label>
+    <ion-input labelPlacement="floating" (ionChange)="bankName = bankName.toUpperCase()" [(ngModel)]="bankName" placeholder="Nombre del banco:"></ion-input>
   </ion-item>
   <ion-item>
-    <ion-input labelPlacement="stacked" [(ngModel)]="accountNumber"  placeholder="Número de cuenta: "></ion-input>
+    <ion-label color="primary" position="floating">Número de cuenta:</ion-label>
+    <ion-input labelPlacement="floating" [(ngModel)]="accountNumber"  placeholder="Número de cuenta: "></ion-input>
   </ion-item>
   <ion-item>
-    <ion-input labelPlacement="stacked" type="number" [(ngModel)]="montoCheque" placeholder="Monto del cheque:">$</ion-input>
+    <ion-label color="primary" position="floating">Monto del cheque:</ion-label>
+    <ion-input labelPlacement="floating" type="number" [(ngModel)]="montoCheque" placeholder="Monto del cheque:">$</ion-input>
   </ion-item>
 </ion-content>
+

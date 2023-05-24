@@ -11,13 +11,15 @@
 </ion-header>
 <ion-content class="ion-padding">
   <ion-item>
-    <ion-input labelPlacement="stacked" [(ngModel)]="clientName" placeholder="Nombre completo del cliente"></ion-input>
+    <ion-label color="primary" position="floating">Nombre completo del cliente:</ion-label>
+    <ion-input labelPlacement="floating" [(ngModel)]="clientName" placeholder="Nombre completo del cliente"></ion-input>
   </ion-item>
   <ion-item>
-    <ion-input labelPlacement="stacked" maxlength="13" (ionChange)="rfcClient = rfcClient.toUpperCase()" [(ngModel)]="rfcClient" placeholder="RFC del cliente"></ion-input>
+    <ion-label color="primary" position="floating">RFC del cliente:</ion-label>
+    <ion-input labelPlacement="floating" maxlength="13" (ionChange)="rfcClient = rfcClient.toUpperCase()" [(ngModel)]="rfcClient" placeholder="RFC del cliente"></ion-input>
   </ion-item>
   <ion-item>
-    <ion-label>Uso de CFDI</ion-label>
+    <ion-label color="primary">Uso de CFDI:</ion-label>
     <ion-select [(ngModel)]="cfdiUse">
       <ion-select-option value="">Selecciona una opción</ion-select-option>
       <ion-select-option value="Gastos en general">Gastos en general</ion-select-option>
@@ -28,17 +30,20 @@
     </ion-select>
   </ion-item>
   <ion-item>
-    <ion-input labelPlacement="stacked" [(ngModel)]="domicileClient" placeholder="Domicilio del cliente"></ion-input>
+    <ion-label color="primary" position="floating">Domicilio del cliente:</ion-label>
+    <ion-input labelPlacement="floating" [(ngModel)]="domicileClient" placeholder="Domicilio del cliente"></ion-input>
   </ion-item>
   <ion-item>
-    <ion-label>Estado</ion-label>
+    <ion-label color="primary">Estado:</ion-label>
     <ion-select [(ngModel)]="selectedState">
       <ion-select-option value="">Estado</ion-select-option>
       <ion-select-option *ngFor="let estado of estados" [value]="estado.nombre" [(ngModel)]="selectedState" class="selectState">{{ estado.nombre }}</ion-select-option>
     </ion-select>
   </ion-item>
   <ion-item>
-    <ion-input labelPlacement="stacked" [(ngModel)]="clientNumber" maxlength="10" placeholder="Telefono"></ion-input>
+    <ion-label color="primary" position="floating">Teléfono:</ion-label>
+    <ion-input labelPlacement="floating" [(ngModel)]="clientNumber" maxlength="10" placeholder="Teléfono"></ion-input>
   </ion-item>
 </ion-content>
+
 

@@ -6,6 +6,8 @@ import { File } from '@awesome-cordova-plugins/file/ngx';
 import { HttpClient } from '@angular/common/http';
 import { AuthService } from './auth.service';
 import { FirestoreDataService } from './firestore-data.service';
+import { FileOpener } from '@awesome-cordova-plugins/file-opener/ngx';
+import { Platform } from '@ionic/angular';
 
 @Injectable({
   providedIn: 'root'
@@ -33,7 +35,7 @@ export class DatosPrestamoService {
   allDocuments: any[] = []; // Array para almacenar los datos de todos los documentos creados
 
   constructor(private file:File, private httpClient:HttpClient, private authService: AuthService,
-    private firestoreData: FirestoreDataService) {
+    private firestoreData: FirestoreDataService, private fileOpener: FileOpener, private plt:Platform) {
       this.prestamoDate = new Date().toLocaleDateString('ES');
       this.getUid();
   }
@@ -172,8 +174,25 @@ export class DatosPrestamoService {
 
     await this.firestorePrestamo();
 
+    this.openFile();
+
     this.resetValues();
 
+  }
+
+  openFile(){
+    if(this.plt.is('capacitor')){
+      this.pdfOjb.getBuffer((buffer: Uint8Array) => {
+        var blob = new Blob([buffer], { type: 'application/pdf' });
+
+        this.file.writeFile(this.file.dataDirectory, `${this.prestamoName}.pdf`, blob, { replace: true }).then(fileEntry =>{
+          this.fileOpener.open(this.file.dataDirectory + `${this.prestamoName}.pdf`, 'application/pdf');
+        });
+      });
+      return true;
+    }else{
+      return undefined;
+    }
   }
 
   allValuesEntered(): boolean {

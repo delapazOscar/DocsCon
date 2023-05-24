@@ -11,40 +11,51 @@
 </ion-header>
 <ion-content class="ion-padding">
   <ion-item>
-    <ion-input labelPlacement="stacked" [(ngModel)]="acuerdoPlace" placeholder="Lugar de acuerdo: "></ion-input>
+    <ion-label color="primary" position="floating">Lugar de acuerdo:</ion-label>
+    <ion-input type="text" placeholder="Lugar de acuerdo" [(ngModel)]="acuerdoPlace"></ion-input>
   </ion-item>
   <ion-item>
-    <ion-label>Fecha de vencimiento</ion-label>
-    <ion-datetime-button datetime="datetime"></ion-datetime-button>
+    <div style="display: flex; flex-direction: column;">
+      <ion-label color="primary" style="width: 100%; text-align: left; margin-top: 15px; margin-bottom: 8px;">Fecha de vencimiento:</ion-label>
+      <ion-datetime-button datetime="datetime" style="margin-bottom: 12px;" color="primary"></ion-datetime-button>
+    </div>
     <ion-modal [keepContentsMounted]="true">
       <ng-template>
-        <ion-datetime color="dark" locale="es-ES" id="datetime" [(ngModel)]="dateAcuerdo"></ion-datetime>
+        <ion-datetime color="primary" locale="es-ES" id="datetime" [(ngModel)]="dateAcuerdo" min="2000" max="2050"></ion-datetime>
       </ng-template>
     </ion-modal>
   </ion-item>
+
+
+
   <ion-item>
-    <ion-input labelPlacement="stacked" type="number" [(ngModel)]="acuerdoQuantity" placeholder="Cantidad a pagar: ">$</ion-input>
+    <ion-label color="primary" position="floating">Cantidad a pagar:</ion-label>
+    <ion-input type="number" placeholder="Cantidad a pagar" [(ngModel)]="acuerdoQuantity"></ion-input>
   </ion-item>
   <ion-item>
-    <ion-label>Moneda</ion-label>
+    <ion-label color="primary">Moneda</ion-label>
     <ion-select [(ngModel)]="selectedCurrency">
       <ion-select-option value="">Seleccionar moneda</ion-select-option>
       <ion-select-option *ngFor="let moneda of monedas" [value]="moneda.codigo" class="selectState">{{ moneda.nombre }}</ion-select-option>
     </ion-select>
   </ion-item>
   <ion-item>
-    <ion-input labelPlacement="stacked" type="number" [(ngModel)]="acuerdoInteres" placeholder="Tasa de interéses: "> %</ion-input>
+    <ion-label color="primary" position="floating">Tasa de interés:</ion-label>
+    <ion-input type="number" placeholder="Tasa de interés" [(ngModel)]="acuerdoInteres"></ion-input>
   </ion-item>
   <ion-item>
-    <ion-label>Estado</ion-label>
+    <ion-label color="primary">Estado</ion-label>
     <ion-select [(ngModel)]="selectedState">
       <ion-select-option value="">Estado</ion-select-option>
       <ion-select-option *ngFor="let estado of estados" [value]="estado.nombre" [(ngModel)]="selectedState" class="selectState">{{ estado.nombre }}</ion-select-option>
     </ion-select>
   </ion-item>
   <ion-item>
-    <ion-input labelPlacement="stacked" [(ngModel)]="acuerdoMunicipio" placeholder="Municipio:"></ion-input>
+    <ion-label color="primary" position="floating">Municipio:</ion-label>
+    <ion-input type="text" placeholder="Municipio" [(ngModel)]="acuerdoMunicipio"></ion-input>
   </ion-item>
 </ion-content>
+
+
 
 

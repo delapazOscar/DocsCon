@@ -1,0 +1,51 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button color="medium" (click)="cancel()">Cancel</ion-button>
+    </ion-buttons>
+    <ion-title>Idiomas</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="confirm()" [strong]="true">Confirm</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ng-container *ngFor="let item of idiomState; let i = index;">
+    <div class="product-container">
+      <h1>Idioma No.{{i + 1}}</h1>
+      <ion-item>
+        <ion-label position="stacked">Idioma No.{{i + 1}}:</ion-label>
+        <ion-select [(ngModel)]="idiomsCv[i]" placeholder="Seleccione el idioma">
+          <ion-select-option value="Español">Español</ion-select-option>
+          <ion-select-option value="Inglés">Inglés</ion-select-option>
+          <ion-select-option value="Francés">Francés</ion-select-option>
+          <ion-select-option value="Alemán">Alemán</ion-select-option>
+          <ion-select-option value="Italiano">Italiano</ion-select-option>
+          <ion-select-option value="Portugués">Portugués</ion-select-option>
+          <ion-select-option value="Chino">Chino</ion-select-option>
+          <ion-select-option value="Japonés">Japonés</ion-select-option>
+          <ion-select-option value="Ruso">Ruso</ion-select-option>
+          <ion-select-option value="Árabe">Árabe</ion-select-option>
+          <ion-select-option value="Hindi">Hindi</ion-select-option>
+          <ion-select-option value="Coreano">Coreano</ion-select-option>
+          <ion-select-option value="Holandés">Holandés</ion-select-option>
+          <ion-select-option value="Polaco">Polaco</ion-select-option>
+          <ion-select-option value="Sueco">Sueco</ion-select-option>
+          <ion-select-option value="Turco">Turco</ion-select-option>
+          <ion-select-option value="Hebreo">Hebreo</ion-select-option>
+          <ion-select-option value="Danés">Danés</ion-select-option>
+          <ion-select-option value="Noruego">Noruego</ion-select-option>
+          <ion-select-option value="Finlandés">Finlandés</ion-select-option>
+        </ion-select>
+      </ion-item>
+    </div>
+  </ng-container>
+
+  <ion-fab slot="fixed" vertical="bottom" horizontal="end">
+    <ion-fab-button (click)="addFormation()">
+      <ion-icon name="add-circle-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>
+

@@ -46,26 +46,26 @@ export class DocumentsService{
     //   color: "linear-gradient(to bottom right, #999999, #FFFFFF)",
     //   description: ""
     // },
-    {
-      name: "Derechos",
-      //icon: "../assets/img/derechos-de-autor.png",
-      icon: "./assets/img/derechos-de-autor.png",
-      color: "linear-gradient(to bottom right, #FFC7B1, #D13C02)",
-      description: ""
-    },
-    {
-      name: "Cotización",
-      //icon: "../assets/img/solicitud-de-cotizacion.png",
-      icon: "./assets/img/solicitud-de-cotizacion.png",
-      color: "linear-gradient(to bottom right, #FFA8A8, #A61B1B)",
-      description: ""
-    },
+    // {
+    //   name: "Derechos",
+    //   //icon: "../assets/img/derechos-de-autor.png",
+    //   icon: "./assets/img/derechos-de-autor.png",
+    //   color: "linear-gradient(to bottom right, #FFC7B1, #D13C02)",
+    //   description: ""
+    // },
+    // {
+    //   name: "Cotización",
+    //   //icon: "../assets/img/solicitud-de-cotizacion.png",
+    //   icon: "./assets/img/solicitud-de-cotizacion.png",
+    //   color: "linear-gradient(to bottom right, #FFA8A8, #A61B1B)",
+    //   description: ""
+    // },
     {
       name: "Curriculum",
       //icon: "../assets/img/curriculum.png",
       icon: "./assets/img/curriculum.png",
       color: "linear-gradient(to bottom right, #4F91A5, #7ECEE8)",
-      description: ""
+      description: "Un currículum es un documento que sintetiza la información clave sobre la formación, experiencia y habilidades de una persona, con el objetivo de presentarse de manera efectiva a posibles empleadores o instituciones educativas. Es una herramienta fundamental en la búsqueda de empleo y en la solicitud de oportunidades profesionales."
     },
   ];
 

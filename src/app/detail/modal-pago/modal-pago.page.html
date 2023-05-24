@@ -11,7 +11,7 @@
 </ion-header>
 <ion-content class="ion-padding">
   <ion-item>
-    <ion-label>Forma de pago</ion-label>
+    <ion-label color="primary" position="floating">Forma de pago</ion-label>
     <ion-select [(ngModel)]="selectedPayment">
       <ion-select-option value="">Selecciona una opción</ion-select-option>
       <ion-select-option value="Tarjeta de crédito/debito">Tarjeta de crédito/débito</ion-select-option>
@@ -21,13 +21,15 @@
     </ion-select>
   </ion-item>
   <ion-item>
+    <ion-label color="primary" position="floating">Nombre del banco</ion-label>
     <ion-input labelPlacement="stacked" [(ngModel)]="bankName" placeholder="Nombre del banco" maxlength="20"></ion-input>
   </ion-item>
   <ion-item>
-    <ion-label>Moneda</ion-label>
+    <ion-label color="primary" position="floating">Moneda</ion-label>
     <ion-select [(ngModel)]="moneda">
       <ion-select-option value="">Seleccionar moneda</ion-select-option>
       <ion-select-option *ngFor="let moneda of monedas" [value]="moneda.codigo" class="selectState">{{ moneda.nombre }}</ion-select-option>
     </ion-select>
   </ion-item>
 </ion-content>
+

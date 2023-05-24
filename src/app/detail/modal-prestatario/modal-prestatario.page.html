@@ -12,9 +12,12 @@
 
 <ion-content class="ion-padding">
   <ion-item>
-    <ion-input labelPlacement="stacked" [(ngModel)]="prestatarioName" placeholder="Nombre del prestatario:"></ion-input>
+    <ion-label position="floating" color="primary">Nombre del prestatario:</ion-label>
+    <ion-input [(ngModel)]="prestatarioName" placeholder="Nombre del prestatario:"></ion-input>
   </ion-item>
   <ion-item>
-    <ion-input labelPlacement="stacked" [(ngModel)]="prestatarioDirection"  placeholder="Domicilio del prestatario: "></ion-input>
+    <ion-label position="floating" color="primary">Domicilio del prestatario:</ion-label>
+    <ion-input [(ngModel)]="prestatarioDirection" placeholder="Domicilio del prestatario:"></ion-input>
   </ion-item>
 </ion-content>
+

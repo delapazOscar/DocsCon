@@ -57,11 +57,6 @@ export class ModalProductosPage implements OnInit {
     this.datosFactura.productPrices = data.productPrices;
     this.datosFactura.productQuantitys = data.productQuantitys;
 
-    console.log(this.datosFactura.productNames);
-    console.log(this.datosFactura.productDescriptions);
-    console.log(this.datosFactura.productPrices);
-    console.log(this.datosFactura.productQuantitys);
-
     return this.modalCtrl.dismiss(this.productNames, 'confirm');
   }
 

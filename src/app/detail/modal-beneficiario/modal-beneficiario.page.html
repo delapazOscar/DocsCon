@@ -11,12 +11,16 @@
 </ion-header>
 <ion-content class="ion-padding">
   <ion-item>
-    <ion-input labelPlacement="stacked" (ionChange)="beneficiarioName = beneficiarioName.toUpperCase()" [(ngModel)]="beneficiarioName" placeholder="Nombre completo del beneficiario:"></ion-input>
+    <ion-label color="primary" position="floating">Nombre completo del beneficiario:</ion-label>
+    <ion-input (ionChange)="beneficiarioName = beneficiarioName.toUpperCase()" [(ngModel)]="beneficiarioName" placeholder="Nombre completo del beneficiario"></ion-input>
   </ion-item>
   <ion-item>
-    <ion-input labelPlacement="stacked" [(ngModel)]="beneficiarioDirection"  placeholder="Domicilio del beneficiario: "></ion-input>
+    <ion-label color="primary" position="floating">Domicilio del beneficiario:</ion-label>
+    <ion-input [(ngModel)]="beneficiarioDirection" placeholder="Domicilio del beneficiario"></ion-input>
   </ion-item>
   <ion-item>
-    <ion-input labelPlacement="stacked" type="number" [maxlength]="10" [(ngModel)]="beneficiarioNumber" placeholder="Teléfono del beneficiario:"></ion-input>
+    <ion-label color="primary" position="floating">Teléfono del beneficiario:</ion-label>
+    <ion-input type="number" [maxlength]="10" [(ngModel)]="beneficiarioNumber" placeholder="Teléfono del beneficiario"></ion-input>
   </ion-item>
 </ion-content>
+

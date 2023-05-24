@@ -14,6 +14,7 @@ import { ContratoService } from '../services/firestore/contrato.service';
 import { PagareFirestoreService } from '../services/firestore/pagare-firestore.service';
 import { PrestamoFirestoreService } from '../services/firestore/prestamo-firestore.service';
 import { ChequeFirestoreService } from '../services/firestore/cheque-firestore.service';
+import { CurriculumFirestoreService } from '../services/firestore/curriculum-firestore.service';
 
 
 @Component({
@@ -46,7 +47,7 @@ export class Tab2Page implements OnInit {
     private firestoreData: FirestoreDataService, private popoverController: PopoverController,
     private facturaFirestoreService: FacturaFirestoreService, private contratoService: ContratoService,
     private pagareFirestoreService:PagareFirestoreService, private prestamoFirestoreService: PrestamoFirestoreService,
-    private chequeFirestoreService:ChequeFirestoreService) { }
+    private chequeFirestoreService:ChequeFirestoreService, private curriculumFirestoreService: CurriculumFirestoreService) { }
 
     async ngOnInit() {
       this.documentos = this.documentsService.getDocuments();
@@ -56,9 +57,10 @@ export class Tab2Page implements OnInit {
       const pagares$ = this.firestoreData.getDocumentNames(this.uid, 'pagarés');
       const cheques$ = this.firestoreData.getDocumentNames(this.uid, 'cheques');
       const prestamos$ = this.firestoreData.getDocumentNames(this.uid, 'préstamos');
+      const curriculums$ = this.firestoreData.getDocumentNames(this.uid, 'curriculums');
 
-      forkJoin([facturas$, contratos$, pagares$, cheques$, prestamos$]).subscribe(([facturas, contratos, pagares, cheques, prestamos]) => {
-        this.documentNames = [...facturas, ...contratos, ...pagares, ...cheques, ...prestamos];
+      forkJoin([facturas$, contratos$, pagares$, cheques$, prestamos$, curriculums$]).subscribe(([facturas, contratos, pagares, cheques, prestamos, curriculums]) => {
+        this.documentNames = [...facturas, ...contratos, ...pagares, ...cheques, ...prestamos, ...curriculums];
         this.filterDocuments('');
         this.refreshData(null);
         this.isLoading = false; // Loading is complete, set the flag to false
@@ -71,10 +73,10 @@ export class Tab2Page implements OnInit {
       const pagares$ = this.firestoreData.getDocumentNames(this.uid, 'pagarés');
       const chques$ = this.firestoreData.getDocumentNames(this.uid, 'cheques');
       const prestamos$ = this.firestoreData.getDocumentNames(this.uid, 'préstamos');
+      const curriculums$ = this.firestoreData.getDocumentNames(this.uid, 'curriculums');
 
-
-      forkJoin([facturas$, contratos$, pagares$, chques$, prestamos$]).subscribe(([facturas, contratos, pagares, cheques, prestamos]) => {
-        this.documentNames = [...facturas, ...contratos, ...pagares, ...cheques, ...prestamos];
+      forkJoin([facturas$, contratos$, pagares$, chques$, prestamos$, curriculums$]).subscribe(([facturas, contratos, pagares, cheques, prestamos, curriculums]) => {
+        this.documentNames = [...facturas, ...contratos, ...pagares, ...cheques, ...prestamos, ...curriculums];
         this.filteredDocuments = this.documentNames;
         this.isLoading = false;// Actualiza filteredDocuments con los nuevos datos
       });
@@ -149,7 +151,7 @@ export class Tab2Page implements OnInit {
 
   async presentToast() {
     const toast = await this.toastController.create({
-      message: 'Documento descargado!',
+      message: 'Documento Generado!',
       duration: 2500,
       position: 'top',
       icon: 'checkmark-circle'
@@ -181,6 +183,10 @@ export class Tab2Page implements OnInit {
             break;
           case 'Préstamo':
             this.prestamoFirestoreService.pdfDownload(uid, documentData);
+            this.presentToast();
+            break;
+          case 'Curriculum':
+            this.curriculumFirestoreService.pdfDownload(uid, documentData);
             this.presentToast();
             break;
           // Agrega más casos según los nombres de los documentos que tengas

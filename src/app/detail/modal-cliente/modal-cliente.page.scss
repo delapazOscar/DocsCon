@@ -1,8 +1,15 @@
-ion-item ion-label{
-  color: rgb(151, 151, 151);
-}
-
 ::placeholder{
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   color: black;
+}
+
+*{
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+ion-label{
+  font-weight: bold;
+}
+ion-item{
+  margin-bottom: 20px;
 }

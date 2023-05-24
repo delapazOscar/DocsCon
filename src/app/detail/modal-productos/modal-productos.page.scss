@@ -7,6 +7,8 @@ ion-fab ion-icon{
 h1{
   margin: 0;
   font-size: 25px;
+  color: rgb(24, 97, 255);
+  font-weight: bold;
 }
 *{
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -14,4 +16,12 @@ h1{
 
 .product-container{
   margin-bottom: 30px;
+}
+
+ion-label{
+  font-weight: bold;
+}
+
+ion-item{
+  margin-bottom: 20px;
 }

@@ -6,6 +6,10 @@ import { AuthService } from '../auth.service';
 import * as pdfMake from "pdfmake/build/pdfmake";
 import * as pdfFonts from 'pdfmake/build/vfs_fonts';
 import { Margins, PageOrientation, PageSize } from 'pdfmake/interfaces';
+import { FileOpener } from '@awesome-cordova-plugins/file-opener/ngx';
+import { Platform } from '@ionic/angular';
+import { File } from '@awesome-cordova-plugins/file/ngx';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -13,7 +17,7 @@ export class PrestamoFirestoreService {
 
   pdfOjb:any;
 
-  constructor(private firestore:AngularFirestore) { }
+  constructor(private firestore:AngularFirestore, private fileOpener: FileOpener, private plt:Platform, private file: File) { }
 
   async getDocumentData(uid: string, subcoleccion: string, documento: string): Promise<any> {
     try {
@@ -132,6 +136,19 @@ export class PrestamoFirestoreService {
     this.pdfOjb = pdfMake.createPdf(docDef);
 
     this.pdfOjb.download(documentData.prestamoName + '.pdf');
+
+    if(this.plt.is('capacitor')){
+      this.pdfOjb.getBuffer((buffer: Uint8Array) => {
+        var blob = new Blob([buffer], { type: 'application/pdf' });
+
+        this.file.writeFile(this.file.dataDirectory, `${documentData.prestamoName}.pdf`, blob, { replace: true }).then(fileEntry =>{
+          this.fileOpener.open(this.file.dataDirectory + `${documentData.prestamoName}.pdf`, 'application/pdf');
+        });
+      });
+      return true;
+    }else{
+      return undefined;
+    }
 
   }
 

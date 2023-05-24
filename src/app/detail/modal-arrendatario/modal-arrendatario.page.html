@@ -12,13 +12,15 @@
 
 <ion-content>
   <ion-item>
-    <ion-input labelPlacement="stacked" (ionChange)="arrendatarioName = arrendatarioName.toUpperCase()" [(ngModel)]="arrendatarioName" placeholder="Nombre completo del arrendatario: "></ion-input>
+    <ion-label color="primary" position="floating">Nombre completo del arrendatario:</ion-label>
+    <ion-input labelPlacement="stacked" (ionChange)="arrendatarioName = arrendatarioName.toUpperCase()" [(ngModel)]="arrendatarioName" placeholder="Nombre completo del arrendatario"></ion-input>
   </ion-item>
   <ion-item>
-    <ion-input labelPlacement="stacked" (ionChange)="arrendatarioDomicile = arrendatarioDomicile.toUpperCase()" [(ngModel)]="arrendatarioDomicile" placeholder="Domicilio actual: "></ion-input>
+    <ion-label color="primary" position="floating">Domicilio actual:</ion-label>
+    <ion-input labelPlacement="stacked" (ionChange)="arrendatarioDomicile = arrendatarioDomicile.toUpperCase()" [(ngModel)]="arrendatarioDomicile" placeholder="Domicilio actual"></ion-input>
   </ion-item>
   <ion-item>
-    <ion-label>Sexo:</ion-label>
+    <ion-label color="primary">Sexo:</ion-label>
     <ion-select [(ngModel)]="arrendatarioSexo">
       <ion-select-option value="">Selecciona una opción</ion-select-option>
       <ion-select-option value="Hombre">Hombre</ion-select-option>
@@ -26,3 +28,4 @@
     </ion-select>
   </ion-item>
 </ion-content>
+
