@@ -12,6 +12,8 @@ export class ModalHabilidadesCvPage implements OnInit {
   habilidadesState: any;
   habilitiesCv: Array<any> = [];
 
+  habilidadesFill: boolean = false;
+
   constructor(private modalCtrl:ModalController, private datosCurriculum:DatosCurriculumService,
     private alertController: AlertController) {
       this.habilidadesState = [
@@ -27,6 +29,7 @@ export class ModalHabilidadesCvPage implements OnInit {
     for (let i = 1; i < storedProductsCount; i++) {
       this.addFormation();
     }
+    this.checkFormValues();
   }
 
   cancel() {
@@ -36,12 +39,26 @@ export class ModalHabilidadesCvPage implements OnInit {
   async confirm() {
     const data = {
       habilitiesCv: this.habilitiesCv,
+      habilidadesFill: this.habilidadesFill
     };
 
     this.datosCurriculum.habilitiesCv = data.habilitiesCv;
+    data.habilidadesFill = true;
+    this.datosCurriculum.habilidadesFill = data.habilidadesFill;
 
+    this.checkFormValues();
     // Cierra el modal con un resultado de this.companyName
     this.modalCtrl.dismiss('confirm');
+  }
+
+  checkFormValues() {
+    if (
+      this.habilitiesCv
+    ) {
+      this.habilidadesFill = true;
+    } else {
+      this.habilidadesFill = false;
+    }
   }
 
   async addFormation() {

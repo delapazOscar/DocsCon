@@ -12,11 +12,14 @@ export class ModalGarantePage implements OnInit {
   garanteName: any;
   garanteDirection: any;
 
+  garanteFill: boolean = false;
+
   constructor(private modalCtrl: ModalController, private datosPrestamo:DatosPrestamoService) { }
 
   ngOnInit() {
     this.garanteName = this.datosPrestamo.garanteName;
     this.garanteDirection = this.datosPrestamo.garanteDirection;
+    this.checkFormValues();
   }
 
   cancel() {
@@ -27,14 +30,29 @@ export class ModalGarantePage implements OnInit {
     const data = {
       garanteName: this.garanteName,
       garanteDirection: this.garanteDirection,
+      garanteFill: this.garanteFill
     };
 
     // Asignar los valores de las variables del servicio
     this.datosPrestamo.garanteName = data.garanteName;
     this.datosPrestamo.garanteDirection = data.garanteDirection;
+    data.garanteFill = true;
+    this.datosPrestamo.garanteFill = data.garanteFill;
 
+    this.checkFormValues();
     // Cierra el modal con un resultado de this.companyName
     this.modalCtrl.dismiss(this.modalCtrl, 'confirm');
+  }
+
+  checkFormValues() {
+    if (
+      this.garanteName &&
+      this.garanteDirection
+    ) {
+      this.garanteFill = true;
+    } else {
+      this.garanteFill = false;
+    }
   }
 
 }

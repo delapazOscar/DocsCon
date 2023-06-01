@@ -26,6 +26,9 @@ export class DatosChequeService {
 
   pdfOjb: any;
 
+  beneficiarioFill: boolean = false;
+  detallesFill: boolean = false;
+
   constructor(private authService: AuthService, private firestoreData: FirestoreDataService,
     private fileOpener: FileOpener, private plt:Platform, private file: File ) {
     this.chequeDate = new Date().toLocaleDateString('ES');

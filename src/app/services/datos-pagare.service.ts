@@ -41,6 +41,10 @@ export class DatosPagareService {
 
   lugar: any;
 
+  deudorFill: boolean = false;
+  acreedorFill: boolean = false;
+  acuerdoFill: boolean = false;
+
   constructor (private authService: AuthService, private firestoreData: FirestoreDataService,
     private fileOpener: FileOpener, private plt:Platform, private file: File) {
     this.getUid();

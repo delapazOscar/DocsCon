@@ -12,6 +12,8 @@ export class ModalExperienciaCvPage implements OnInit {
   experienceCv: Array<any> = [];
   experienceState: any;
 
+  experienciaFill: boolean = false;
+
   constructor(private modalCtrl:ModalController, private datosCurriculum:DatosCurriculumService,
     private alertController: AlertController) {
       this.experienceState = [
@@ -27,6 +29,7 @@ export class ModalExperienciaCvPage implements OnInit {
     for (let i = 1; i < storedProductsCount; i++) {
       this.addFormation();
     }
+    this.checkFormValues();
   }
 
   cancel() {
@@ -36,12 +39,26 @@ export class ModalExperienciaCvPage implements OnInit {
   async confirm() {
     const data = {
       experienceCv: this.experienceCv,
+      experienceFill: this.experienciaFill
     };
 
     this.datosCurriculum.experienceCv = data.experienceCv;
+    data.experienceFill = true;
+    this.datosCurriculum.experienciaFill = data.experienceFill;
 
+    this.checkFormValues();
     // Cierra el modal con un resultado de this.companyName
     this.modalCtrl.dismiss('confirm');
+  }
+
+  checkFormValues() {
+    if (
+      this.experienceCv
+    ) {
+      this.experienciaFill = true;
+    } else {
+      this.experienciaFill = false;
+    }
   }
 
   async addFormation() {

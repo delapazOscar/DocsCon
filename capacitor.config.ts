@@ -2,7 +2,7 @@ import { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
   appId: 'io.ionic.starter',
-  appName: 'Proyect1',
+  appName: 'DocsCon',
   webDir: 'www',
   bundledWebRuntime: false
 };

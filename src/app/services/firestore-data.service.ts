@@ -6,6 +6,7 @@ import { QueryDocumentSnapshot } from '@angular/fire/compat/firestore';
 import { QuerySnapshot } from '@angular/fire/compat/firestore';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import * as bcrypt from 'bcryptjs';
 
 @Injectable({
   providedIn: 'root'

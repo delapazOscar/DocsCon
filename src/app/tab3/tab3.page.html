@@ -7,7 +7,7 @@
 <ion-content>
   <!-- <ion-button color="dark" class="user-icon" shape="round"><ion-icon name="person-circle-outline"></ion-icon></ion-button> -->
   <div class="user-container">
-    <ion-avatar (click)="changeImage()">
+    <ion-avatar>
       <img *ngIf="profile?.['imageUrl']; else placeholder_avatar;" [src]="profile?.['imageUrl']"/>
       <ng-template #placeholder_avatar>
         <ion-icon name="person-circle"></ion-icon>

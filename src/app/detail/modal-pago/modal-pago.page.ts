@@ -11,6 +11,9 @@ export class ModalPagoPage implements OnInit {
   selectedPayment: any;
   bankName: any;
   moneda:any;
+  payState:any;
+
+  formaPagoFill: boolean = false;
 
   constructor(private modalCtrl:ModalController, private datosFactura:DatosfacturaService) { }
 
@@ -28,6 +31,9 @@ export class ModalPagoPage implements OnInit {
     this.selectedPayment = this.datosFactura.selectedPayment;
     this.bankName = this.datosFactura.bankName;
     this.moneda = this.datosFactura.moneda;
+    this.payState = this.datosFactura.payState;
+
+    this.checkFormValues();
   }
 
   cancel() {
@@ -38,14 +44,34 @@ export class ModalPagoPage implements OnInit {
     const data={
       selectedPayment:this.selectedPayment,
       bankName: this.bankName,
-      moneda: this.moneda
+      moneda: this.moneda,
+      payState: this.payState,
+      formaPagoFill: this.formaPagoFill,
     }
 
     this.datosFactura.selectedPayment = data.selectedPayment;
     this.datosFactura.bankName = data.bankName;
     this.datosFactura.moneda = data.moneda;
+    this.datosFactura.payState = data.payState;
+    data.formaPagoFill = true;
+    this.datosFactura.formaPagoFill = data.formaPagoFill;
 
-    return this.modalCtrl.dismiss(this.selectedPayment, 'confirm');
+    this.checkFormValues();
+
+    this.modalCtrl.dismiss(this.selectedPayment, 'confirm');
+  }
+
+  checkFormValues() {
+    if (
+      this.selectedPayment &&
+      this.bankName &&
+      this.moneda &&
+      this.payState
+    ) {
+      this.formaPagoFill = true;
+    } else {
+      this.formaPagoFill = false;
+    }
   }
 
 }

@@ -8,10 +8,6 @@ const routes: Routes = [
     path: '',
     component: Tab3Page
   },
-  {
-    path: 'modal-terms',
-    loadChildren: () => import('./modal-terms/modal-terms.module').then( m => m.ModalTermsPageModule)
-  }
 ];
 
 @NgModule({

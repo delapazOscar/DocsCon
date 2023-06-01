@@ -30,6 +30,7 @@ ion-title{
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   font-weight: 700;
   font-size: 20px;
+  --color: black;
 }
 
 .create-button{
@@ -124,14 +125,23 @@ ion-item ion-button{
   height: 50px;
   width: 45%;
   font-weight: 700;
+  font-size: 15px;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   text-transform: uppercase;
 }
 
 ion-item ion-icon{
-  margin: 0 5px 0px 0;
-  color: red;
+  margin: 0 10px 0px 0;
   font-weight: bolder;
+  // color: red;
+}
+
+.red{
+  color: red;
+}
+
+.green{
+  color: green;
 }
 
 ion-item ion-label{
@@ -156,5 +166,9 @@ ion-select{
   --padding-top: 10px;
   --padding-bottom: 10px;
   --border-style: none;
+}
+
+ion-modal p{
+  color:black;
 }
 

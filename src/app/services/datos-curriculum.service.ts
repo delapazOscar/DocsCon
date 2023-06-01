@@ -38,6 +38,12 @@ export class DatosCurriculumService {
 
   pdfOjb:any;
 
+  personalesFill: boolean = false;
+  formacionFill: boolean = false;
+  idiomasFill: boolean = false;
+  habilidadesFill: boolean = false;
+  experienciaFill: boolean = false;
+
   constructor(public angularFirestore: AngularFirestore, private authService: AuthService,
     private firestoreData: FirestoreDataService, private fileOpener: FileOpener, private plt:Platform, private file: File) { }
 

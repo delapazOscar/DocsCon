@@ -32,17 +32,14 @@ ion-title{
 }
 
 ion-avatar {
-  :hover{
-    cursor: pointer;
-  }
-  width: 150px;
-  height: 150px;
+  width: 120px;
+  height: 120px;
   margin: 10px 20px 20px 20px;
 }
 
 ion-avatar ion-icon {
-  width: 150px;
-  height: 150px;
+  width: 120px;
+  height: 120px;
   --margin: 30px;
 }
 

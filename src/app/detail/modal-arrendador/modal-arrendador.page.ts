@@ -15,12 +15,16 @@ export class ModalArrendadorPage implements OnInit {
 
   obligado: any;
 
+  arrendadorFill: boolean = false;
+
   constructor(private modalCtrl: ModalController, private datosContrato:DatosContratoService) { }
 
   ngOnInit() {
     this.arrendadorName = this.datosContrato.arrendadorName;
     this.arrendadorDomicile = this.datosContrato.arrendadorDomicile;
     this.arrendadorSexo = this.datosContrato.arrendadorSexo;
+
+    this.checkFormValues();
   }
 
   cancel() {
@@ -32,23 +36,30 @@ export class ModalArrendadorPage implements OnInit {
       arrendadorName: this.arrendadorName,
       arrendadorDomicile: this.arrendadorDomicile,
       arrendadorSexo: this.arrendadorSexo,
+      arrendadorFill: this.arrendadorFill
     }
 
     this.datosContrato.arrendadorName = data.arrendadorName;
     this.datosContrato.arrendadorDomicile = data.arrendadorDomicile;
     this.datosContrato.arrendadorSexo = data.arrendadorSexo;
+    data.arrendadorFill = true;
+    this.datosContrato.arrendadorFill = data.arrendadorFill;
 
-    // if(this.arrendadorSexo = 'Hombre'){
-    //   this.obligado = 'obligado'
-    // }else{
-    //   this.obligado = 'obligada'
-    // }
-
-    // console.log(this.datosContrato.arrendadorName);
-    // console.log(this.datosContrato.arrendadorDomicile);
-
+    this.checkFormValues();
     // Cierra el modal con un resultado de this.companyName
     this.modalCtrl.dismiss(this.modalCtrl, 'confirm');
+  }
+
+  checkFormValues() {
+    if (
+      this.arrendadorName &&
+      this.arrendadorDomicile &&
+      this.arrendadorSexo
+    ) {
+      this.arrendadorFill = true;
+    } else {
+      this.arrendadorFill = false;
+    }
   }
 
 }

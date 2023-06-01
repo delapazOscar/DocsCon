@@ -24,6 +24,8 @@ export class ModalClientePage implements OnInit {
   estados: Estado[]| undefined;
   selectedUse: any;
 
+  clienteFill: boolean = false;
+
   constructor(private modalCtrl:ModalController, private http:HttpClient, private datosFactura:DatosfacturaService) {}
 
   ngOnInit() {
@@ -36,6 +38,8 @@ export class ModalClientePage implements OnInit {
     this.cfdiUse = this.datosFactura.cfdiUse;
     this.clientNumber = this.datosFactura.clientNumber;
     this.rfcClient = this.datosFactura.rfcClient;
+
+    this.checkFormValues();
   }
 
   cancel() {
@@ -49,7 +53,8 @@ export class ModalClientePage implements OnInit {
       domicileClient: this.domicileClient,
       selectedState: this.selectedState,
       rfcClient: this.rfcClient,
-      clientNumber: this.clientNumber
+      clientNumber: this.clientNumber,
+      clienteFill: this.clienteFill
     };
 
     // Asignar los valores de las variables del servicio
@@ -59,16 +64,26 @@ export class ModalClientePage implements OnInit {
     this.datosFactura.domicileClient = data.domicileClient;
     this.datosFactura.selectedState = data.selectedState;
     this.datosFactura.rfcClient = data.rfcClient;
+    data.clienteFill = true;
+    this.datosFactura.clienteFill = data.clienteFill;
 
-    // Imprimir los valores asignados en consola
-    // console.log(this.datosFactura.companyName);
-    // console.log(this.datosFactura.domicileCompany);
-    // console.log(this.datosFactura.cpCompany);
-    // console.log(this.datosFactura.rfcCompany);
-    // console.log(this.datosFactura.companyNumber);
-
-    // Cierra el modal con un resultado de this.companyName
+    this.checkFormValues();
     this.modalCtrl.dismiss(this.clientName, 'confirm');
+  }
+
+  checkFormValues() {
+    if (
+      this.clientName &&
+      this.cfdiUse &&
+      this.clientNumber &&
+      this.domicileClient &&
+      this.selectedState &&
+      this.rfcClient
+    ) {
+      this.clienteFill = true;
+    } else {
+      this.clienteFill = false;
+    }
   }
 
 }

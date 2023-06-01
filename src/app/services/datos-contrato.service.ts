@@ -39,6 +39,10 @@ export class DatosContratoService {
 
   pdfOjb: any;
 
+  arrendadorFill: boolean = false;
+  arrendatarioFill: boolean = false;
+  rentaFill:boolean = false;
+
   constructor(private authService: AuthService, private firestoreData: FirestoreDataService,
     private fileOpener: FileOpener, private plt:Platform, private file: File) {
     this.contractDate = new Date().toLocaleDateString('ES');

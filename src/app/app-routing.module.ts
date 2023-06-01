@@ -50,8 +50,10 @@ const routes: Routes = [
   {
     path: 'modal-empresa',
     loadChildren: () => import('./detail/modal-empresa/modal-empresa.module').then( m => m.ModalEmpresaPageModule)
+  },  {
+    path: 'modal-terminos-y-condiciones',
+    loadChildren: () => import('./modal-terminos-y-condiciones/modal-terminos-y-condiciones.module').then( m => m.ModalTerminosYCondicionesPageModule)
   },
-
 
 
 ];

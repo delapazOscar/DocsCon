@@ -28,6 +28,8 @@ export class ModalRentaPage implements OnInit {
   estados: Estado[]| undefined;
   selectedState: any;
 
+  rentaFill:boolean = false;
+
   ngOnInit() {
     this.http.get<{ estados: Estado[] }>('assets/estados.json').subscribe(data => {
       this.estados = data.estados;
@@ -41,6 +43,7 @@ export class ModalRentaPage implements OnInit {
     this.mensualidadRenta = this.datosContrato.mensualidadRenta;
     this.contractMunicipe = this.datosContrato.contractMunicipe;
     this.selectedState = this.datosContrato.selectedState;
+    this.checkFormValues();
   }
 
   cancel() {
@@ -57,6 +60,7 @@ export class ModalRentaPage implements OnInit {
       mensualidadRenta: this.mensualidadRenta,
       contractMunicipe: this.contractMunicipe,
       selectedState: this.selectedState,
+      rentaFill: this.rentaFill
     }
 
     this.datosContrato.domicileHouseToRent = data.domicileHouseToRent;
@@ -67,9 +71,29 @@ export class ModalRentaPage implements OnInit {
     this.datosContrato.mensualidadRenta = data.mensualidadRenta;
     this.datosContrato.contractMunicipe = data.contractMunicipe;
     this.datosContrato.selectedState = data.selectedState;
+    data.rentaFill = true;
+    this.datosContrato.rentaFill = data.rentaFill;
 
+    this.checkFormValues();
     // Cierra el modal con un resultado de this.companyName
     this.modalCtrl.dismiss(this.modalCtrl, 'confirm');
+  }
+
+  checkFormValues() {
+    if (
+      this.domicileHouseToRent &&
+      this.metrosCuadrados &&
+      this.noHabitaciones &&
+      this.duracionContrato &&
+      this.inicioRenta &&
+      this.mensualidadRenta &&
+      this.contractMunicipe &&
+      this.selectedState
+    ) {
+      this.rentaFill = true;
+    } else {
+      this.rentaFill = false;
+    }
   }
 
 }

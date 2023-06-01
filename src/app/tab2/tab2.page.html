@@ -5,14 +5,7 @@
       <ion-icon name="add-circle-outline" slot="end" class="addIcon"></ion-icon>
     </button>
   </div>
-</ion-toolbar>
-
-<ion-content>
-  <ion-refresher slot="fixed" (ionRefresh)="refreshData($event)">
-    <ion-refresher-content></ion-refresher-content>
-  </ion-refresher>
-
-  <div class="searchbar-container">
+  <div class="searchbar-container" style="position: sticky; top: 0; z-index: 999;">
     <ion-input
       type="text"
       [(ngModel)]="textInput"
@@ -36,6 +29,15 @@
       <ion-icon class="cancel-btn" name="close-circle-outline"></ion-icon>
     </ion-button>
   </div>
+</ion-toolbar>
+
+<ion-content>
+  <ion-refresher slot="fixed" (ionRefresh)="refreshData($event)">
+    <ion-refresher-content
+    pullingIcon="chevron-down-circle"
+    refreshingSpinner="circles"
+    refreshingText="Actualizando..."></ion-refresher-content>
+  </ion-refresher>
 
   <div class="acomodo">
     <ng-container *ngIf="isLoading; else content">

@@ -4,7 +4,7 @@ import { WelcomePage } from '../welcome/welcome.page';
 import { Router } from '@angular/router';
 import { AlertController, ModalController } from '@ionic/angular';
 import { setErrorHandler } from 'ionicons/dist/types/stencil-public-runtime';
-import { ModalTermsPage } from '../tab3/modal-terms/modal-terms.page';
+import { ModalTerminosYCondicionesPage } from '../modal-terminos-y-condiciones/modal-terminos-y-condiciones.page';
 
 @Component({
   selector: 'app-configuration',
@@ -22,41 +22,9 @@ export class ConfigurationPage implements OnInit {
 
   }
 
-  async appareance(){
-    const alert = await this.alertController.create({
-      header: 'Selecciona el tema de tu preferencia',
-      buttons: [
-        {
-          text: 'OK',
-          handler: (data) => {
-            this.selectedValue = data;
-            console.log(this.selectedValue)
-            if(this.selectedValue == "dark"){
-              document.body.classList.toggle('dark');
-            }
-          }
-        }
-      ],
-      inputs: [
-        {
-          label: 'Oscuro',
-          type: 'radio',
-          value: 'dark',
-        },
-        {
-          label: 'Claro',
-          type: 'radio',
-          value: 'light',
-        },
-      ],
-    });
-    await alert.present();
-    console.log(this.selectedValue)
-  }
-
   async openModalTerms(){
     const modal = await this.modalCtrl.create({
-      component: ModalTermsPage,
+      component: ModalTerminosYCondicionesPage,
     });
     modal.present();
 

@@ -15,25 +15,27 @@ export class ModalEmpresaPage implements OnInit {
   rfcCompany: string = '';
   companyNumber: string = '';
 
-  constructor(private modalCtrl: ModalController, private httpClient:HttpClient,
-    private datosFactura:DatosfacturaService,
-    private alertController:AlertController) {
+  empresaFill: boolean = false;
 
-     }
-
+  constructor(
+    private modalCtrl: ModalController,
+    private httpClient: HttpClient,
+    private datosFactura: DatosfacturaService,
+    private alertController: AlertController
+  ) {}
 
   cancel() {
     return this.modalCtrl.dismiss(null, 'cancel');
   }
 
   async confirm() {
-
     const data = {
       companyName: this.companyName,
       domicileCompany: this.domicileCompany,
       cpCompany: this.cpCompany,
       rfcCompany: this.rfcCompany,
-      companyNumber: this.companyNumber
+      companyNumber: this.companyNumber,
+      empresaFill: this.empresaFill,
     };
 
     // Asignar los valores de las variables del servicio
@@ -42,17 +44,28 @@ export class ModalEmpresaPage implements OnInit {
     this.datosFactura.cpCompany = data.cpCompany;
     this.datosFactura.rfcCompany = data.rfcCompany;
     this.datosFactura.companyNumber = data.companyNumber;
+    data.empresaFill = true;
+    this.datosFactura.empresafill = data.empresaFill;
+    console.log(this.datosFactura.empresafill);
 
-    // Imprimir los valores asignados en consola
-    // console.log(this.datosFactura.companyName);
-    // console.log(this.datosFactura.domicileCompany);
-    // console.log(this.datosFactura.cpCompany);
-    // console.log(this.datosFactura.rfcCompany);
-    // console.log(this.datosFactura.companyNumber);
-
+    this.checkFormValues(); // Actualizar el estado de empresaFill
 
     // Cierra el modal con un resultado de this.companyName
     this.modalCtrl.dismiss(this.companyName, 'confirm');
+  }
+
+  checkFormValues() {
+    if (
+      this.companyName &&
+      this.domicileCompany &&
+      this.cpCompany &&
+      this.rfcCompany &&
+      this.companyNumber
+    ) {
+      this.empresaFill = true;
+    } else {
+      this.empresaFill = false;
+    }
   }
 
   ngOnInit() {
@@ -61,7 +74,7 @@ export class ModalEmpresaPage implements OnInit {
     this.cpCompany = this.datosFactura.cpCompany;
     this.rfcCompany = this.datosFactura.rfcCompany;
     this.companyNumber = this.datosFactura.companyNumber;
+
+    this.checkFormValues(); // Actualizar el estado inicial de empresaFill
   }
-
-
 }

@@ -57,6 +57,16 @@ interface DocumentData {
 })
 export class DetailPage implements OnInit {
 
+  empresafill: boolean = this.datosFactura.empresafill;
+  clienteFill: boolean = this.datosFactura.clienteFill;
+  productosFill: boolean = this.datosFactura.productosFill;
+  formaPagoFill: boolean = this.datosFactura.formaPagoFill;
+
+  deudorFill: boolean = false;
+  acreedorFill: boolean = false;
+  acuerdoFill: boolean = false;
+
+
   customAlertOptions = {
     header: 'Selecciona tu empresa',
     message: 'Facturación para:',
@@ -86,12 +96,12 @@ export class DetailPage implements OnInit {
     private activatedRoute:ActivatedRoute, private loadingController:LoadingController,
     private alertController:AlertController,
     private modalCtrl: ModalController,
-    private datosFactura:DatosfacturaService,
-    private datosPagare: DatosPagareService,
-    private datosContrato: DatosContratoService,
-    private datosCheque: DatosChequeService,
-    private datosPrestamo: DatosPrestamoService,
-    private datosCurriculum: DatosCurriculumService,
+    public datosFactura:DatosfacturaService,
+    public datosPagare: DatosPagareService,
+    public datosContrato: DatosContratoService,
+    public datosCheque: DatosChequeService,
+    public datosPrestamo: DatosPrestamoService,
+    public datosCurriculum: DatosCurriculumService,
     private fileOpener:FileOpener,
     private file:File,
     private platform:Platform,
@@ -106,6 +116,11 @@ export class DetailPage implements OnInit {
     this.activatedRoute.paramMap.subscribe(p => {
       this.datos = this.documentsService.getDocumentsByName(p.get('name') ?? '')
     })
+    //this.empresafill = this.datosFactura.empresafill;
+    this.empresafill = this.datosFactura.empresafill;
+    this.clienteFill = this.datosFactura.clienteFill;
+    this.productosFill = this.datosFactura.productosFill;
+    this.formaPagoFill = this.datosFactura.formaPagoFill;
   }
 
   navigateBack(){
@@ -133,51 +148,93 @@ export class DetailPage implements OnInit {
     loading.present();
   }
 
+  async showDocumentoAlert() {
+    const alert = await this.alertController.create({
+      header: 'Nombre del documento:',
+      buttons: [
+        {
+          text: 'OK',
+          handler: (data) => {
+            this.facturaName = data.facturaName;
+            this.datosFactura.facturaName = data.facturaName;
+            console.log(this.facturaName);
+            // this.showLoading();
+            this.datosFactura.pdfDownload();
+
+            // this.datosFactura.resetValues();
+            this.presentToast();
+            this.datosFactura.clienteFill = false;
+            this.datosFactura.productosFill = false;
+            this.datosFactura.formaPagoFill = false;
+            this.datosFactura.empresafill = false;
+          },
+        },
+      ],
+      inputs: [
+        {
+          placeholder: 'Name',
+          type: 'text',
+          name: 'facturaName',
+          attributes: {
+            maxlength: 15,
+            inputmode: 'text',
+          },
+        },
+      ],
+    });
+
+    await alert.present();
+  }
+
+  factNum: any;
   async createDocument(){
 
     switch (this.datos.name) {
       case 'Factura':
-        if (!this.datosFactura.allValuesEntered()) {
-          const alert = await this.alertController.create({
-            header: 'Datos Incompletos',
-            subHeader: 'Por favor llene todos los datos requeridos',
-            buttons: ['OK'],
-          });
+      if (!this.datosFactura.allValuesEntered()) {
+        const alert = await this.alertController.create({
+          header: 'Datos Incompletos',
+          subHeader: 'Por favor llene todos los datos requeridos',
+          buttons: ['OK'],
+        });
 
-          await alert.present();
-
-        } else {
-          const alert = await this.alertController.create({
-            header: 'Nombre del documento:',
-            buttons: [{
+        await alert.present();
+      } else {
+        const factNo = await this.alertController.create({
+          header: 'Factura #',
+          buttons: [
+            {
               text: 'OK',
               handler: (data) => {
-                this.facturaName = data.facturaName;
-                this.datosFactura.facturaName = data.facturaName;
-                console.log(this.facturaName);
-                // this.showLoading();
-                this.datosFactura.pdfDownload();
+                this.factNum = data.factNum;
+                this.datosFactura.factNo = data.factNum;
 
-                //this.datosFactura.resetValues();
-                this.presentToast();
-
-              }
-            }],
-            inputs: [
-              {
-                placeholder: 'Name',
-                type: 'text',
-                name: 'facturaName',
-                attributes: {
-                  maxlength: 15,
-                  inputmode: 'text'
-                },
+                // Once the invoice number is entered, show the dialog to enter the document name
+                this.showDocumentoAlert();
               },
-            ],
-          });
-          await alert.present();
-        }
-        break;
+            },
+          ],
+          inputs: [
+            {
+              placeholder: 'Factura No.#',
+              type: 'number',
+              name: 'factNum',
+              attributes: {
+                maxlength: 5,
+                inputmode: 'numeric',
+              },
+            },
+          ],
+        });
+
+        await factNo.present();
+      }
+      break;
+
+    // Handle other cases if needed
+    default:
+      // Handle default case
+      break;
 
         case 'Contrato':
           if (!this.datosContrato.allValuesEntered()) {
@@ -200,6 +257,9 @@ export class DetailPage implements OnInit {
                   console.log(this.datosContrato.contratoName);
                   this.datosContrato.pdfDownload();
                   this.presentToast();
+                  this.datosContrato.arrendadorFill = false;
+                  this.datosContrato.rentaFill = false;
+                  this.datosContrato.arrendatarioFill = false;
                 }
               }],
               inputs: [
@@ -215,9 +275,8 @@ export class DetailPage implements OnInit {
               ],
             });
             await alert.present();
+
           }
-
-
           break;
 
           case 'Pagaré':
@@ -241,6 +300,9 @@ export class DetailPage implements OnInit {
                     console.log(this.datosPagare.pagareName);
                     this.datosPagare.pdfDownload();
                     this.presentToast();
+                    this.datosPagare.deudorFill = false;
+                    this.datosPagare.acuerdoFill = false;
+                    this.datosPagare.acreedorFill = false;
                   }
                 }],
                 inputs: [
@@ -280,6 +342,8 @@ export class DetailPage implements OnInit {
                       console.log(this.datosCheque.chequeName);
                       this.datosCheque.pdfDownload();
                       this.presentToast();
+                      this.datosCheque.detallesFill = false;
+                      this.datosCheque.beneficiarioFill = false;
                     }
                   }],
                   inputs: [
@@ -320,6 +384,10 @@ export class DetailPage implements OnInit {
                       console.log(this.datosPrestamo.prestamoName);
                       this.datosPrestamo.pdfDownload();
                       this.presentToast();
+                      this.datosPrestamo.garanteFill = false;
+                      this.datosPrestamo.prestamoFill = false;
+                      this.datosPrestamo.prestamistaFill = false;
+                      this.datosPrestamo.prestatarioFill = false;
                     }
                   }],
                   inputs: [
@@ -360,6 +428,11 @@ export class DetailPage implements OnInit {
                       console.log(this.datosCurriculum.curriculumName);
                       this.datosCurriculum.pdfDownload();
                       this.presentToast();
+                      this.datosCurriculum.idiomasFill = false;
+                      this.datosCurriculum.formacionFill = false;
+                      this.datosCurriculum.experienciaFill = false;
+                      this.datosCurriculum.habilidadesFill = false;
+                      this.datosCurriculum.personalesFill = false;
                     }
                   }],
                   inputs: [
@@ -383,7 +456,14 @@ export class DetailPage implements OnInit {
 
   message = 'This modal example uses the modalController to present and dismiss modals.';
 
-  async openModalEmpresa(){
+  updateAlertIcon() {
+    const iconElement = document.querySelector('.item-empresa ion-icon');
+    if (iconElement) {
+      iconElement.setAttribute('name', 'checkmark-circle');
+    }
+  }
+
+  async openModalEmpresa() {
     const modal = await this.modalCtrl.create({
       component: ModalEmpresaPage,
     });
@@ -392,11 +472,11 @@ export class DetailPage implements OnInit {
     const { data, role } = await modal.onWillDismiss();
 
     if (role === 'confirm') {
-      this.message = `Hello, ${data}!`;
+    } else {
     }
   }
 
-  async openModalCliente(){
+  async openModalCliente() {
     const modal = await this.modalCtrl.create({
       component: ModalClientePage,
     });
@@ -405,9 +485,10 @@ export class DetailPage implements OnInit {
     const { data, role } = await modal.onWillDismiss();
 
     if (role === 'confirm') {
-      this.message = `Hello, ${data}!`;
+    } else {
     }
   }
+
 
   async openModalProductos(){
     const modal = await this.modalCtrl.create({
@@ -419,6 +500,7 @@ export class DetailPage implements OnInit {
 
     if (role === 'confirm') {
       this.message = `Hello, ${data}!`;
+    }else{
     }
   }
 
@@ -432,6 +514,7 @@ export class DetailPage implements OnInit {
 
     if (role === 'confirm') {
       this.message = `Hello, ${data}!`;
+    }else{
     }
   }
 
@@ -445,6 +528,7 @@ export class DetailPage implements OnInit {
 
     if (role === 'confirm') {
       this.message = `Hello, ${data}!`;
+    }else{
     }
   }
 
@@ -458,6 +542,7 @@ export class DetailPage implements OnInit {
 
     if (role === 'confirm') {
       this.message = `Hello, ${data}!`;
+    }else{
     }
   }
 
@@ -471,6 +556,7 @@ export class DetailPage implements OnInit {
 
     if (role === 'confirm') {
       this.message = `Hello, ${data}!`;
+    }else{
     }
   }
 

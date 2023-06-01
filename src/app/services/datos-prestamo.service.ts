@@ -34,6 +34,11 @@ export class DatosPrestamoService {
 
   allDocuments: any[] = []; // Array para almacenar los datos de todos los documentos creados
 
+  prestamoFill: boolean = false;
+  prestatarioFill: boolean = false;
+  prestamistaFill: boolean = false;
+  garanteFill: boolean = false;
+
   constructor(private file:File, private httpClient:HttpClient, private authService: AuthService,
     private firestoreData: FirestoreDataService, private fileOpener: FileOpener, private plt:Platform) {
       this.prestamoDate = new Date().toLocaleDateString('ES');

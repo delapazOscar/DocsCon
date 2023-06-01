@@ -4,10 +4,8 @@ import { Auth, createUserWithEmailAndPassword , signInWithEmailAndPassword, send
 import { userInfo } from 'os';
 import { Observable } from 'rxjs';
 import { DocumentData } from 'firebase/firestore';
-
-
-
 import * as auth from 'firebase/auth';
+import firebase from 'firebase/compat/app';
 import 'firebase/auth';
 import 'firebase/firestore';
 import { AngularFireModule } from '@angular/fire/compat';
@@ -18,6 +16,9 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { User } from 'firebase/auth';
 import { FirestoreDataService } from './firestore-data.service';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
+
+
+const { setPersistence, browserSessionPersistence } = auth;
 
 async function sleep(ms: number): Promise<void> {
   return new Promise(resolve => setTimeout(resolve, ms));
@@ -32,7 +33,7 @@ async function sleep(ms: number): Promise<void> {
     throw new Error('Method not implemented.');
   }
  	constructor(private auth:Auth, private afAuth: AngularFireAuthModule, private alertController:AlertController,
-    private angularFirestore: AngularFirestore) {}
+    private angularFirestore: AngularFirestore, private afFireAuth: AngularFireAuth) {}
 
 
    async register({email, password, names, lastnames}:any){
@@ -49,24 +50,60 @@ async function sleep(ms: number): Promise<void> {
     return userCredential;
   }
 
-  async login({email, password}:any){
+  async login({ email, password }: any) {
     const userCredential = await signInWithEmailAndPassword(this.auth, email, password);
-    if(!userCredential.user.emailVerified){
+    const user = userCredential.user;
+
+    if (!user.emailVerified) {
       throw new Error('Please verify your email before logging in.');
     }
+
     return userCredential;
   }
+
 
   async loginWithGoogle(){
-    const userCredential = await signInWithPopup(this.auth, new GoogleAuthProvider);
+    const userCredential = await auth.signInWithPopup(this.auth, new GoogleAuthProvider);
     return userCredential;
   }
-
   async registerWithGoogle(){
     const userCredential = await signInWithPopup(this.auth, new GoogleAuthProvider);
     await sendEmailVerification(userCredential.user);
     return userCredential;
   }
+
+  // async registerWithGoogle() {
+  //   try {
+  //     const provider = new firebase.auth.GoogleAuthProvider();
+  //     const userCredential = await this.afFireAuth.signInWithPopup(provider);
+
+  //     if (userCredential.user) {
+  //       await sendEmailVerification(userCredential.user);
+  //       return userCredential;
+  //     } else {
+  //       throw new Error('Failed to register with Google');
+  //     }
+  //   } catch (error) {
+  //     console.log(error);
+  //     // Maneja el error de registro con Google
+  //     return undefined;
+  //   }
+  // }
+
+
+  // async loginWithGoogle() {
+  //   try {
+  //     const provider = new firebase.auth.GoogleAuthProvider();
+  //     const userCredential = await this.afFireAuth.signInWithRedirect(provider);
+  //     return userCredential;
+  //   } catch (error) {
+  //     console.log(error);
+  //     // Maneja el error de inicio de sesión con Google
+  //     return undefined;
+  //   }
+  // }
+
+
 
   verifyEmail(){
     const user = this.auth.currentUser;
@@ -126,6 +163,12 @@ async function sleep(ms: number): Promise<void> {
       console.error(error);
     }
   }
+
+  isLoggedIn(): boolean {
+    const user: User | null = this.auth.currentUser;
+    return !!user; // Devuelve true si el usuario está autenticado, false de lo contrario
+  }
+
 
 
  }

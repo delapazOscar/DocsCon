@@ -12,6 +12,8 @@ export class ModalIdiomCvPage implements OnInit {
   idiomsCv: Array<any> = [];
   idiomState:any;
 
+  idiomasFill: boolean = false;
+
   constructor(private modalCtrl:ModalController, private datosCurriculum:DatosCurriculumService,
     private alertController: AlertController) {
       this.idiomState = [
@@ -27,6 +29,7 @@ export class ModalIdiomCvPage implements OnInit {
     for (let i = 1; i < storedProductsCount; i++) {
       this.addFormation();
     }
+    this.checkFormValues();
   }
 
   cancel() {
@@ -35,11 +38,15 @@ export class ModalIdiomCvPage implements OnInit {
 
   async confirm() {
     const data = {
-      idiomsCv: this.idiomsCv
+      idiomsCv: this.idiomsCv,
+      idiomasFill:this.idiomasFill
     };
 
     this.datosCurriculum.idiomsCv = data.idiomsCv;
+    data.idiomasFill = true;
+    this.datosCurriculum.idiomasFill = data.idiomasFill;
 
+    this.checkFormValues();
     this.modalCtrl.dismiss('confirm');
   }
 
@@ -57,6 +64,16 @@ export class ModalIdiomCvPage implements OnInit {
       });
 
       await alert.present();
+    }
+  }
+
+  checkFormValues() {
+    if (
+      this.idiomsCv
+    ) {
+      this.idiomasFill = true;
+    } else {
+      this.idiomasFill = false;
     }
   }
 

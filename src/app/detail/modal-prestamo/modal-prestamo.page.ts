@@ -13,12 +13,15 @@ export class ModalPrestamoPage implements OnInit {
   prestamoQuantity: any;
   prestamoPurpose: any;
 
+  prestamoFill: boolean = false;
+
   constructor(private modalCtrl: ModalController, private datosPrestamo:DatosPrestamoService) { }
 
   ngOnInit() {
     this.prestamoPeriod = this.datosPrestamo.prestamoPeriod;
     this.prestamoQuantity = this.datosPrestamo.prestamoQuantity;
     this.prestamoPurpose = this.datosPrestamo.prestamoPurpose;
+    this.checkFormValues();
   }
 
   cancel() {
@@ -29,16 +32,32 @@ export class ModalPrestamoPage implements OnInit {
     const data = {
       prestamoPeriod: this.prestamoPeriod,
       prestamoQuantity: this.prestamoQuantity,
-      prestamoPurpose: this.prestamoPurpose
+      prestamoPurpose: this.prestamoPurpose,
+      prestamoFill: this.prestamoFill
     };
 
     // Asignar los valores de las variables del servicio
     this.datosPrestamo.prestamoPeriod = data.prestamoPeriod;
     this.datosPrestamo.prestamoQuantity = data.prestamoQuantity;
     this.datosPrestamo.prestamoPurpose = data.prestamoPurpose;
+    data.prestamoFill = true;
+    this.datosPrestamo.prestamoFill = data.prestamoFill;
 
+    this.checkFormValues();
     // Cierra el modal con un resultado de this.companyName
     this.modalCtrl.dismiss(this.modalCtrl, 'confirm');
+  }
+
+  checkFormValues() {
+    if (
+      this.prestamoPeriod &&
+      this.prestamoQuantity &&
+      this.prestamoPurpose
+    ) {
+      this.prestamoFill = true;
+    } else {
+      this.prestamoFill = false;
+    }
   }
 
 }

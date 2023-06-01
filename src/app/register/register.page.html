@@ -1,7 +1,9 @@
 <ion-content>
-  <ion-title>
-    Registrarse
-  </ion-title>
+  <ion-header collapse="condense" mode="ios">
+    <ion-toolbar>
+      <ion-title color="dark" size="large">Registrarse</ion-title>
+    </ion-toolbar>
+  </ion-header>
   <form [formGroup]="registerForm" (keyup.enter)="saveData()">
     <ion-item>
       <ion-label position="floating"  class="custom-label">Nombre(s)</ion-label>
@@ -20,12 +22,17 @@
 
     <ion-item>
       <ion-label position="floating" class="custom-label">Contraseña</ion-label>
-      <ion-input placeholder="Mínimo 6 carácteres*" formControlName="password" type="password"></ion-input>
+      <ion-input placeholder="Mínimo 6 carácteres*" [(ngModel)]="pass" formControlName="password" type="password"></ion-input>
+    </ion-item>
+
+    <ion-item lines="none" class="terms">
+      <ion-checkbox  position="fixed" mode="md" name="agree" value="agree" (ionChange)="onCheck($event)"></ion-checkbox>
+      <ion-label class="custom-terms">Acepto los <a (click)="openModalTerms()">términos y condiciones</a></ion-label>
     </ion-item>
   </form>
 
-  <ion-button (click)="saveData()" color="primary" shape="round" class="log">Registrarme</ion-button>
-  <ion-button (click)="otraPagina()" fill="clear" class="signUp">Iniciar Sesión</ion-button>
-  <ion-button (click)="googleRegister()" class="GoogleBack" color="light" shape="round"><ion-icon name="logo-google" class="Google"></ion-icon></ion-button>
+  <ion-button (click)="saveData()" color="primary" shape="round" class="log">REGISTRARME</ion-button>
+  <ion-button (click)="otraPagina()" fill="clear" class="signUp">INICIAR SESIÓN</ion-button>
+  <!-- <ion-button (click)="googleRegister()" class="GoogleBack" color="light" shape="round"><ion-icon name="logo-google" class="Google"></ion-icon></ion-button> -->
 
 </ion-content>

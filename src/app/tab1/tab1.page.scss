@@ -5,6 +5,7 @@
 ion-toolbar{
   padding-top: 15px;
   display: flex;
+  align-items: center;
   height: 70px;
 }
 
@@ -59,7 +60,9 @@ ion-input{
   font-size: 14px;
   font-weight: 500;
   margin-bottom: 3px;
+  --color:black;
 }
+
 
 .icon-search{
   padding-left: 10px;
@@ -68,6 +71,7 @@ ion-input{
 
 .cancel-btn{
   height: 18px;
+  color: black;
 }
 
 .inactive-search{

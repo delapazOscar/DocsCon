@@ -104,14 +104,26 @@ export class Tab2Page implements OnInit {
           text: 'Eliminar',
           handler: () => {
             this.deleteDocument(uid, subcoleccion, documento);
+            this.toastDelete();
           }
         }
       ]
     });
 
     await alert.present();
+
   }
 
+  async toastDelete(){
+    const toast = await this.toastController.create({
+      message: 'Documento eliminado exitosamente!',
+      duration: 1500,
+      position: 'top',
+      icon: 'trash'
+    });
+
+    await toast.present();
+  }
 
   async getUid(){
     let uid = await this.authService.getUser();

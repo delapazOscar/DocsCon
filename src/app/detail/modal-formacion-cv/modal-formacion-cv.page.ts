@@ -13,6 +13,8 @@ export class ModalFormacionCvPage implements OnInit {
   formacionState: any;
   formacionCv: Array<any> = [];
 
+  formacionFill: boolean = false;
+
   constructor(private modalCtrl:ModalController, private http:HttpClient, private datosCurriculum:DatosCurriculumService,
     private alertController: AlertController) {
       this.formacionState = [
@@ -28,6 +30,7 @@ export class ModalFormacionCvPage implements OnInit {
     for (let i = 1; i < storedProductsCount; i++) {
       this.addFormation();
     }
+    this.checkFormValues();
   }
 
   cancel() {
@@ -37,13 +40,16 @@ export class ModalFormacionCvPage implements OnInit {
   async confirm() {
     const data = {
       formacionCv: this.formacionCv,
+      formacionfill: this.formacionFill
     };
 
     this.datosCurriculum.formacionCv = data.formacionCv;
+    data.formacionfill = true;
+    this.datosCurriculum.formacionFill = data.formacionfill;
 
     // Asignar los valores de las variables del servicio
     //this.datosFactura.clientName = data.clientName;
-
+    this.checkFormValues();
     // Cierra el modal con un resultado de this.companyName
     this.modalCtrl.dismiss('confirm');
   }
@@ -65,4 +71,13 @@ export class ModalFormacionCvPage implements OnInit {
     }
   }
 
+  checkFormValues() {
+    if (
+      this.formacionCv
+    ) {
+      this.formacionFill = true;
+    } else {
+      this.formacionFill = false;
+    }
+  }
 }

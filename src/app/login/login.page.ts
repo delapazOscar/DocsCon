@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { RegisterPage } from '../register/register.page';
 import { WelcomePage } from '../welcome/welcome.page';
 import { NavController } from '@ionic/angular';
-import { Router } from '@angular/router';
+import { Router, CanActivate } from '@angular/router';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AlertController, LoadingController } from '@ionic/angular';
@@ -18,6 +18,7 @@ export class LoginPage implements OnInit {
 
   loginForm: FormGroup;
   emailInput:string = '';
+  passwordInput:string = '';
 
   constructor(private router: Router, public formBuilder:FormBuilder, public alertController: AlertController,
     private loadingController: LoadingController,
@@ -30,9 +31,29 @@ export class LoginPage implements OnInit {
    }
 
   ngOnInit() {
+    this.checkIfLoggedIn();
+    if (this.authService.isLoggedIn()) {
+      this.authService.logout();
+    }
+    this.loginForm.patchValue({
+      email: '',
+      password: ''
+    });
+  }
+
+  async checkIfLoggedIn() {
+    const isLoggedIn = await this.authService.isLoggedIn();
+    if (isLoggedIn) {
+      // El usuario ya ha iniciado sesión, redirigir a la página de bienvenida
+      this.router.navigate(['/welcome']);
+    }
   }
 
   RegisterPage(){
+    this.loginForm.patchValue({
+      email: '',
+      password: ''
+    });
     this.router.navigate(['register']);
   }
 
@@ -94,18 +115,31 @@ export class LoginPage implements OnInit {
 
           await loading.present();
           await loading.onWillDismiss();
-           this.router.navigate(['welcome']);
+
+          this.loginForm.patchValue({
+            email: '',
+            password: ''
+          });
+
+          history.replaceState(null, '', '/welcome');
+
+          this.router.navigate(['welcome']);
 
          })
          .catch(async (error: any) => {
           console.log(error);
+          let errorMessage = '';
+
+          if (error.code === 'auth/user-not-found' || error.code === 'auth/wrong-password') {
+            errorMessage = 'Correo o contraseña incorrectos';
+          } else if (error.code === 'auth/user-not-verified') {
+            errorMessage = 'Verifica tu correo electrónico';
+          } else {
+            errorMessage = 'Verifica tu correo electrónico';
+          }
+
           const alert = await this.alertController.create({
-            header: error.code === "auth/user-not-found" || error.code === "auth/wrong-password"
-              ? "Correo o contraseña incorrectos"
-              : error.code === "auth/user-not-verified"
-                ? "Verifica tu correo electrónico"
-                : "Verifica tu correo electrónico",
-            message: error.message,
+            header: errorMessage,
             buttons: ['OK'],
           });
 
@@ -114,7 +148,7 @@ export class LoginPage implements OnInit {
     }
   }
 
-  async googleRegister(){
+  async googleLogin(){
     this.authService.loginWithGoogle()
       .then(async response =>{
         const loading = await this.loadingController.create({
@@ -124,6 +158,7 @@ export class LoginPage implements OnInit {
 
         await loading.present();
         await loading.onWillDismiss();
+        history.replaceState(null, '', '/welcome');
         this.router.navigate(['welcome']);
       })
       .catch(error=>console.log(error));

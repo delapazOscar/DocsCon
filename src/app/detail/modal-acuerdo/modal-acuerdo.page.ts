@@ -36,6 +36,8 @@ export class ModalAcuerdoPage implements OnInit {
   estados: Estado[]| undefined;
   selectedState: any;
 
+  acuerdoFill: boolean = false;
+
   constructor(private modalCtrl: ModalController, private http:HttpClient, private datosPagare:DatosPagareService) {}
 
   public monedas = [
@@ -59,6 +61,8 @@ export class ModalAcuerdoPage implements OnInit {
     this.acuerdoMunicipio = this.datosPagare.acuerdoMunicipio;
     this.selectedState = this.datosPagare.selectedState;
     this.selectedCurrency = this.datosPagare.moneda;
+
+    this.checkFormValues();
   }
 
   cancel() {
@@ -78,6 +82,7 @@ export class ModalAcuerdoPage implements OnInit {
       fechaAcuerdo: this.fechaAcuerdo,
       quantityLetter: this.quantityLetter,
       selectedCurrency: this.selectedCurrency,
+      acuerdoFill: this.acuerdoFill
     };
 
     this.quantityLetter = toWords(this.acuerdoQuantity);
@@ -92,11 +97,31 @@ export class ModalAcuerdoPage implements OnInit {
     this.datosPagare.selectedState = data.selectedState;
     this.datosPagare.acuerdoMunicipio = data.acuerdoMunicipio;
     this.datosPagare.moneda = data.selectedCurrency;
+    data.acuerdoFill = true;
+    this.datosPagare.acuerdoFill = data.acuerdoFill;
 
     // Imprimir los valores asignados en consola
 
+    this.checkFormValues();
     // Cierra el modal con un resultado de this.companyName
     this.modalCtrl.dismiss(this.modalCtrl, 'confirm');
+  }
+
+  checkFormValues() {
+    if (
+      this.quantityLetter &&
+      this.dateAcuerdo &&
+      this.acuerdoPlace &&
+      this.acuerdoQuantity &&
+      this.acuerdoInteres &&
+      this.selectedState &&
+      this.acuerdoMunicipio &&
+      this.selectedCurrency
+    ) {
+      this.acuerdoFill = true;
+    } else {
+      this.acuerdoFill = false;
+    }
   }
 
   public ajustarLongitud(cadena: string): string {

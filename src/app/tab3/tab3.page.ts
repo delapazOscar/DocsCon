@@ -90,7 +90,7 @@ export class Tab3Page implements OnInit {
   }
 
   btnConfiguration(){
-    this.router.navigate(['configuration'])
+    this.router.navigate(['configuration']);
   };
 
   btnAyuda(){

@@ -5,7 +5,7 @@
     </ion-buttons>
     <ion-title>Cliente</ion-title>
     <ion-buttons slot="end">
-      <ion-button (click)="confirm()" [strong]="true">Confirm</ion-button>
+      <ion-button (click)="confirm()" [disabled]="!nameCv|| !selectedState || !municipeCv || !numberCv || !emailCv || !descriptionCv" [strong]="true">Confirm</ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>

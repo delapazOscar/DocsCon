@@ -13,12 +13,15 @@ export class ModalDetalleschequePage implements OnInit {
   accountNumber: any;
   bankName: any;
 
+  detallesFill: boolean = false;
+
   constructor(private modalCtrl:ModalController, private datosCheque:DatosChequeService) { }
 
   ngOnInit() {
     this.bankName = this.datosCheque.bankName;
     this.accountNumber = this.datosCheque.accountNumber;
     this.montoCheque = this.datosCheque.montoCheque;
+    this.checkFormValues();
   }
 
   cancel() {
@@ -29,16 +32,32 @@ export class ModalDetalleschequePage implements OnInit {
     const data = {
       montoCheque: this.montoCheque,
       accountNumber: this.accountNumber,
-      bankName: this.bankName
+      bankName: this.bankName,
+      detallesFill:this.detallesFill
     };
 
     // Asignar los valores de las variables del servicio
     this.datosCheque.montoCheque = data.montoCheque;
     this.datosCheque.accountNumber = data.accountNumber;
     this.datosCheque.bankName = data.bankName;
+    data.detallesFill = true;
+    this.datosCheque.detallesFill = data.detallesFill;
 
+    this.checkFormValues();
     // Cierra el modal con un resultado de this.companyName
     this.modalCtrl.dismiss(this.modalCtrl, 'confirm');
+  }
+
+  checkFormValues() {
+    if (
+      this.montoCheque &&
+      this.accountNumber &&
+      this.bankName
+    ) {
+      this.detallesFill = true;
+    } else {
+      this.detallesFill = false;
+    }
   }
 
 }
