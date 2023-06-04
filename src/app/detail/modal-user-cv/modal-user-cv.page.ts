@@ -22,15 +22,47 @@ export class ModalUserCvPage implements OnInit {
   emailCv: any;
   numberCv: any;
   descriptionCv: any;
-  estados: Estado[]| undefined;
+  estados: string[]| undefined;
 
   personalesFill: boolean = false;
-  constructor(private modalCtrl:ModalController, private http:HttpClient, private datosCurriculum:DatosCurriculumService) { }
+  constructor(private modalCtrl:ModalController, private http:HttpClient, private datosCurriculum:DatosCurriculumService) {
+    this.estados = [
+      'Aguascalientes',
+      'Baja California',
+      'Baja California Sur',
+      'Campeche',
+      'Chiapas',
+      'Chihuahua',
+      'Ciudad de México',
+      'Coahuila',
+      'Colima',
+      'Durango',
+      'Estado de México',
+      'Guanajuato',
+      'Guerrero',
+      'Hidalgo',
+      'Jalisco',
+      'Michoacán',
+      'Morelos',
+      'Nayarit',
+      'Nuevo León',
+      'Oaxaca',
+      'Puebla',
+      'Querétaro',
+      'Quintana Roo',
+      'San Luis Potosí',
+      'Sinaloa',
+      'Sonora',
+      'Tabasco',
+      'Tamaulipas',
+      'Tlaxcala',
+      'Veracruz',
+      'Yucatán',
+      'Zacatecas'
+    ];
+   }
 
   ngOnInit() {
-    this.http.get<{ estados: Estado[] }>('assets/estados.json').subscribe(data => {
-      this.estados = data.estados;
-    });
     this.checkFormValues();
   }
 

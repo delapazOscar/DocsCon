@@ -419,14 +419,6 @@ export class DatosfacturaService {
           },
         },
         '\n\n',
-        {
-          text: 'Notas',
-          style: 'notesTitle',
-        },
-        {
-          text: 'Algunas notas van aquí',
-          style: 'notesText',
-        },
       ],
       styles: {
         notesTitle: {

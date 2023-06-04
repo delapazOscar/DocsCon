@@ -45,7 +45,7 @@ export class ChequeFirestoreService {
     const docDef = {
       pageSize: {
         width: 7 * 72,       // 6 pulgadas convertidas a puntos (1 pulgada = 72 puntos)
-        height: 3.50 * 75   // 2.75 pulgadas convertidas a puntos
+        height: 3.80 * 75   // 2.75 pulgadas convertidas a puntos
       },
       pageMargin: [ 20 , 15 , 20 , 20 ],
       content: [

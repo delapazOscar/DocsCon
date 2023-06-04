@@ -21,17 +21,50 @@ export class ModalClientePage implements OnInit {
   domicileClient: string| undefined;
   selectedState: any;
   clientNumber: string | undefined;
-  estados: Estado[]| undefined;
+  estados: string[] | undefined;
   selectedUse: any;
 
   clienteFill: boolean = false;
 
-  constructor(private modalCtrl:ModalController, private http:HttpClient, private datosFactura:DatosfacturaService) {}
+  constructor(private modalCtrl:ModalController, private http:HttpClient, private datosFactura:DatosfacturaService) {
+    this.estados = [
+      'Aguascalientes',
+      'Baja California',
+      'Baja California Sur',
+      'Campeche',
+      'Chiapas',
+      'Chihuahua',
+      'Ciudad de México',
+      'Coahuila',
+      'Colima',
+      'Durango',
+      'Estado de México',
+      'Guanajuato',
+      'Guerrero',
+      'Hidalgo',
+      'Jalisco',
+      'Michoacán',
+      'Morelos',
+      'Nayarit',
+      'Nuevo León',
+      'Oaxaca',
+      'Puebla',
+      'Querétaro',
+      'Quintana Roo',
+      'San Luis Potosí',
+      'Sinaloa',
+      'Sonora',
+      'Tabasco',
+      'Tamaulipas',
+      'Tlaxcala',
+      'Veracruz',
+      'Yucatán',
+      'Zacatecas'
+    ];
+
+  }
 
   ngOnInit() {
-    this.http.get<{ estados: Estado[] }>('assets/estados.json').subscribe(data => {
-      this.estados = data.estados;
-    });
     this.clientName = this.datosFactura.clientName;
     this.domicileClient = this.datosFactura.domicileClient;
     this.selectedState = this.datosFactura.selectedState;

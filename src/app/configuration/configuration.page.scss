@@ -23,15 +23,16 @@ ion-title{
 
 ion-label{
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  font-size: 20px;
+  font-size: 16px;
   font-weight: 700;
   --color: black;
 }
 
 ion-label a{
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  font-size: 25px;
+  font-size: 16px;
   font-weight: 600;
+  text-decoration: underline;
   --color: black;
 }
 

@@ -33,12 +33,47 @@ export class ModalAcuerdoPage implements OnInit {
   fechaAcuerdo: any;
   public selectedCurrency: string = '';
 
-  estados: Estado[]| undefined;
+  estados: string[] | undefined;
   selectedState: any;
 
   acuerdoFill: boolean = false;
 
-  constructor(private modalCtrl: ModalController, private http:HttpClient, private datosPagare:DatosPagareService) {}
+  constructor(private modalCtrl: ModalController, private http:HttpClient, private datosPagare:DatosPagareService) {
+    this.estados = [
+      'Aguascalientes',
+      'Baja California',
+      'Baja California Sur',
+      'Campeche',
+      'Chiapas',
+      'Chihuahua',
+      'Ciudad de México',
+      'Coahuila',
+      'Colima',
+      'Durango',
+      'Estado de México',
+      'Guanajuato',
+      'Guerrero',
+      'Hidalgo',
+      'Jalisco',
+      'Michoacán',
+      'Morelos',
+      'Nayarit',
+      'Nuevo León',
+      'Oaxaca',
+      'Puebla',
+      'Querétaro',
+      'Quintana Roo',
+      'San Luis Potosí',
+      'Sinaloa',
+      'Sonora',
+      'Tabasco',
+      'Tamaulipas',
+      'Tlaxcala',
+      'Veracruz',
+      'Yucatán',
+      'Zacatecas'
+    ];
+  }
 
   public monedas = [
     { nombre: 'Peso mexicano', codigo: 'MXN' },
@@ -50,9 +85,6 @@ export class ModalAcuerdoPage implements OnInit {
   ];
 
   ngOnInit() {
-    this.http.get<{ estados: Estado[] }>('assets/estados.json').subscribe(data => {
-      this.estados = data.estados;
-    });
 
     this.dateAcuerdo = this.datosPagare.dateAcuerdo;
     this.acuerdoPlace = this.datosPagare.acuerdoPlace;

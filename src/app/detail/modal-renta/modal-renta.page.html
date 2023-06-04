@@ -43,10 +43,10 @@
     <ion-input labelPlacement="floating" type="number" [(ngModel)]="mensualidadRenta" placeholder="Mensualidad">$</ion-input>
   </ion-item>
   <ion-item>
-    <ion-label position="floating" color="primary">Estado</ion-label>
+    <ion-label color="primary">Estado:</ion-label>
     <ion-select [(ngModel)]="selectedState">
       <ion-select-option value="">Estado</ion-select-option>
-      <ion-select-option *ngFor="let estado of estados" [value]="estado.nombre" [(ngModel)]="selectedState" class="selectState">{{ estado.nombre }}</ion-select-option>
+      <ion-select-option *ngFor="let estado of estados" [value]="estado">{{ estado }}</ion-select-option>
     </ion-select>
   </ion-item>
   <ion-item>

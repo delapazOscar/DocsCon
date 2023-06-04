@@ -17,8 +17,8 @@
   <ion-item>
     <ion-label color="primary">Estado:</ion-label>
     <ion-select [(ngModel)]="selectedState">
-      <ion-select-option value="">Estado:</ion-select-option>
-      <ion-select-option *ngFor="let estado of estados" [value]="estado.nombre" class="selectState">{{ estado.nombre }}</ion-select-option>
+      <ion-select-option value="">Estado</ion-select-option>
+      <ion-select-option *ngFor="let estado of estados" [value]="estado">{{ estado }}</ion-select-option>
     </ion-select>
   </ion-item>
   <ion-item>

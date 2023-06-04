@@ -15,7 +15,44 @@ interface Estado {
 })
 export class ModalRentaPage implements OnInit {
 
-  constructor(private modalCtrl:ModalController, private datosContrato:DatosContratoService, private http:HttpClient) { }
+  estados: string[] | undefined;
+
+  constructor(private modalCtrl:ModalController, private datosContrato:DatosContratoService, private http:HttpClient) {
+    this.estados = [
+      'Aguascalientes',
+      'Baja California',
+      'Baja California Sur',
+      'Campeche',
+      'Chiapas',
+      'Chihuahua',
+      'Ciudad de México',
+      'Coahuila',
+      'Colima',
+      'Durango',
+      'Estado de México',
+      'Guanajuato',
+      'Guerrero',
+      'Hidalgo',
+      'Jalisco',
+      'Michoacán',
+      'Morelos',
+      'Nayarit',
+      'Nuevo León',
+      'Oaxaca',
+      'Puebla',
+      'Querétaro',
+      'Quintana Roo',
+      'San Luis Potosí',
+      'Sinaloa',
+      'Sonora',
+      'Tabasco',
+      'Tamaulipas',
+      'Tlaxcala',
+      'Veracruz',
+      'Yucatán',
+      'Zacatecas'
+    ];
+   }
 
   domicileHouseToRent: any;
   metrosCuadrados: any;
@@ -24,17 +61,11 @@ export class ModalRentaPage implements OnInit {
   inicioRenta: any;
   mensualidadRenta: any;
   contractMunicipe: any;
-
-  estados: Estado[]| undefined;
   selectedState: any;
 
   rentaFill:boolean = false;
 
   ngOnInit() {
-    this.http.get<{ estados: Estado[] }>('assets/estados.json').subscribe(data => {
-      this.estados = data.estados;
-    });
-
     this.domicileHouseToRent = this.datosContrato.domicileHouseToRent;
     this.metrosCuadrados = this.datosContrato.metrosCuadrados;
     this.noHabitaciones = this.datosContrato.noHabitaciones;
